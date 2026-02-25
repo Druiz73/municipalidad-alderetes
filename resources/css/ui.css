@@ -1,0 +1,243 @@
+/* ==========================================================================
+   UI Components - Municipalidad de Alderetes
+   ========================================================================== */
+
+/* Accordion
+   ========================================================================== */
+
+.tp-accordion details summary {
+    list-style: none;
+}
+
+.tp-accordion details summary::-webkit-details-marker {
+    display: none;
+}
+
+.tp-accordion details[open] > .tp-accordion-content {
+    animation: accordion-down 0.2s ease-out;
+}
+
+@keyframes accordion-down {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Alert Dialog
+   ========================================================================== */
+
+dialog.tp-alert-dialog {
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 32rem;
+    width: calc(100% - 2rem);
+}
+
+dialog.tp-alert-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+dialog.tp-alert-dialog[open] {
+    animation: dialog-in 0.2s ease-out;
+}
+
+dialog.tp-alert-dialog[open]::backdrop {
+    animation: backdrop-in 0.2s ease-out;
+}
+
+@keyframes dialog-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes backdrop-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Dialog
+   ========================================================================== */
+
+dialog.tp-dialog {
+    position: relative;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 32rem;
+    width: calc(100% - 2rem);
+}
+
+dialog.tp-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+dialog.tp-dialog[open] {
+    animation: dialog-in 0.2s ease-out;
+}
+
+dialog.tp-dialog[open]::backdrop {
+    animation: backdrop-in 0.2s ease-out;
+}
+
+/* Drawer
+   ========================================================================== */
+
+dialog.tp-drawer {
+    position: fixed;
+    inset: auto 0 0 0;
+    margin: 0;
+    max-height: 90vh;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0.625rem 0.625rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+dialog.tp-drawer::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+dialog.tp-drawer[open] {
+    animation: drawer-slide-up 0.3s ease-out;
+}
+
+dialog.tp-drawer[open]::backdrop {
+    animation: backdrop-in 0.3s ease-out;
+}
+
+@keyframes drawer-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Carousel
+   ========================================================================== */
+
+.tp-carousel-viewport {
+    overflow: hidden;
+}
+
+.tp-carousel-track {
+    display: flex;
+    transition: transform 0.3s ease-out;
+}
+
+.tp-carousel-slide {
+    min-width: 0;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: 100%;
+}
+
+/* Collapsible
+   ========================================================================== */
+
+.tp-collapsible[open] > .tp-collapsible-content {
+    animation: collapsible-open 0.2s ease-out;
+}
+
+@keyframes collapsible-open {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dropdown Menu
+   ========================================================================== */
+
+.tp-dropdown-content:not(.hidden) {
+    animation: dropdown-in 0.15s ease-out;
+}
+
+@keyframes dropdown-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Navigation Menu
+   ========================================================================== */
+
+.tp-nav-menu-content:not(.hidden) {
+    animation: nav-menu-in 0.15s ease-out;
+}
+
+@keyframes nav-menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tp-nav-menu-trigger .shrink-0 {
+    transition: transform 0.2s ease;
+}
+
+.tp-nav-menu-trigger.is-open .shrink-0 {
+    transform: rotate(180deg);
+}
+
+/* Toast
+   ========================================================================== */
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}

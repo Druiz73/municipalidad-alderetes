@@ -11,22 +11,27 @@
         {
           "name": "Primary",
           "slug": "primary",
-          "color": "#2C7FFF"
+          "color": "#1B4D6E"
         },
         {
           "name": "Secondary",
           "slug": "secondary",
-          "color": "#FD9A00"
+          "color": "#E07B32"
+        },
+        {
+          "name": "Accent",
+          "slug": "accent",
+          "color": "#3B8EC4"
         },
         {
           "name": "Dark",
           "slug": "dark",
-          "color": "#18181C"
+          "color": "#1A2A3A"
         },
         {
           "name": "Light",
           "slug": "light",
-          "color": "#F4F4F5"
+          "color": "#F5F1EB"
         }
       ]
     },
