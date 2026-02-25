@@ -6,10 +6,13 @@
 
 @source '../../vendor/tailpress/framework/**/*.php';
 @source '../../vendor/tailpress/framework/**/**/*.php';
+@source '../../*.php';
+@source '../../template-parts/**/*.php';
+@source '../../parts/**/*.php';
 
 @utility container {
-    margin-inline: auto;
-    padding-inline: 2rem;
+  margin-inline: auto;
+  padding-inline: 2rem;
 }
 
 /*
