@@ -181,6 +181,19 @@ function tailpress_handle_contacto_form() {
     $email    = sanitize_email($_POST['email'] ?? '');
     $consulta = sanitize_textarea_field($_POST['consulta'] ?? '');
 
+    // Check Honeypot (if filled out, it's a bot)
+    if (!empty($_POST['url_website'])) {
+        wp_send_json_error('Error al procesar la solicitud. Intente nuevamente.');
+    }
+
+    // Rate Limiting (Session/Transient based)
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $transient_name = 'contacto_limit_' . md5($ip);
+    
+    if (get_transient($transient_name)) {
+        wp_send_json_error('Por favor, esperá un minuto antes de enviar otra consulta para prevenir spam.');
+    }
+
     // Basic validation
     if (empty($nombre) || empty($apellido) || empty($telefono) || empty($consulta)) {
         wp_send_json_error('Por favor, completá todos los campos obligatorios.');
@@ -205,6 +218,8 @@ function tailpress_handle_contacto_form() {
     $sent = wp_mail($to, $subject, $body, $headers);
 
     if ($sent) {
+        // Establecer el rate limit a 60 segundos después de mandar exitosamente un mail
+        set_transient($transient_name, true, 60);
         wp_send_json_success('Consulta enviada exitosamente.');
     } else {
         // En caso de que el hosting todavía no pueda enviar correos
@@ -213,6 +228,40 @@ function tailpress_handle_contacto_form() {
 }
 add_action('wp_ajax_submit_contacto_form', 'tailpress_handle_contacto_form');
 add_action('wp_ajax_nopriv_submit_contacto_form', 'tailpress_handle_contacto_form');
+
+/**
+ * Deshabilitar completamente los comentarios en todo el sitio web.
+ */
+add_action('admin_init', function () {
+    // Redirigir si alguien intenta acceder a la página de comentarios directamente
+    global $pagenow;
+    if ($pagenow === 'edit-comments.php') {
+        wp_redirect(admin_url());
+        exit;
+    }
+    // Remover metaboxes de comentarios en post/page
+    remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
+    foreach (get_post_types() as $post_type) {
+        if (post_type_supports($post_type, 'comments')) {
+            remove_post_type_support($post_type, 'comments');
+            remove_post_type_support($post_type, 'trackbacks');
+        }
+    }
+});
+// Cerrar comentarios en el frontend
+add_filter('comments_open', '__return_false', 20, 2);
+add_filter('pings_open', '__return_false', 20, 2);
+// Ocultar comentarios existentes
+add_filter('comments_array', '__return_empty_array', 10, 2);
+// Quitar opción de menú de comentarios del administrador
+add_action('admin_menu', function () {
+    remove_menu_page('edit-comments.php');
+});
+// Quitar del admin bar de arriba
+add_action('wp_before_admin_bar_render', function() {
+    global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('comments');
+});
 
 // Permite reejecutar el setup manualmente desde WP Admin → Apariencia
 add_action('admin_notices', function () {

@@ -98,6 +98,12 @@ get_header();
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">Envianos tu consulta</h2>
                         <form id="contacto-form" class="space-y-6" novalidate>
                             <?php wp_nonce_field('contacto_form', 'contacto_nonce'); ?>
+                            
+                            <!-- Honeypot anti-spam (invisible para humanos, trampa para bots) -->
+                            <div style="display:none;" aria-hidden="true">
+                                <label for="url_website">No completar este campo:</label>
+                                <input id="url_website" name="url_website" type="text" value="">
+                            </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
