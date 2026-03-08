@@ -1,0 +1,38 @@
+# Manual de Administración - Noticias Muncipales
+
+Este manual explica cómo cargar, editar y borrar Noticias del portal oficial de la Municipalidad de Alderetes, de tal forma que aparezcan automáticamente en la sección correspondiente del sitio web.
+
+> [!IMPORTANTE]
+> Necesitás acceso al Panel de Administración de WordPress (WP Admin).
+
+## ¿Cómo publicar una Noticia nueva?
+
+Toda la sección de "Noticias" del sitio se alimenta automáticamente de las Entradas estándar (Posts) de WordPress.
+
+1. **Ingresar al Panel:** Entrá a tu sitio agregando `/wp-admin` al final (ejemplo: `municipalidadalderetes.com.ar/wp-admin`).
+2. **Ir a Entradas:** En el menú lateral izquierdo, hacé clic en el ícono de chincheta **"Entradas"** (o "Posts" si está en inglés).
+3. **Añadir nueva:** Arriba de todo, hacé clic en el botón **Añadir nueva entrada**.
+4. **Completar datos principales:**
+   - **Añadir el título:** Escribí el titular de la noticia (ej: "Nueva pavimentación en el barrio Centro").
+   - **Contenido:** Debajo del título, hacé clic y empezá a escribir el cuerpo de la noticia. Podés apretar el botón [+] para agregar párrafos, imágenes, galerías de fotos múltiples, o videos de YouTube. Todo lo que pongas ahí adentro se adaptará automáticamente al diseño limpio de la noticia (usando las clases \`prose\`).
+5. **Configurar los metadatos (Barra Right Lateral de "Entrada"):**
+   - **Imagen Destacada:** Fundamental. Bajá en la barra derecha hasta encontrar la caja "Imagen destacada" (Featured image). Hacé clic y subí la foto principal de la noticia. Esta es la imagen que saldrá en la tarjeta miniatura.
+   - **Categorías:** Marcá la categoría a la que pertenece (Ej: "Obras Públicas", "Salud"). Si la categoría no existe, podés crearla ahí mismo con el botón "Añadir nueva categoría". Estas categorías son las que luego usarán los vecinos para filtrar las noticias en la web.
+   - **Extracto (Excerpt):** Es un resumen muy corto (1 o 2 líneas) que aparece en la tarjeta antes de que la persona entre a leer toda la noticia. Si lo dejás en blanco, WordPress sacará las primeras palabras del contenido automáticamente.
+   - **Etiquetas (Opcional):** Si querés marcar la noticia como Especial o Destacada, podés agregarle una etiqueta (Tag) que diga "Destacada".
+6. **Publicar:** Cuando termine, hacé clic en el botón azul de arriba a la derecha que dice **Publicar**.
+
+## ¿Cómo editar o borrar una Noticia existente?
+
+1. En el menú de la izquierda, andá a **Entradas > Todas las entradas**.
+2. Ahí verás el listado de todas las noticias publicadas.
+3. Para **Editar:** Pasá el mouse por encima del título de la noticia y hacé clic en "Editar". Al finalizar los cambios, apretá en "Actualizar" (arriba a la derecha).
+4. Para **Borrar:** Pasá el mouse por encima del título y hacé clic en "Enviar a la papelera".
+
+## Consejos importantes para imágenes
+
+- **Formato:** Asegurate de subir imágenes en formato `.JPG` o `.WebP` preferentemente, y no muy pesadas (menos de 500 KB es ideal) para que el sitio no se ponga lento.
+- **Imagen Destacada Horizontal:** El diseño estético del sitio está pensado para que la imagen de portada sea apaisada (horizontal). Si subís una imagen vertical, el sistema la va a recortar para que encaje, pero puede que no se vea como esperabas.
+
+---
+

@@ -1,0 +1,91 @@
+Sistema de Turnos – Municipalidad de Alderetes
+Guía de uso para el personal municipal
+
+¿Qué es este sistema?
+El sistema de turnos permite que los ciudadanos reserven su turno para trámites de licencia de conducir directamente desde la web, sin necesidad de llamar por teléfono ni hacer fila.
+Ciudadano → Elige fecha y horario → Completa sus datos → Recibe email con N° de turno
+El personal de Tránsito puede ver, editar y gestionar todos los turnos desde el panel de administración de WordPress.
+
+Para el ciudadano – Cómo sacar un turno
+> [!NOTE]
+> La página pública está disponible en: aldereteslocal.local/turnos-transito/
+> (en producción será la URL del dominio oficial)
+Pasos:
+① Elegir fecha — El calendario muestra solo los días disponibles (lunes a viernes, sin feriados). Los días grises no tienen turnos.
+② Elegir horario — Aparecen los 8 horarios del día:
+| Turno | Horario |
+|---|---|
+| 1 | 08:00 hs |
+| 2 | 08:30 hs |
+| 3 | 09:00 hs |
+| 4 | 09:30 hs |
+| 5 | 10:00 hs |
+| 6 | 10:30 hs |
+| 7 | 11:00 hs |
+| 8 | 11:30 hs |
+Los horarios ocupados aparecen en gris y no se pueden seleccionar.
+③ Completar datos — El ciudadano ingresa nombre, DNI, teléfono, email y categoría de licencia.
+④ Confirmación — Al confirmar, recibe un número de turno en pantalla y un email de confirmación con todos los detalles.
+
+Para el personal – Panel de Administración
+> [!IMPORTANT]
+> Necesitás acceso al Panel de WordPress (WP Admin). Pedile el usuario y contraseña al administrador del sitio.
+Ver los turnos del día
+Entrá al panel: aldereteslocal.local/wp-admin
+En el menú izquierdo hacé clic en 📅 Turnos de Tránsito
+Aparece la lista de todos los turnos
+Para filtrar por fecha: usá el campo de fecha en la parte superior y hacé clic en Filtrar.
+Columnas de la tabla de turnos
+| Columna | Descripción |
+|---|---|
+| Fecha | Día del turno |
+| Hora | Horario reservado |
+| Nombre | Nombre completo del ciudadano |
+| DNI | Documento de identidad |
+| Teléfono | Teléfono de contacto |
+| Email | Email del ciudadano |
+| Categoría | Tipo de licencia |
+| Estado | Estado actual del turno (ver abajo) |
+Estados del turno
+| Estado | Color | Significado |
+|---|---|---|
+| Pendiente | 🟡 Amarillo | Turno reservado, todavía no se atendió |
+| Atendido | 🟢 Verde | El ciudadano se presentó y fue atendido |
+| Ausente | 🔴 Rojo | El ciudadano no se presentó |
+| Cancelado | ⚫ Gris | Turno cancelado (el ciudadano recibe un email automático) |
+Cambiar el estado de un turno
+Hacé clic en el nombre del turno para abrirlo
+En la sección "Datos del Turno" cambiá el campo Estado
+Hacé clic en Actualizar (botón azul arriba a la derecha)
+> [!IMPORTANT]
+> Si cambiás el estado a Cancelado, el ciudadano recibe automáticamente un email informándole de la cancelación.
+
+Para el administrador – Bloquear fechas
+Si hay un asueto, feriado provincial, o cualquier día en que no se darán turnos, podés bloquearlo manualmente.
+En WP Admin, andá a 📅 Turnos de Tránsito → Bloquear Fechas
+Hacé clic en el campo de fecha
+Elegí la fecha a bloquear
+Hacé clic en Bloquear esta fecha
+La fecha queda bloqueada y los ciudadanos no pueden sacar turnos para ese día.
+> [!NOTE]
+> Los feriados nacionales ya están bloqueados automáticamente para 2025 y 2026. No es necesario cargarlos manualmente.
+
+Configuración de Email (Importante para Producción)
+> [!WARNING]
+> En el servidor de staging/producción es necesario configurar el envío de emails para que las confirmaciones lleguen a los ciudadanos.
+Pasos para configurar (una sola vez):
+Instalar el plugin WP Mail SMTP desde WP Admin → Plugins → Añadir nuevo
+Configurarlo con una cuenta de Gmail o el servidor de correo de la municipalidad
+Hacer una prueba de envío desde el plugin
+Una vez configurado, los emails funcionan automáticamente sin más intervención.
+
+Preguntas frecuentes
+¿Qué pasa si un ciudadano quiere cancelar su turno?
+Actualmente debe comunicarse por teléfono o email con la Dirección de Tránsito, quienes cancelan el turno desde el panel de administración.
+¿Se pueden agregar más turnos por día?
+Sí, es posible ampliar el horario o reducir el intervalo entre turnos. Contactar al desarrollador para modificar la configuración.
+¿Los turnos se borran solos?
+No, quedan guardados permanentemente en la base de datos. Se pueden eliminar manualmente desde WP Admin si se desea.
+¿Qué pasa si dos personas intentan reservar el mismo turno al mismo tiempo?
+El sistema valida en tiempo real. Solo una persona puede reservar cada horario; la segunda recibe un mensaje de error y debe elegir otro horario.
+

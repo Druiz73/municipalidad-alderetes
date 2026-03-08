@@ -165,6 +165,55 @@ function tailpress_setup_pages(): void {
 
 add_action('after_switch_theme', 'tailpress_setup_pages');
 
+/**
+ * Handle Contact Form Submission via AJAX
+ */
+function tailpress_handle_contacto_form() {
+    // Check Nonce for security
+    if (!isset($_POST['contacto_nonce']) || !wp_verify_nonce($_POST['contacto_nonce'], 'contacto_form')) {
+        wp_send_json_error('Error de seguridad. Recargá la página e intentá nuevamente.');
+    }
+
+    // Sanitize input data
+    $nombre   = sanitize_text_field($_POST['nombre'] ?? '');
+    $apellido = sanitize_text_field($_POST['apellido'] ?? '');
+    $telefono = sanitize_text_field($_POST['telefono'] ?? '');
+    $email    = sanitize_email($_POST['email'] ?? '');
+    $consulta = sanitize_textarea_field($_POST['consulta'] ?? '');
+
+    // Basic validation
+    if (empty($nombre) || empty($apellido) || empty($telefono) || empty($consulta)) {
+        wp_send_json_error('Por favor, completá todos los campos obligatorios.');
+    }
+
+    // Configure email
+    $to = 'contacto@municipalidadalderetes.com.ar'; // Reemplazar con el correo final cuando se cree
+    $subject = 'Nueva consulta desde la web - ' . $nombre . ' ' . $apellido;
+    
+    $body = "Has recibido una nueva consulta desde el formulario web:\n\n";
+    $body .= "Nombre: $nombre $apellido\n";
+    $body .= "Teléfono: $telefono\n";
+    $body .= "Email: " . ($email ? $email : 'No especificado') . "\n\n";
+    $body .= "Mensaje:\n$consulta\n";
+
+    $headers = array('Content-Type: text/plain; charset=UTF-8');
+    if ($email) {
+        $headers[] = 'Reply-To: ' . $nombre . ' <' . $email . '>';
+    }
+
+    // Send email using wp_mail
+    $sent = wp_mail($to, $subject, $body, $headers);
+
+    if ($sent) {
+        wp_send_json_success('Consulta enviada exitosamente.');
+    } else {
+        // En caso de que el hosting todavía no pueda enviar correos
+        wp_send_json_error('Error en el servidor al enviar el correo. Por favor contactate por teléfono.');
+    }
+}
+add_action('wp_ajax_submit_contacto_form', 'tailpress_handle_contacto_form');
+add_action('wp_ajax_nopriv_submit_contacto_form', 'tailpress_handle_contacto_form');
+
 // Permite reejecutar el setup manualmente desde WP Admin → Apariencia
 add_action('admin_notices', function () {
     if (!current_user_can('manage_options')) return;
