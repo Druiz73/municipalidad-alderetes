@@ -75,13 +75,13 @@
                     </button>
                     <div class="tp-nav-menu-content hidden absolute top-full left-0 w-64 z-50" style="padding-top:6px"><div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                         <span class="block px-4 pt-2 pb-1 text-xs font-bold text-gray-400 uppercase tracking-widest">Rentas</span>
-                        <a href="<?php echo esc_url(home_url('/tem')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">T.E.M.</a>
-                        <a href="<?php echo esc_url(home_url('/cisi')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">C.I.S.I.</a>
-                        <a href="<?php echo esc_url(home_url('/cementerio')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Cementerio (C.I.S.C.)</a>
+                        <a href="<?php echo esc_url(home_url('/tem')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Comercio (T.E.M)</a>
+                        <a href="<?php echo esc_url(home_url('/cisi')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Inmueble (C.I.S.I)</a>
+                        <a href="<?php echo esc_url(home_url('/cementerio')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Cementerio (C.I.S.C)</a>
                         <div class="border-t border-gray-100 my-2"></div>
                         <span class="block px-4 pt-2 pb-1 text-xs font-bold text-gray-400 uppercase tracking-widest">Tránsito</span>
                         <a href="<?php echo esc_url(home_url('/transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Requisitos</a>
-                        <a href="<?php echo esc_url(home_url('/turnos-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Solicitar Turno</a>
+                        <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Solicitar Turno</a>
                         <div class="border-t border-gray-100 my-2"></div>
                         <a href="<?php echo esc_url(home_url('/tribunal-de-faltas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Tribunal de Faltas</a>
                         <a href="<?php echo esc_url(home_url('/catastro')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Catastro</a>
@@ -94,13 +94,15 @@
                         Áreas
                         <svg class="w-4 h-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                    <div class="tp-nav-menu-content hidden absolute top-full left-0 w-56 z-50" style="padding-top:6px"><div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
+                    <div class="tp-nav-menu-content hidden absolute top-full left-0 w-64 z-50" style="padding-top:6px"><div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                         <a href="<?php echo esc_url(home_url('/obras-publicas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Obras Públicas</a>
                         <a href="<?php echo esc_url(home_url('/salud')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Salud</a>
-                        <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Educación y Cultura</a>
+                        <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Educación</a>
+                        <a href="<?php echo esc_url(home_url('/cultura')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Cultura</a>
                         <a href="<?php echo esc_url(home_url('/deporte')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Deporte</a>
                         <a href="<?php echo esc_url(home_url('/seguridad')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Seguridad</a>
                         <a href="<?php echo esc_url(home_url('/alumbrado')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Alumbrado Público</a>
+                        <a href="<?php echo esc_url(home_url('/politicas-sociales')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Políticas Sociales</a>
                     </div></div>
                 </div>
 
@@ -122,10 +124,21 @@
 
         <!-- Search Bar -->
         <div id="search-bar" class="hidden pb-4">
-            <div class="relative">
-                <input type="search" placeholder="Buscar trámites, noticias, información..." class="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            </div>
+            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                <div class="relative">
+                    <input
+                        type="search"
+                        name="s"
+                        value="<?php echo esc_attr( get_search_query() ); ?>"
+                        placeholder="Buscar trámites, noticias, información..."
+                        class="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-blue-600 transition-colors" aria-label="Buscar">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -153,13 +166,13 @@
                 </button>
                 <div class="mobile-submenu hidden ml-4 mt-1 space-y-1">
                     <span class="block px-4 pt-2 pb-1 text-xs font-bold text-gray-400 uppercase tracking-widest">Rentas</span>
-                    <a href="<?php echo esc_url(home_url('/tem')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">T.E.M.</a>
-                    <a href="<?php echo esc_url(home_url('/cisi')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">C.I.S.I.</a>
-                    <a href="<?php echo esc_url(home_url('/cementerio')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Cementerio (C.I.S.C.)</a>
+                    <a href="<?php echo esc_url(home_url('/tem')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Comercio (T.E.M)</a>
+                    <a href="<?php echo esc_url(home_url('/cisi')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Inmueble (C.I.S.I)</a>
+                    <a href="<?php echo esc_url(home_url('/cementerio')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Cementerio (C.I.S.C)</a>
                     <div class="border-t border-gray-100 my-1"></div>
                     <span class="block px-4 pt-2 pb-1 text-xs font-bold text-gray-400 uppercase tracking-widest">Tránsito</span>
                     <a href="<?php echo esc_url(home_url('/transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Requisitos</a>
-                    <a href="<?php echo esc_url(home_url('/turnos-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Solicitar Turno</a>
+                    <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Solicitar Turno</a>
                     <div class="border-t border-gray-100 my-1"></div>
                     <a href="<?php echo esc_url(home_url('/tribunal-de-faltas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Tribunal de Faltas</a>
                     <a href="<?php echo esc_url(home_url('/catastro')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Catastro</a>
@@ -175,10 +188,12 @@
                 <div class="mobile-submenu hidden ml-4 mt-1 space-y-1">
                     <a href="<?php echo esc_url(home_url('/obras-publicas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Obras Públicas</a>
                     <a href="<?php echo esc_url(home_url('/salud')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Salud</a>
-                    <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Educación y Cultura</a>
+                    <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Educación</a>
+                    <a href="<?php echo esc_url(home_url('/cultura')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Cultura</a>
                     <a href="<?php echo esc_url(home_url('/deporte')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Deporte</a>
                     <a href="<?php echo esc_url(home_url('/seguridad')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Seguridad</a>
                     <a href="<?php echo esc_url(home_url('/alumbrado')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Alumbrado Público</a>
+                    <a href="<?php echo esc_url(home_url('/politicas-sociales')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Políticas Sociales</a>
                 </div>
             </div>
 

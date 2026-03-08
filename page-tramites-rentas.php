@@ -33,6 +33,22 @@ get_header();
     </div>
 </section>
 
+<!-- Horarios de Atención -->
+<div class="bg-white border-b border-gray-200 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center sm:text-left">
+        <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-alderetes-blue shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="font-bold text-gray-800 uppercase tracking-wide text-sm">Horarios de Atención:</span>
+            <span class="text-gray-600 text-sm">Lunes a Viernes · <strong class="text-alderetes-blue">8:00 a 13:30 hs</strong></span>
+        </div>
+        <span class="hidden sm:block text-gray-300">|</span>
+        <a href="<?php echo esc_url(home_url('/rentas')); ?>" class="inline-flex items-center gap-2 bg-alderetes-blue text-white font-bold px-5 py-2 rounded-xl hover:bg-blue-800 transition-colors text-sm shadow">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            TRÁMITES
+        </a>
+    </div>
+</div>
+
 <!-- Tributos Tabs -->
 <main class="py-12 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4">
@@ -42,10 +58,10 @@ get_header();
             <!-- Tabs Header -->
             <div class="flex flex-wrap border-b border-gray-100 bg-gray-50/50">
                 <button onclick="switchTab('tem')" id="tab-btn-tem" class="tab-btn active flex-1 px-6 py-5 text-base font-bold transition-all border-b-4 border-alderetes-blue text-alderetes-blue bg-white">
-                    T.E.M.
+                    COMERCIO (T.E.M.)
                 </button>
                 <button onclick="switchTab('cisi')" id="tab-btn-cisi" class="tab-btn flex-1 px-6 py-5 text-base font-bold transition-all border-b-4 border-transparent text-gray-400 hover:text-gray-600 hover:bg-white/50">
-                    C.I.S.I.
+                    INMUEBLE (C.I.S.I.)
                 </button>
                 <button onclick="switchTab('cisc')" id="tab-btn-cisc" class="tab-btn flex-1 px-6 py-5 text-base font-bold transition-all border-b-4 border-transparent text-gray-400 hover:text-gray-600 hover:bg-white/50">
                     CEMENTERIO (C.I.S.C.)
@@ -116,17 +132,6 @@ get_header();
                                     <?php endforeach; ?>
                                 </ul>
 
-                                <!-- PDF Download button for exención -->
-                                <div class="mt-6 p-5 bg-gradient-to-r from-alderetes-blue to-blue-700 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
-                                    <div class="text-white">
-                                        <p class="font-bold text-lg">Indicaciones de Exención T.E.M.</p>
-                                        <p class="text-blue-200 text-sm">Descargá el instructivo completo en PDF</p>
-                                    </div>
-                                    <a href="#" class="flex items-center gap-2 bg-white text-alderetes-blue font-bold px-5 py-3 rounded-xl hover:bg-blue-50 transition-colors shadow-md whitespace-nowrap">
-                                        <svg class="w-5 h-5 text-alderetes-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                        Descargar PDF
-                                    </a>
-                                </div>
                             </div>
                         </div>
 

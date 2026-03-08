@@ -10,7 +10,7 @@ get_header();
 if (is_front_page()) :
     get_template_part('template-parts/hero-carousel');
     get_template_part('template-parts/banner-info', null, ['variant' => 'primary']);
-    get_template_part('template-parts/tramites-section');
+    get_template_part('template-parts/tramites-section'); // Desactivado: sección visible solo en página Trámites
     get_template_part('template-parts/areas-section');
     get_template_part('template-parts/noticias-section');
     get_template_part('template-parts/banner-info', null, ['variant' => 'secondary']);

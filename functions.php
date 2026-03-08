@@ -54,7 +54,7 @@ function tailpress_setup_pages(): void {
         ['title' => 'Organigrama',     'slug' => 'organigrama',      'template' => 'page-organigrama.php'],
         ['title' => 'Rentas',          'slug' => 'rentas',           'template' => 'page-tramites-rentas.php'],
         ['title' => 'Tránsito',        'slug' => 'transito',         'template' => 'page-tramites-transito.php'],
-        ['title' => 'Tribunal de Faltas', 'slug' => 'tribunal-de-faltas', 'template' => ''],
+        ['title' => 'Tribunal de Faltas', 'slug' => 'tribunal-de-faltas', 'template' => 'page-tribunal-de-faltas.php'],
         ['title' => 'Catastro',        'slug' => 'catastro',         'template' => 'page-tramites-catastro.php'],
         ['title' => 'Obras Públicas',  'slug' => 'obras-publicas',   'template' => ''],
         ['title' => 'Salud',           'slug' => 'salud',            'template' => ''],
@@ -65,7 +65,7 @@ function tailpress_setup_pages(): void {
         ['title' => 'Acción Social',   'slug' => 'accion-social',    'template' => ''],
         ['title' => 'CISI y Cementerio', 'slug' => 'cisi',           'template' => ''],
         ['title' => 'TEM',             'slug' => 'tem',              'template' => ''],
-        ['title' => 'Turnos Tránsito', 'slug' => 'turnos-transito', 'template' => 'page-turnos-transito.php'],
+        ['title' => 'Turnos Tránsito', 'slug' => 'turnos-de-transito', 'template' => 'page-turnos-transito.php'],
     ];
 
     $page_ids = [];
@@ -184,7 +184,7 @@ add_action('admin_notices', function () {
 
 // --- Configuración central ---
 define('TP_TURNO_HORA_INICIO', '08:00');
-define('TP_TURNO_HORA_FIN',    '12:00');
+define('TP_TURNO_HORA_FIN',    '13:00');
 define('TP_TURNO_INTERVALO',   30); // minutos
 define('TP_TURNO_EMAIL_ADMIN', get_option('admin_email'));
 

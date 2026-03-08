@@ -6,29 +6,45 @@
  * @package TailPress
  */
 
+$base   = get_template_directory_uri() . '/resources/images/fotos-areas/CARRUSEL/';
 $slides = [
     [
-        'image'    => 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1920&q=80',
+        'image'    => $base . 'FOTO1.jpg',
         'title'    => 'Bienvenidos a Alderetes',
         'subtitle' => 'Trabajando juntos por una ciudad mejor',
         'cta'      => 'Conocer más',
-        'cta_url'  => esc_url(home_url('/institucional')),
+        'cta_url'  => esc_url( home_url( '/institucional' ) ),
     ],
     [
-        'image'    => 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1920&q=80',
+        'image'    => $base . 'FOTO2.jpg',
         'title'    => 'Servicios Municipales',
         'subtitle' => 'Trámites online, rápidos y seguros',
         'cta'      => 'Ver trámites',
-        'cta_url'  => esc_url(home_url('/rentas')),
+        'cta_url'  => esc_url( home_url( '/tem' ) ),
     ],
     [
-        'image'    => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80',
+        'image'    => $base . 'FOTO3.jpg',
         'title'    => 'Desarrollo Urbano',
         'subtitle' => 'Construyendo el futuro de nuestra ciudad',
         'cta'      => 'Ver proyectos',
-        'cta_url'  => esc_url(home_url('/obras-publicas')),
+        'cta_url'  => esc_url( home_url( '/obras-publicas' ) ),
+    ],
+    [
+        'image'    => $base . 'FOTO12.jpg',
+        'title'    => 'Cultura y Comunidad',
+        'subtitle' => 'Arte, eventos y programas para todos',
+        'cta'      => 'Ver áreas',
+        'cta_url'  => esc_url( home_url( '/cultura' ) ),
+    ],
+    [
+        'image'    => $base . 'FOTO15.jpeg',
+        'title'    => 'Salud para Todos',
+        'subtitle' => 'Hospital Modular con atención las 24 horas',
+        'cta'      => 'Conocer más',
+        'cta_url'  => esc_url( home_url( '/salud' ) ),
     ],
 ];
+
 ?>
 
 <div

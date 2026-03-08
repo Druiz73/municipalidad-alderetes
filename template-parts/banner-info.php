@@ -27,7 +27,7 @@ $variant = $args['variant'] ?? 'primary';
                     <p class="text-white/80">Sacá tu turno para el carnet de manejo sin salir de casa</p>
                 </div>
             </div>
-            <a href="<?php echo esc_url(home_url('/transito')); ?>" class="flex items-center gap-2 px-6 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg">
+            <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="flex items-center gap-2 px-6 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg">
                 Solicitar turno
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
