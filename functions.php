@@ -229,6 +229,14 @@ function tailpress_handle_contacto_form() {
 add_action('wp_ajax_submit_contacto_form', 'tailpress_handle_contacto_form');
 add_action('wp_ajax_nopriv_submit_contacto_form', 'tailpress_handle_contacto_form');
 
+// Cambiar el nombre y mail del remitente por defecto de WordPress
+add_filter('wp_mail_from', function($original_email_address) {
+    return 'contacto@municipalidadalderetes.com.ar';
+});
+add_filter('wp_mail_from_name', function($original_email_from) {
+    return 'Web Municipalidad de Alderetes';
+});
+
 /**
  * Deshabilitar completamente los comentarios en todo el sitio web.
  */
