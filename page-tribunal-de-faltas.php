@@ -17,6 +17,7 @@ get_template_part( 'template-parts/area-hero', null, [
     'area_title'      => $area_title,
     'area_tagline'    => $area_tagline,
     'area_color'      => $area_color,
+    'height_classes'  => 'h-[260px] md:h-[320px]',
 ] );
 ?>
 

@@ -129,13 +129,13 @@ $estructura = [
 ];
 
 $color_map = [
-    'blue'   => ['bg' => 'bg-blue-600',   'light' => 'bg-blue-50',   'border' => 'border-blue-200',  'text' => 'text-blue-700',  'dot' => 'bg-blue-400'],
-    'purple' => ['bg' => 'bg-purple-600', 'light' => 'bg-purple-50', 'border' => 'border-purple-200','text' => 'text-purple-700','dot' => 'bg-purple-400'],
-    'green'  => ['bg' => 'bg-emerald-600','light' => 'bg-emerald-50','border' => 'border-emerald-200','text' => 'text-emerald-700','dot' => 'bg-emerald-400'],
-    'orange' => ['bg' => 'bg-orange-500', 'light' => 'bg-orange-50', 'border' => 'border-orange-200','text' => 'text-orange-700','dot' => 'bg-orange-400'],
-    'pink'   => ['bg' => 'bg-pink-600',   'light' => 'bg-pink-50',   'border' => 'border-pink-200',  'text' => 'text-pink-700',  'dot' => 'bg-pink-400'],
-    'teal'   => ['bg' => 'bg-teal-600',   'light' => 'bg-teal-50',   'border' => 'border-teal-200',  'text' => 'text-teal-700',  'dot' => 'bg-teal-400'],
-    'red'    => ['bg' => 'bg-red-600',    'light' => 'bg-red-50',    'border' => 'border-red-200',   'text' => 'text-red-700',   'dot' => 'bg-red-400'],
+    'blue'   => ['light' => 'bg-blue-50',   'border' => 'border-blue-200',   'text' => 'text-blue-700',   'hex' => '#60a5fa'],
+    'purple' => ['light' => 'bg-purple-50', 'border' => 'border-purple-200', 'text' => 'text-purple-700', 'hex' => '#c084fc'],
+    'green'  => ['light' => 'bg-emerald-50','border' => 'border-emerald-200','text' => 'text-emerald-700','hex' => '#34d399'],
+    'orange' => ['light' => 'bg-orange-50', 'border' => 'border-orange-200', 'text' => 'text-orange-700', 'hex' => '#fb923c'],
+    'pink'   => ['light' => 'bg-pink-50',   'border' => 'border-pink-200',   'text' => 'text-pink-700',   'hex' => '#f472b6'],
+    'teal'   => ['light' => 'bg-teal-50',   'border' => 'border-teal-200',   'text' => 'text-teal-700',   'hex' => '#2dd4bf'],
+    'red'    => ['light' => 'bg-red-50',    'border' => 'border-red-200',    'text' => 'text-red-700',    'hex' => '#f87171'],
 ];
 ?>
 
@@ -189,7 +189,7 @@ $color_map = [
                 <button onclick="toggleSec('<?php echo $id; ?>')"
                         class="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-gray-50 transition-colors">
                     <div class="flex items-center gap-4">
-                        <div class="w-3 h-3 rounded-full <?php echo $c['dot']; ?> shrink-0"></div>
+                        <div class="w-3 h-3 rounded-full shrink-0" style="background-color:<?php echo $c['hex']; ?>"></div>
                         <div>
                             <p class="font-bold text-gray-900 text-base leading-tight"><?php echo esc_html($sec['secretaria']); ?></p>
                             <?php if (!empty($sec['titular'])): ?>
@@ -219,7 +219,7 @@ $color_map = [
                         <div class="mt-3 space-y-2 pl-3 border-l-2 <?php echo $c['border']; ?>">
                             <?php foreach ($sub['direcciones'] as $dir): ?>
                             <div class="flex items-start gap-2">
-                                <div class="w-1.5 h-1.5 rounded-full <?php echo $c['dot']; ?> mt-1.5 shrink-0"></div>
+                                <div class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style="background-color:<?php echo $c['hex']; ?>"></div>
                                 <div>
                                     <p class="text-sm font-semibold text-gray-700 leading-tight"><?php echo esc_html($dir['cargo']); ?></p>
                                     <?php if (!empty($dir['titular'])): ?>
@@ -237,7 +237,7 @@ $color_map = [
                     <div class="space-y-2 pl-3 border-l-2 <?php echo $c['border']; ?>">
                         <?php foreach ($sec['direcciones_directas'] as $dir): ?>
                         <div class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 rounded-full <?php echo $c['dot']; ?> mt-1.5 shrink-0"></div>
+                            <div class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style="background-color:<?php echo $c['hex']; ?>"></div>
                             <div>
                                 <p class="text-sm font-semibold text-gray-700 leading-tight"><?php echo esc_html($dir['cargo']); ?></p>
                                 <?php if (!empty($dir['titular'])): ?>

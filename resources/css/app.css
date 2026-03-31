@@ -8,6 +8,7 @@
 @source '../../vendor/tailpress/framework/**/**/*.php';
 @source '../../*.php';
 @source '../../template-parts/**/*.php';
+@source inline("h-[520px] md:h-[640px] h-[260px] md:h-[320px]");
 @source '../../parts/**/*.php';
 
 @utility container {
