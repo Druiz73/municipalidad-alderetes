@@ -145,16 +145,16 @@ get_header();
                                 <div class="space-y-2">
                                     <?php
                                     $descargas = [
-                                        "Formulario R708 - Inscripción",
-                                        "Declaración Jurada",
-                                        "Código Tributario",
-                                        "Calendario de Vencimientos",
-                                        "Ordenanza Tributaria",
+                                        ["nombre" => "Formulario R708 - Inscripción", "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORM-INSCRIPCION-TEM.pdf"],
+                                        ["nombre" => "Declaración Jurada",            "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORMULARIO-DDJJ-TEM.pdf"],
+                                        ["nombre" => "Código Tributario",             "url" => "#"],
+                                        ["nombre" => "Calendario de Vencimientos",    "url" => "#"],
+                                        ["nombre" => "Ordenanza Tributaria",          "url" => "#"],
                                     ];
                                     foreach ($descargas as $doc): ?>
-                                    <a href="#" class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/25 rounded-xl text-sm transition-all border border-white/10 group">
+                                    <a href="<?php echo esc_url( $doc['url'] ); ?>" <?php if ( $doc['url'] !== '#' ) echo 'target="_blank" rel="noopener noreferrer"'; ?> class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/25 rounded-xl text-sm transition-all border border-white/10 group">
                                         <svg class="w-4 h-4 text-alderetes-orange shrink-0 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                        <?php echo esc_html($doc); ?>
+                                        <?php echo esc_html($doc['nombre']); ?>
                                     </a>
                                     <?php endforeach; ?>
                                 </div>

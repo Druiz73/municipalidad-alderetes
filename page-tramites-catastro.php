@@ -10,26 +10,32 @@ get_header();
 $descargas = [
     [
         "nombre" => "Solicitud de Inicio de Permiso de Obra",
+        "url"    => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/Solicitud-de-Inicio-Permiso-de-Obra.pdf",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>',
     ],
     [
         "nombre" => "Solicitud de Línea Municipal",
+        "url"    => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/Solicitud-de-Linea-Municipal.pdf",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>',
     ],
     [
         "nombre" => "Solicitud de Visado de Documentación",
+        "url"    => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/Solicitud-de-Visado-de-Documentacion-Tecnica.pdf",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>',
     ],
     [
         "nombre" => "Conforme a Obra (Requisitos)",
+        "url"    => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/CONFORME-A-OBRA-REQUISITOS-scaled.jpg",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>',
     ],
     [
         "nombre" => "Anteproyecto – Lista de Requisitos",
+        "url"    => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/ANTEPROYECTO-REQUISITOS-scaled.jpg",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>',
     ],
     [
-        "nombre" => "Presentación de Documentación Técnica",
+        "nombre" => "Higiene y Seguridad (Requisitos)",
+        "url"    => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/HIGIENE-Y-SEGURIDAD-REQUISITOS-scaled.jpg",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>',
     ],
 ];
@@ -97,7 +103,7 @@ $descargas = [
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <?php foreach ($descargas as $archivo): ?>
-                        <a href="#" class="group flex items-center gap-4 bg-white rounded-2xl border-2 border-gray-100 hover:border-alderetes-blue hover:shadow-lg transition-all duration-300 p-5">
+                        <a href="<?php echo esc_url( $archivo['url'] ); ?>" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 bg-white rounded-2xl border-2 border-gray-100 hover:border-alderetes-blue hover:shadow-lg transition-all duration-300 p-5">
                             <!-- Ícono del documento -->
                             <div class="w-12 h-12 bg-alderetes-blue/10 group-hover:bg-alderetes-blue rounded-xl flex items-center justify-center shrink-0 transition-all duration-300">
                                 <svg class="w-6 h-6 text-alderetes-blue group-hover:text-white transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">

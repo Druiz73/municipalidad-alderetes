@@ -18,7 +18,7 @@ $area_color      = $args['area_color']      ?? 'bg-alderetes-blue';
 
 ?>
 
-<section class="relative h-[420px] md:h-[520px] overflow-hidden flex items-end">
+<section class="relative h-[280px] md:h-[320px] overflow-hidden flex items-end">
 
     <?php if ( ! empty( $cover_image_url ) ) : ?>
         <div class="absolute inset-0 bg-cover bg-center scale-105 transition-transform duration-700"
