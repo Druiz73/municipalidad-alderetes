@@ -5,12 +5,25 @@
  * @package TailPress
  */
 
-$cover_image_url = null;
+$cover_image_url = get_template_directory_uri() . '/resources/images/fotos-areas/POLITICAS-SOCIALES/3.jpg';
 $area_title      = 'Políticas Sociales';
 $area_tagline    = 'Promovemos la inclusión, la igualdad de oportunidades y el bienestar de toda la comunidad';
 $area_color      = 'bg-pink-500';
 
+$gallery_dir = get_template_directory() . '/resources/images/fotos-areas/POLITICAS-SOCIALES';
 $gallery_images = [];
+
+if ( is_dir( $gallery_dir ) ) {
+    $gallery_files = glob( $gallery_dir . '/*.{jpg,jpeg,JPG,JPEG,png,PNG,webp,WEBP}', GLOB_BRACE );
+
+    if ( $gallery_files ) {
+        natsort( $gallery_files );
+
+        foreach ( $gallery_files as $file ) {
+            $gallery_images[] = get_template_directory_uri() . '/resources/images/fotos-areas/POLITICAS-SOCIALES/' . basename( $file );
+        }
+    }
+}
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [
@@ -92,6 +105,10 @@ get_template_part( 'template-parts/area-hero', null, [
 
     </div>
 </section>
+
+<?php get_template_part( 'template-parts/area-gallery', null, [
+    'gallery_images' => $gallery_images,
+] ); ?>
 
 <!-- Mensaje institucional -->
 <section class="py-14 bg-pink-50 border-t border-pink-100">

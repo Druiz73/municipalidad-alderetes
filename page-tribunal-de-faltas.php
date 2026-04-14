@@ -88,7 +88,7 @@ get_template_part( 'template-parts/area-hero', null, [
                             </svg>
                             <div>
                                 <p class="font-bold text-gray-900">Tribunal de Faltas</p>
-                                <p class="text-gray-600">Avda. Urquiza 114, Alderetes</p>
+                                <p class="text-gray-600">Rivadavia 1000, Alderetes</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
@@ -96,8 +96,8 @@ get_template_part( 'template-parts/area-hero', null, [
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                             <p class="text-gray-600">
-                                <span class="font-bold text-gray-900">Horarios de Atención:</span>
-                                Lunes a Viernes de 7:00 a 13:00 hs.
+                                <span class="font-bold text-gray-900">Horario:</span>
+                                de 08:00 a 13:00 hs.
                             </p>
                         </div>
                     </div>
@@ -213,7 +213,7 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                             </div>
                             <div>
                                 <p class="text-white/70 text-xs font-medium uppercase tracking-wide">Dirección</p>
-                                <p class="font-semibold">Avda. Urquiza 114</p>
+                                <p class="font-semibold">Rivadavia 1000</p>
                                 <p class="text-white/80 text-sm">Alderetes, Tucumán</p>
                             </div>
                         </div>
@@ -225,14 +225,14 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                             </div>
                             <div>
                                 <p class="text-white/70 text-xs font-medium uppercase tracking-wide">Horario</p>
-                                <p class="font-semibold">Lunes a Viernes</p>
-                                <p class="text-white/80 text-sm">7:00 a 13:00 hs.</p>
+                                <p class="font-semibold">Atención</p>
+                                <p class="text-white/80 text-sm">de 08:00 a 13:00 hs.</p>
                             </div>
                         </div>
                     </div>
 
                     <a
-                        href="https://maps.google.com/?q=Avda.+Urquiza+114,+Alderetes,+Tucumán"
+                        href="https://maps.google.com/?q=Rivadavia+1000,+Alderetes,+Tucumán"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="mt-5 flex items-center justify-center gap-2 w-full py-2.5 bg-white/20 hover:bg-white/30 rounded-xl text-sm font-medium transition-colors"

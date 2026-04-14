@@ -5,16 +5,18 @@
   --breakpoint-lg: 960px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1440px;
-  --color-primary: var(--wp--preset--color--primary, #1d70b8);
-  --color-secondary: var(--wp--preset--color--secondary, #c26e2c);
-  --color-accent: var(--wp--preset--color--accent, #f6c16b);
-  --color-dark: var(--wp--preset--color--dark, #1a1a1a);
-  --color-light: var(--wp--preset--color--light, #ffffff);
+  --color-primary: var(--wp--preset--color--primary, #16345c);
+  --color-secondary: var(--wp--preset--color--secondary, #c96d24);
+  --color-accent: var(--wp--preset--color--accent, #2f6b34);
+  --color-dark: var(--wp--preset--color--dark, #102744);
+  --color-light: var(--wp--preset--color--light, #f6f1e7);
 
-  --color-alderetes-orange: #c26e2c;
-  --color-alderetes-blue: #1d70b8;
-  --color-alderetes-blue-light: #6eb4e0;
-  --color-alderetes-gold: #f6c16b;
+  --color-alderetes-orange: #c96d24;
+  --color-alderetes-blue: #16345c;
+  --color-alderetes-blue-light: #2f5f96;
+  --color-alderetes-green: #2f6b34;
+  --color-alderetes-gold: #f0c449;
+  --color-alderetes-cream: #fbf7ee;
 
   --color-muted: #f1f5f9;
   --color-muted-foreground: #64748b;

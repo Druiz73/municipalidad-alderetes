@@ -11,27 +11,37 @@
         {
           "name": "Primary",
           "slug": "primary",
-          "color": "#1B4D6E"
+          "color": "#16345C"
         },
         {
           "name": "Secondary",
           "slug": "secondary",
-          "color": "#E07B32"
+          "color": "#C96D24"
         },
         {
           "name": "Accent",
           "slug": "accent",
-          "color": "#3B8EC4"
+          "color": "#2F6B34"
         },
         {
           "name": "Dark",
           "slug": "dark",
-          "color": "#1A2A3A"
+          "color": "#102744"
         },
         {
           "name": "Light",
           "slug": "light",
-          "color": "#F5F1EB"
+          "color": "#F6F1E7"
+        },
+        {
+          "name": "Gold",
+          "slug": "gold",
+          "color": "#F0C449"
+        },
+        {
+          "name": "Cream",
+          "slug": "cream",
+          "color": "#FBF7EE"
         }
       ]
     },

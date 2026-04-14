@@ -12,36 +12,26 @@ $slides = [
         'image'    => $base . 'FOTO1.jpg',
         'title'    => 'Bienvenidos a Alderetes',
         'subtitle' => 'Trabajando juntos por una ciudad mejor',
-        'cta'      => 'Conocer más',
-        'cta_url'  => esc_url( home_url( '/institucional' ) ),
     ],
     [
         'image'    => $base . 'FOTO2.jpg',
         'title'    => 'Servicios Municipales',
         'subtitle' => 'Trámites online, rápidos y seguros',
-        'cta'      => 'Ver trámites',
-        'cta_url'  => esc_url( home_url( '/tem' ) ),
     ],
     [
         'image'    => $base . 'FOTO3.jpg',
         'title'    => 'Desarrollo Urbano',
         'subtitle' => 'Construyendo el futuro de nuestra ciudad',
-        'cta'      => 'Ver proyectos',
-        'cta_url'  => esc_url( home_url( '/obras-publicas' ) ),
     ],
     [
         'image'    => $base . 'FOTO12.jpg',
         'title'    => 'Cultura y Comunidad',
         'subtitle' => 'Arte, eventos y programas para todos',
-        'cta'      => 'Ver áreas',
-        'cta_url'  => esc_url( home_url( '/cultura' ) ),
     ],
     [
         'image'    => $base . 'FOTO15.jpeg',
         'title'    => 'Salud para Todos',
         'subtitle' => 'Hospital Modular con atención las 24 horas',
-        'cta'      => 'Conocer más',
-        'cta_url'  => esc_url( home_url( '/salud' ) ),
     ],
 ];
 
@@ -57,7 +47,7 @@ $slides = [
         <?php foreach ($slides as $slide) : ?>
         <div class="tp-carousel-slide relative flex-shrink-0 w-full h-full">
             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url($slide['image']); ?>')"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-blue-900/50 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#102744]/90 via-[#16345c]/60 to-transparent"></div>
             <div class="relative z-10 h-full max-w-7xl mx-auto px-4 flex items-center">
                 <div class="max-w-2xl">
                     <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
@@ -66,9 +56,9 @@ $slides = [
                     <p class="text-xl md:text-2xl text-white/90 mb-8">
                         <?php echo esc_html($slide['subtitle']); ?>
                     </p>
-                    <a href="<?php echo $slide['cta_url']; ?>" class="inline-block px-8 py-4 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform duration-200">
-                        <?php echo esc_html($slide['cta']); ?>
-                    </a>
+                    <p class="inline-flex items-center px-5 py-2.5 rounded-full border border-[#f0c449]/50 bg-[#c96d24]/80 backdrop-blur-sm text-sm md:text-base font-bold tracking-[0.25em] uppercase text-white shadow-lg">
+                        Para seguir creciendo
+                    </p>
                 </div>
             </div>
         </div>

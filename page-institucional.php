@@ -9,7 +9,7 @@ get_header();
 ?>
 
 <!-- Hero Section -->
-<section class="relative py-20 bg-gradient-to-br from-alderetes-blue to-blue-900 overflow-hidden text-white">
+<section class="relative py-20 bg-gradient-to-br from-alderetes-orange via-alderetes-blue to-alderetes-green overflow-hidden text-white">
     <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
     <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
         <h1 class="text-4xl md:text-5xl font-bold mb-6">Institucional</h1>
@@ -26,8 +26,8 @@ get_header();
                 La Municipalidad de Alderetes trabaja día a día para mejorar la calidad de vida de sus ciudadanos, gestionando recursos y servicios con transparencia y compromiso social.
             </p>
 
-            <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 my-10">
-                <h3 class="text-xl font-bold text-alderetes-blue mb-4">Nuestra Misión</h3>
+            <div class="bg-alderetes-cream p-8 rounded-2xl border border-[#eadfcf] my-10">
+                <h3 class="text-xl font-bold text-alderetes-green mb-4">Nuestra Misión</h3>
                 <p>Brindar servicios públicos de excelencia, fomentando el desarrollo sostenible, la inclusión social y el crecimiento económico de nuestra comunidad.</p>
             </div>
 
@@ -93,7 +93,7 @@ get_header();
                 <div class="md:w-1/2 md:pl-16 order-2 md:order-3">
                     <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                         <span class="inline-block bg-alderetes-orange/10 text-alderetes-orange text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wide">Mediados del Siglo XIX</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Reconocimiento como Villa</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Reconocimiento como Villa de Alderetes</h3>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             El poblado creció lentamente como un pequeño caserío rural hasta ser reconocido como villa, contando ya con <strong>escuela y juzgado de paz</strong>, hitos fundamentales de organización civil.
                         </p>
@@ -205,4 +205,3 @@ get_header();
 </section>
 
 <?php get_footer(); ?>
-

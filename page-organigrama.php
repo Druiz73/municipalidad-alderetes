@@ -140,13 +140,13 @@ $color_map = [
 ?>
 
 <!-- Hero -->
-<section class="relative py-20 bg-gradient-to-br from-alderetes-blue to-blue-900 overflow-hidden text-white">
+<section class="relative py-20 bg-gradient-to-br from-alderetes-orange via-alderetes-blue to-alderetes-green overflow-hidden text-white">
     <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
     <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
         <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm">Período 2023 – 2027</span>
         <h1 class="text-4xl md:text-5xl font-bold mb-4">Organigrama Municipal</h1>
         <div class="w-20 h-1 bg-alderetes-orange mx-auto rounded-full mb-4"></div>
-        <p class="text-white/70 max-w-xl mx-auto text-lg">Estructura de gobierno de la Municipalidad de Alderetes bajo la gestión de la Intendente Graciela Gutiérrez.</p>
+        <p class="text-white/70 max-w-xl mx-auto text-lg">Estructura de gobierno de la Municipalidad de Alderetes bajo la gestión de la Intendenta Graciela Gutiérrez.</p>
     </div>
 </section>
 
@@ -255,14 +255,14 @@ $color_map = [
         </div>
 
         <!-- Concejo Deliberante -->
-        <div class="mt-10 bg-gradient-to-r from-gray-800 to-gray-900 rounded-3xl p-8 text-white text-center shadow-xl">
+        <div class="mt-10 bg-gradient-to-r from-[#6f1d2b] to-[#8d2337] rounded-3xl p-8 text-white text-center shadow-xl">
             <svg class="w-10 h-10 mx-auto mb-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
             </svg>
             <span class="inline-block bg-white/10 text-white/80 text-xs font-bold px-4 py-1 rounded-full mb-3 uppercase tracking-wider">Poder Legislativo Local</span>
             <h3 class="text-2xl font-black mb-2">Honorable Concejo Deliberante</h3>
             <p class="text-gray-400 max-w-lg mx-auto text-sm leading-relaxed">
-                Funciona de manera independiente del Ejecutivo Municipal para sancionar normativas, ordenanzas y políticas públicas en beneficio de la comunidad de Alderetes.
+                El HCD es el órgano legislativo del Municipio, encargado de representar a la comunidad y de dictar las normas que regulan la vida local.
             </p>
         </div>
 

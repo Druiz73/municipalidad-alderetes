@@ -132,9 +132,9 @@ $descargas = [
             <div class="lg:w-72">
                 <div class="sticky top-24 space-y-4">
 
-                    <!-- Atención técnica -->
+                    <!-- Atención -->
                     <div class="bg-gray-900 text-white rounded-2xl p-6 shadow-xl">
-                        <h3 class="font-bold text-base mb-5 pb-3 border-b border-white/20 uppercase tracking-wider">Atención Técnica</h3>
+                        <h3 class="font-bold text-base mb-5 pb-3 border-b border-white/20 uppercase tracking-wider">Atención</h3>
                         <div class="space-y-5">
                             <div class="flex items-start gap-3">
                                 <div class="p-2 bg-white/10 rounded-lg shrink-0">
@@ -142,7 +142,7 @@ $descargas = [
                                 </div>
                                 <div>
                                     <p class="text-xs text-white/50 uppercase font-bold mb-0.5">Dirección</p>
-                                    <p class="text-sm text-white/80">Edificio Municipal – Sector Planeamiento</p>
+                                    <p class="text-sm text-white/80">Edificio Municipal – Caseros y Urquiza</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
@@ -151,22 +151,10 @@ $descargas = [
                                 </div>
                                 <div>
                                     <p class="text-xs text-white/50 uppercase font-bold mb-0.5">Horario</p>
-                                    <p class="text-sm text-white/80">Lunes a Viernes<br>08:00 a 13:00 hs</p>
+                                    <p class="text-sm text-white/80">Lunes a viernes de 08:00 a 13:00 hs</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Call to action -->
-                    <div class="bg-alderetes-blue rounded-2xl p-6 text-white shadow-xl">
-                        <svg class="w-8 h-8 mb-3 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <h3 class="font-bold mb-2">¿Necesitás asesoramiento?</h3>
-                        <p class="text-sm text-blue-200 mb-4">Nuestro equipo técnico puede orientarte en tu consulta.</p>
-                        <a href="<?php echo esc_url(home_url('/contacto')); ?>" class="block text-center bg-white text-alderetes-blue font-bold text-sm py-2.5 rounded-xl hover:bg-blue-50 transition-colors">
-                            Contactar
-                        </a>
                     </div>
 
                 </div>
