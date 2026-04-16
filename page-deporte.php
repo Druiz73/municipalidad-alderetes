@@ -5,12 +5,29 @@
  * @package TailPress
  */
 
-$cover_image_url = null;
+$cover_image_url = get_template_directory_uri() . '/resources/images/fotos-areas/DEPORTES/4.jpg';
 $area_title      = 'Deporte';
-$area_tagline    = 'El deporte como herramienta de transformación social, salud preventiva y cohesión comunitaria';
-$area_color      = 'bg-green-500';
+$area_tagline    = 'Promovemos la actividad física, deportiva y recreativa como motor de salud, integración e inclusión comunitaria';
+$area_color      = 'bg-alderetes-green';
 
+$gallery_dir = get_template_directory() . '/resources/images/fotos-areas/DEPORTES';
 $gallery_images = [];
+
+if ( is_dir( $gallery_dir ) ) {
+    $gallery_files = glob( $gallery_dir . '/*.{jpg,jpeg,JPG,JPEG,png,PNG,webp,WEBP}', GLOB_BRACE );
+
+    if ( $gallery_files ) {
+        natsort( $gallery_files );
+
+        foreach ( $gallery_files as $file ) {
+            if ( basename( $file ) === '4.jpg' ) {
+                continue;
+            }
+
+            $gallery_images[] = get_template_directory_uri() . '/resources/images/fotos-areas/DEPORTES/' . basename( $file );
+        }
+    }
+}
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [
@@ -28,39 +45,46 @@ get_template_part( 'template-parts/area-hero', null, [
 
             <!-- Texto -->
             <div class="md:col-span-2">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-green-500 pl-4">
-                    Política Deportiva Municipal
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-alderetes-green pl-4">
+                    Información del Área
                 </h2>
                 <p class="text-lg text-gray-700 leading-relaxed mb-5">
-                    La política deportiva municipal se consolidó como una herramienta de <strong>transformación social</strong>, entendiendo al deporte como inversión en salud preventiva, cohesión comunitaria y reducción de factores de riesgo social.
+                    La Dirección de Deportes es el área encargada de <strong>promover, organizar y fomentar la actividad física, deportiva y recreativa</strong> en la comunidad. Su principal objetivo es contribuir al desarrollo integral de los vecinos, impulsando hábitos saludables y fortaleciendo la inclusión social a través del deporte.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-5">
+                    Entre sus funciones se destacan la planificación de actividades deportivas, la organización de torneos y eventos, el acompañamiento a instituciones y clubes, y la implementación de programas destinados a niños, jóvenes y adultos.
                 </p>
                 <p class="text-gray-600 leading-relaxed">
-                    Se trabajó bajo un criterio central: convertir el gasto público en <strong>inversión social inteligente</strong>, fortaleciendo infraestructura, profesionalización y territorialidad.
+                    Además, busca garantizar el acceso igualitario a espacios y propuestas recreativas en toda la ciudad.
                 </p>
             </div>
 
             <!-- Card lateral -->
-            <div class="bg-green-50 rounded-2xl p-6 border border-green-100">
+            <div class="bg-[#f3f8f1] rounded-2xl p-6 border border-[#d9e7d4]">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center flex-shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-alderetes-green flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-gray-900">Objetivos</h3>
+                    <h3 class="font-bold text-gray-900">Funciones principales</h3>
                 </div>
                 <ul class="space-y-2 text-sm text-gray-600">
-                    <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">▸</span> Salud preventiva comunitaria</li>
-                    <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">▸</span> Cohesión social y barrial</li>
-                    <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">▸</span> Fortalecimiento de infraestructura</li>
-                    <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">▸</span> Profesionalización deportiva</li>
-                    <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">▸</span> Alcance territorial en toda la ciudad</li>
+                    <li class="flex items-start gap-2"><span class="text-alderetes-green mt-0.5">▸</span> Planificación de actividades deportivas y recreativas</li>
+                    <li class="flex items-start gap-2"><span class="text-alderetes-green mt-0.5">▸</span> Organización de torneos y eventos</li>
+                    <li class="flex items-start gap-2"><span class="text-alderetes-green mt-0.5">▸</span> Acompañamiento a instituciones y clubes</li>
+                    <li class="flex items-start gap-2"><span class="text-alderetes-green mt-0.5">▸</span> Programas para niños, jóvenes y adultos</li>
+                    <li class="flex items-start gap-2"><span class="text-alderetes-green mt-0.5">▸</span> Acceso igualitario a espacios y propuestas en toda la ciudad</li>
                 </ul>
             </div>
 
         </div>
     </div>
 </section>
+
+<?php get_template_part( 'template-parts/area-gallery', null, [
+    'gallery_images' => $gallery_images,
+] ); ?>
 
 <!-- CTA Contacto -->
 <section class="py-14 bg-gradient-to-br from-alderetes-blue to-blue-900 text-white text-center">
