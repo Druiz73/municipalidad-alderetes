@@ -25,33 +25,8 @@ get_header();
 
 <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start">
-            <div class="space-y-8">
-                <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10">
-                    <span class="inline-flex items-center px-4 py-1.5 bg-alderetes-cream text-alderetes-green rounded-full text-sm font-medium mb-5 border border-[#e7dcc8]">
-                        Noticias automáticas
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                        La web se alimenta desde el Facebook oficial del municipio
-                    </h2>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
-                        Cada publicación realizada por prensa en la página oficial de Facebook de la Municipalidad de Alderetes queda reflejada en esta sección, para mantener actualizada la comunicación institucional.
-                    </p>
-                    <a href="<?php echo esc_url( $facebook_page_url ); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-alderetes-orange hover:bg-[#a95c1e] text-white font-semibold rounded-xl transition-colors">
-                        Ver Facebook oficial
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </a>
-                </div>
-
-                <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Canal oficial de novedades</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Si en algún momento quieren volver a manejar noticias internas desde WordPress también se puede, pero por ahora esta página queda conectada directamente a Facebook para que no haya doble carga de contenido.
-                    </p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-3xl border border-gray-100 shadow-lg overflow-hidden">
+        <div class="flex justify-center">
+            <div class="bg-white rounded-3xl border border-gray-100 shadow-lg overflow-hidden w-full max-w-2xl">
                 <iframe
                     src="<?php echo esc_url( $facebook_embed_url ); ?>"
                     width="100%"

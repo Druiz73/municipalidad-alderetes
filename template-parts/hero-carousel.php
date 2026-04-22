@@ -50,13 +50,7 @@ $slides = [
             <div class="absolute inset-0 bg-gradient-to-r from-[#102744]/90 via-[#16345c]/60 to-transparent"></div>
             <div class="relative z-10 h-full max-w-7xl mx-auto px-4 flex items-center">
                 <div class="max-w-2xl">
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                        <?php echo esc_html($slide['title']); ?>
-                    </h2>
-                    <p class="text-xl md:text-2xl text-white/90 mb-8">
-                        <?php echo esc_html($slide['subtitle']); ?>
-                    </p>
-                    <p class="inline-flex items-center px-5 py-2.5 rounded-full border border-[#f0c449]/50 bg-[#c96d24]/80 backdrop-blur-sm text-sm md:text-base font-bold tracking-[0.25em] uppercase text-white shadow-lg">
+                    <p class="text-3xl md:text-4xl lg:text-5xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg">
                         Para seguir creciendo
                     </p>
                 </div>

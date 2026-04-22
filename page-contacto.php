@@ -41,7 +41,7 @@ get_header();
                         </div>
                         <div>
                             <h3 class="font-semibold text-gray-900">Dirección</h3>
-                            <p class="text-gray-600 text-sm mt-1">Esquina Casero y Urquiza<br>Alderetes, Tucumán</p>
+                            <p class="text-gray-600 text-sm mt-1">Caseros y Urquiza<br>Alderetes, Tucumán</p>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ get_header();
                         </div>
                         <div>
                             <h3 class="font-semibold text-gray-900">Horario de Atención</h3>
-                            <p class="text-gray-600 text-sm mt-1">08:00 a 13:00 hs</p>
+                            <p class="text-gray-600 text-sm mt-1">Lunes a viernes de 08:00 a 13:00 hs</p>
                         </div>
                     </div>
                 </div>
