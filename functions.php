@@ -196,6 +196,37 @@ function tailpress_ensure_punto_digital_page(): void {
 }
 add_action( 'init', 'tailpress_ensure_punto_digital_page' );
 
+function tailpress_ensure_turnos_transito_page(): void {
+    if ( get_option( 'tailpress_turnos_transito_page_done' ) ) {
+        return;
+    }
+
+    $existing = get_page_by_path( 'turnos-de-transito' );
+
+    if ( $existing ) {
+        if ( get_page_template_slug( $existing->ID ) !== 'page-turnos-transito.php' ) {
+            update_post_meta( $existing->ID, '_wp_page_template', 'page-turnos-transito.php' );
+        }
+        update_option( 'tailpress_turnos_transito_page_done', true );
+        return;
+    }
+
+    $page_id = wp_insert_post( [
+        'post_title'   => 'Turnos Tránsito',
+        'post_name'    => 'turnos-de-transito',
+        'post_status'  => 'publish',
+        'post_type'    => 'page',
+        'post_content' => '',
+    ] );
+
+    if ( $page_id && ! is_wp_error( $page_id ) ) {
+        update_post_meta( $page_id, '_wp_page_template', 'page-turnos-transito.php' );
+        flush_rewrite_rules( false );
+        update_option( 'tailpress_turnos_transito_page_done', true );
+    }
+}
+add_action( 'init', 'tailpress_ensure_turnos_transito_page' );
+
 /**
  * Handle Contact Form Submission via AJAX
  */
@@ -211,18 +242,42 @@ function tailpress_handle_contacto_form() {
     $telefono = sanitize_text_field($_POST['telefono'] ?? '');
     $email    = sanitize_email($_POST['email'] ?? '');
     $consulta = sanitize_textarea_field($_POST['consulta'] ?? '');
+    $form_ts  = absint($_POST['contacto_ts'] ?? 0);
 
     // Check Honeypot (if filled out, it's a bot)
     if (!empty($_POST['url_website'])) {
         wp_send_json_error('Error al procesar la solicitud. Intente nuevamente.');
     }
 
-    // Rate Limiting (Session/Transient based)
-    $ip = $_SERVER['REMOTE_ADDR'];
+    // Tiempo mínimo de completado: evita bots que disparan el form instantáneamente
+    if (!$form_ts || (time() - $form_ts) < 4) {
+        wp_send_json_error('Detectamos un envío inválido. Esperá unos segundos e intentá nuevamente.');
+    }
+
+    // Rate Limiting por IP y huella del mensaje
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     $transient_name = 'contacto_limit_' . md5($ip);
+    $attempts_name  = 'contacto_attempts_' . md5($ip);
+    $fingerprint    = md5(strtolower(trim($nombre . '|' . $apellido . '|' . $telefono . '|' . $consulta)));
+    $fingerprint_name = 'contacto_fingerprint_' . $fingerprint;
     
     if (get_transient($transient_name)) {
-        wp_send_json_error('Por favor, esperá un minuto antes de enviar otra consulta para prevenir spam.');
+        wp_send_json_error('Por favor, esperá unos minutos antes de enviar otra consulta.');
+    }
+
+    if (get_transient($fingerprint_name)) {
+        wp_send_json_error('Ya recibimos una consulta igual hace instantes. Si necesitás agregar algo, esperá unos minutos antes de reenviar.');
+    }
+
+    $attempts = get_transient($attempts_name);
+    $attempts = is_array($attempts) ? $attempts : [];
+    $cutoff   = time() - (15 * MINUTE_IN_SECONDS);
+    $attempts = array_values(array_filter($attempts, static function ($ts) use ($cutoff) {
+        return is_numeric($ts) && (int) $ts >= $cutoff;
+    }));
+
+    if (count($attempts) >= 3) {
+        wp_send_json_error('Recibimos varias consultas desde esta conexión en poco tiempo. Esperá 15 minutos antes de enviar otra.');
     }
 
     // Basic validation
@@ -249,8 +304,10 @@ function tailpress_handle_contacto_form() {
     $sent = wp_mail($to, $subject, $body, $headers);
 
     if ($sent) {
-        // Establecer el rate limit a 60 segundos después de mandar exitosamente un mail
-        set_transient($transient_name, true, 60);
+        $attempts[] = time();
+        set_transient($attempts_name, $attempts, 15 * MINUTE_IN_SECONDS);
+        set_transient($transient_name, true, 3 * MINUTE_IN_SECONDS);
+        set_transient($fingerprint_name, true, 10 * MINUTE_IN_SECONDS);
         wp_send_json_success('Consulta enviada exitosamente.');
     } else {
         // En caso de que el hosting todavía no pueda enviar correos

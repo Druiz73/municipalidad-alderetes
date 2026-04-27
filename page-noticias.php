@@ -6,7 +6,7 @@
  */
 
 $facebook_page_url  = 'https://www.facebook.com/MunicipalidaddeAlderetes';
-$facebook_embed_url = 'https://www.facebook.com/plugins/page.php?href=' . rawurlencode( $facebook_page_url ) . '&tabs=timeline&width=500&height=1200&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true';
+$facebook_embed_url = 'https://www.facebook.com/plugins/page.php?href=' . rawurlencode( $facebook_page_url ) . '&tabs=timeline&width=1400&height=1200&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true';
 
 get_header();
 ?>
@@ -24,24 +24,24 @@ get_header();
 </section>
 
 <section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-center">
-            <div class="bg-white rounded-3xl border border-gray-100 shadow-lg overflow-hidden w-full max-w-2xl">
+    <div class="max-w-[1400px] mx-auto px-4">
+        <div class="bg-white rounded-3xl border border-gray-100 shadow-lg overflow-hidden w-full">
+            <div class="w-full">
                 <iframe
                     src="<?php echo esc_url( $facebook_embed_url ); ?>"
-                    width="100%"
+                    id="facebook-page-widget"
+                    width="1200"
                     height="1200"
-                    style="border:none;overflow:hidden"
+                    
                     scrolling="no"
                     frameborder="0"
-                    allowfullscreen="true"
+                  
                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                     loading="lazy"
                     title="Facebook Municipalidad de Alderetes">
                 </iframe>
             </div>
         </div>
-
     </div>
 </section>
 

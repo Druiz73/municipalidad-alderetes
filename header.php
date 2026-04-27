@@ -104,7 +104,6 @@
                     </div></div>
                 </div>
 
-                <a href="<?php echo esc_url(home_url('/noticias')); ?>" class="px-4 py-2 text-gray-700 hover:text-alderetes-orange font-medium transition-colors rounded-lg hover:bg-alderetes-cream block">Noticias</a>
                 <a href="<?php echo esc_url(home_url('/contacto')); ?>" class="px-4 py-2 text-gray-700 hover:text-alderetes-orange font-medium transition-colors rounded-lg hover:bg-alderetes-cream block">Contacto</a>
             </nav>
 
@@ -196,7 +195,6 @@
                 </div>
             </div>
 
-            <a href="<?php echo esc_url(home_url('/noticias')); ?>" class="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-blue-50">Noticias</a>
             <a href="<?php echo esc_url(home_url('/contacto')); ?>" class="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-blue-50">Contacto</a>
         </nav>
     </div>

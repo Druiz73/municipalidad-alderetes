@@ -12,20 +12,16 @@ $facebook_embed_url = 'https://www.facebook.com/plugins/page.php?href=' . rawurl
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4">
 
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-14">
+        <div class="flex flex-col justify-between items-start gap-4 mb-14">
             <div>
                 <span class="inline-block px-4 py-1.5 bg-alderetes-cream text-alderetes-green text-sm font-medium rounded-full mb-4 border border-[#e7dcc8]">
                     Actualidad
                 </span>
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Últimas Noticias</h2>
             </div>
-            <a href="<?php echo esc_url(home_url('/noticias')); ?>" class="flex items-center gap-2 text-alderetes-orange font-medium hover:text-alderetes-green transition-colors">
-                Ver todas las noticias
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_500px] gap-8 items-start">
             <div class="bg-gradient-to-br from-alderetes-orange via-alderetes-blue to-alderetes-green rounded-3xl p-8 md:p-10 text-white shadow-xl">
                 <span class="inline-flex items-center px-4 py-1.5 bg-white/15 rounded-full text-sm font-medium mb-5">
                     Facebook oficial
@@ -57,6 +53,5 @@ $facebook_embed_url = 'https://www.facebook.com/plugins/page.php?href=' . rawurl
                 </iframe>
             </div>
         </div>
-
     </div>
 </section>

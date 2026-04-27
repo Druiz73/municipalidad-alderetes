@@ -78,6 +78,7 @@ get_header();
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">Envianos tu consulta</h2>
                         <form id="contacto-form" class="space-y-6" novalidate>
                             <?php wp_nonce_field('contacto_form', 'contacto_nonce'); ?>
+                            <input type="hidden" name="contacto_ts" value="<?php echo esc_attr( time() ); ?>">
                             
                             <!-- Honeypot anti-spam (invisible para humanos, trampa para bots) -->
                             <div style="display:none;" aria-hidden="true">
