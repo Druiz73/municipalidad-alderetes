@@ -26,6 +26,7 @@ Pasos:
 Los horarios ocupados aparecen en gris y no se pueden seleccionar.
 ③ Completar datos — El ciudadano ingresa nombre, DNI, teléfono, email y categoría de licencia.
 ④ Confirmación — Al confirmar, recibe un número de turno en pantalla y un email de confirmación con todos los detalles.
+⑤ Cancelación del turno — En el mismo email de confirmación recibe un enlace seguro para cancelar el turno si no va a concurrir. Al cancelarlo, el horario vuelve a quedar disponible automáticamente para otra persona.
 
 Para el personal – Panel de Administración
 > [!IMPORTANT]
@@ -81,11 +82,10 @@ Una vez configurado, los emails funcionan automáticamente sin más intervenció
 
 Preguntas frecuentes
 ¿Qué pasa si un ciudadano quiere cancelar su turno?
-Actualmente debe comunicarse por teléfono o email con la Dirección de Tránsito, quienes cancelan el turno desde el panel de administración.
+Puede hacerlo directamente desde el enlace de cancelación incluido en el email de confirmación. Si el enlace no funciona o el turno ya fue gestionado, el personal también puede cancelarlo desde WP Admin.
 ¿Se pueden agregar más turnos por día?
 Sí, es posible ampliar el horario o reducir el intervalo entre turnos. Contactar al desarrollador para modificar la configuración.
 ¿Los turnos se borran solos?
 No, quedan guardados permanentemente en la base de datos. Se pueden eliminar manualmente desde WP Admin si se desea.
 ¿Qué pasa si dos personas intentan reservar el mismo turno al mismo tiempo?
 El sistema valida en tiempo real. Solo una persona puede reservar cada horario; la segunda recibe un mensaje de error y debe elegir otro horario.
-

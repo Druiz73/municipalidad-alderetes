@@ -7,6 +7,10 @@
 
 get_header();
 
+$hero_image_url = get_template_directory_uri() . '/resources/images/direccion-transito.jpeg';
+$area_title     = 'Tránsito';
+$area_tagline   = 'Requisitos para licencias de conducir: renovaciones, ampliaciones y permisos.';
+
 $categorias = [
     [
         "grupo"  => "Renovaciones Profesionales",
@@ -136,12 +140,12 @@ $categorias = [
 
 $color_map = [
     "orange" => [
-        "badge"   => "bg-orange-100 text-alderetes-orange",
-        "icon"    => "text-alderetes-orange",
-        "border"  => "border-alderetes-orange",
-        "hover"   => "hover:border-alderetes-orange",
-        "dot"     => "bg-alderetes-orange",
-        "check"   => "text-alderetes-orange",
+        "badge"   => "bg-blue-100 text-alderetes-blue",
+        "icon"    => "text-alderetes-blue",
+        "border"  => "border-alderetes-blue",
+        "hover"   => "hover:border-alderetes-blue",
+        "dot"     => "bg-alderetes-blue",
+        "check"   => "text-alderetes-blue",
     ],
     "blue" => [
         "badge"   => "bg-blue-100 text-alderetes-blue",
@@ -152,37 +156,23 @@ $color_map = [
         "check"   => "text-alderetes-blue",
     ],
     "green" => [
-        "badge"   => "bg-green-100 text-green-700",
-        "icon"    => "text-green-600",
-        "border"  => "border-green-500",
-        "hover"   => "hover:border-green-500",
-        "dot"     => "bg-green-500",
-        "check"   => "text-green-600",
+        "badge"   => "bg-blue-100 text-alderetes-blue",
+        "icon"    => "text-alderetes-blue",
+        "border"  => "border-alderetes-blue",
+        "hover"   => "hover:border-alderetes-blue",
+        "dot"     => "bg-alderetes-blue",
+        "check"   => "text-alderetes-blue",
     ],
 ];
 ?>
 
-<!-- Hero Section -->
-<section class="relative py-16 bg-gradient-to-br from-[#0055a4] to-[#003a72] text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="text-center md:text-left">
-                <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm">Sección Trámites</span>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tight">Tránsito</h1>
-                <p class="text-xl text-white/80 max-w-xl">Requisitos para licencias de conducir: renovaciones, ampliaciones y permisos.</p>
-            </div>
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-center">
-                <svg class="w-12 h-12 mx-auto mb-3 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2 .001M13 16l2-4h3l2 4M13 16H9m4 0h2"/>
-                </svg>
-                <p class="text-white font-bold text-sm uppercase tracking-wider">Dirección de Tránsito</p>
-                <p class="text-white/70 text-xs mt-1">Municipalidad de Alderetes</p>
-            </div>
-        </div>
-    </div>
-</section>
+<?php get_template_part( 'template-parts/area-hero', null, [
+    'cover_image_url' => $hero_image_url,
+    'area_title'      => $area_title,
+    'area_tagline'    => $area_tagline,
+    'area_color'      => 'bg-[#0055a4]',
+    'height_classes'  => 'h-[420px] md:h-[520px]',
+] ); ?>
 
 <!-- Duplicado - destacado arriba -->
 <div class="bg-gray-900 py-6">

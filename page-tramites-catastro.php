@@ -7,6 +7,10 @@
 
 get_header();
 
+$hero_image_url = get_template_directory_uri() . '/resources/images/direccion-catastro.jpeg';
+$area_title     = 'Catastro';
+$area_tagline   = 'Gestión, registro y actualización de la información territorial del municipio.';
+
 $descargas = [
     [
         "nombre" => "Solicitud de Inicio de Permiso de Obra",
@@ -41,26 +45,13 @@ $descargas = [
 ];
 ?>
 
-<!-- Hero -->
-<section class="relative py-16 bg-gradient-to-br from-gray-800 to-gray-900 text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="text-center md:text-left">
-                <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm">Sección Trámites</span>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tight">Catastro</h1>
-                <p class="text-xl text-white/70 max-w-xl">Gestión, registro y actualización de la información territorial del municipio.</p>
-            </div>
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-center">
-                <svg class="w-12 h-12 mx-auto mb-3 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-                </svg>
-                <p class="text-white font-bold text-sm uppercase tracking-wider">Área de Catastro</p>
-                <p class="text-white/60 text-xs mt-1">Municipalidad de Alderetes</p>
-            </div>
-        </div>
-    </div>
-</section>
+<?php get_template_part( 'template-parts/area-hero', null, [
+    'cover_image_url' => $hero_image_url,
+    'area_title'      => $area_title,
+    'area_tagline'    => $area_tagline,
+    'area_color'      => 'bg-alderetes-orange',
+    'height_classes'  => 'h-[420px] md:h-[520px]',
+] ); ?>
 
 <!-- Contenido -->
 <main class="py-14 bg-gray-50">
@@ -74,8 +65,8 @@ $descargas = [
                 <!-- Texto institucional -->
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 mb-10">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-alderetes-blue/10 rounded-2xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-alderetes-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-alderetes-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
@@ -94,7 +85,7 @@ $descargas = [
                 <!-- Descargas -->
                 <div>
                     <div class="flex items-center gap-3 mb-6">
-                        <svg class="w-6 h-6 text-alderetes-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-6 h-6 text-alderetes-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                         </svg>
                         <h2 class="text-2xl font-bold text-gray-900">Descargas</h2>
@@ -103,23 +94,23 @@ $descargas = [
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <?php foreach ($descargas as $archivo): ?>
-                        <a href="<?php echo esc_url( $archivo['url'] ); ?>" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 bg-white rounded-2xl border-2 border-gray-100 hover:border-alderetes-blue hover:shadow-lg transition-all duration-300 p-5">
+                        <a href="<?php echo esc_url( $archivo['url'] ); ?>" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 bg-white rounded-2xl border-2 border-gray-100 hover:border-alderetes-orange hover:shadow-lg transition-all duration-300 p-5">
                             <!-- Ícono del documento -->
-                            <div class="w-12 h-12 bg-alderetes-blue/10 group-hover:bg-alderetes-blue rounded-xl flex items-center justify-center shrink-0 transition-all duration-300">
-                                <svg class="w-6 h-6 text-alderetes-blue group-hover:text-white transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div class="w-12 h-12 bg-orange-100 group-hover:bg-alderetes-orange rounded-xl flex items-center justify-center shrink-0 transition-all duration-300">
+                                <svg class="w-6 h-6 text-alderetes-orange group-hover:text-white transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <?php echo $archivo['icono']; ?>
                                 </svg>
                             </div>
                             <!-- Nombre y chip PDF -->
                             <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-gray-800 group-hover:text-alderetes-blue transition-colors text-sm leading-tight"><?php echo esc_html($archivo['nombre']); ?></p>
-                                <span class="inline-flex items-center gap-1 mt-1.5 text-xs bg-gray-100 group-hover:bg-alderetes-blue/10 text-gray-500 group-hover:text-alderetes-blue px-2 py-0.5 rounded-full transition-all">
+                                <p class="font-semibold text-gray-800 group-hover:text-alderetes-orange transition-colors text-sm leading-tight"><?php echo esc_html($archivo['nombre']); ?></p>
+                                <span class="inline-flex items-center gap-1 mt-1.5 text-xs bg-gray-100 group-hover:bg-orange-100 text-gray-500 group-hover:text-alderetes-orange px-2 py-0.5 rounded-full transition-all">
                                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                     Descargar PDF
                                 </span>
                             </div>
                             <!-- Flecha -->
-                            <svg class="w-5 h-5 text-gray-300 group-hover:text-alderetes-blue group-hover:translate-x-1 transition-all duration-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="w-5 h-5 text-gray-300 group-hover:text-alderetes-orange group-hover:translate-x-1 transition-all duration-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                             </svg>
                         </a>

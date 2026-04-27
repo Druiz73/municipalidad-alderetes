@@ -97,6 +97,7 @@
                         <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Educación</a>
                         <a href="<?php echo esc_url(home_url('/cultura')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Cultura</a>
                         <a href="<?php echo esc_url(home_url('/deporte')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Deporte</a>
+                        <a href="<?php echo esc_url(home_url('/punto-digital')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Punto Digital</a>
                         <a href="<?php echo esc_url(home_url('/seguridad')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Seguridad</a>
                         <a href="<?php echo esc_url(home_url('/alumbrado')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Alumbrado Público</a>
                         <a href="<?php echo esc_url(home_url('/politicas-sociales')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Políticas Sociales</a>
@@ -188,6 +189,7 @@
                     <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Educación</a>
                     <a href="<?php echo esc_url(home_url('/cultura')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Cultura</a>
                     <a href="<?php echo esc_url(home_url('/deporte')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Deporte</a>
+                    <a href="<?php echo esc_url(home_url('/punto-digital')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Punto Digital</a>
                     <a href="<?php echo esc_url(home_url('/seguridad')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Seguridad</a>
                     <a href="<?php echo esc_url(home_url('/alumbrado')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Alumbrado Público</a>
                     <a href="<?php echo esc_url(home_url('/politicas-sociales')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Políticas Sociales</a>

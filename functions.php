@@ -60,6 +60,7 @@ function tailpress_setup_pages(): void {
         ['title' => 'Salud',           'slug' => 'salud',            'template' => ''],
         ['title' => 'Educación y Cultura', 'slug' => 'educacion',   'template' => ''],
         ['title' => 'Deporte',         'slug' => 'deporte',          'template' => ''],
+        ['title' => 'Punto Digital',   'slug' => 'punto-digital',    'template' => 'page-punto-digital.php'],
         ['title' => 'Seguridad',       'slug' => 'seguridad',        'template' => ''],
         ['title' => 'Alumbrado Público', 'slug' => 'alumbrado',      'template' => ''],
         ['title' => 'Acción Social',   'slug' => 'accion-social',    'template' => ''],
@@ -164,6 +165,36 @@ function tailpress_setup_pages(): void {
 }
 
 add_action('after_switch_theme', 'tailpress_setup_pages');
+
+function tailpress_ensure_punto_digital_page(): void {
+    if ( get_option( 'tailpress_punto_digital_page_done' ) ) {
+        return;
+    }
+
+    $existing = get_page_by_path( 'punto-digital' );
+
+    if ( $existing ) {
+        if ( get_page_template_slug( $existing->ID ) !== 'page-punto-digital.php' ) {
+            update_post_meta( $existing->ID, '_wp_page_template', 'page-punto-digital.php' );
+        }
+        update_option( 'tailpress_punto_digital_page_done', true );
+        return;
+    }
+
+    $page_id = wp_insert_post( [
+        'post_title'   => 'Punto Digital',
+        'post_name'    => 'punto-digital',
+        'post_status'  => 'publish',
+        'post_type'    => 'page',
+        'post_content' => '',
+    ] );
+
+    if ( $page_id && ! is_wp_error( $page_id ) ) {
+        update_post_meta( $page_id, '_wp_page_template', 'page-punto-digital.php' );
+        update_option( 'tailpress_punto_digital_page_done', true );
+    }
+}
+add_action( 'init', 'tailpress_ensure_punto_digital_page' );
 
 /**
  * Handle Contact Form Submission via AJAX
@@ -351,6 +382,88 @@ function tp_get_turnos_ocupados(string $fecha): array {
     return $ocupados;
 }
 
+function tp_buscar_turno_por_numero(string $numero): ?int {
+    $query = new WP_Query([
+        'post_type'      => 'tp_turno',
+        'post_status'    => ['publish', 'pending'],
+        'posts_per_page' => 1,
+        'meta_query'     => [
+            ['key' => '_turno_numero', 'value' => $numero, 'compare' => '='],
+        ],
+        'fields' => 'ids',
+    ]);
+
+    return ! empty($query->posts) ? (int) $query->posts[0] : null;
+}
+
+function tp_validar_cancelacion_turno_por_ciudadano(string $numero, string $token): array {
+    $numero = sanitize_text_field($numero);
+    $token  = sanitize_text_field($token);
+
+    if (!$numero || !$token) {
+        return ['ok' => false, 'mensaje' => 'Faltan datos para cancelar el turno.'];
+    }
+
+    $turno_id = tp_buscar_turno_por_numero($numero);
+
+    if (!$turno_id) {
+        return ['ok' => false, 'mensaje' => 'No encontramos un turno con ese número.'];
+    }
+
+    $token_guardado = (string) get_post_meta($turno_id, '_turno_cancel_token', true);
+    if (!$token_guardado || !hash_equals($token_guardado, $token)) {
+        return ['ok' => false, 'mensaje' => 'El enlace de cancelación no es válido o venció.'];
+    }
+
+    $estado_actual = get_post_meta($turno_id, '_turno_estado', true) ?: 'pendiente';
+    if ($estado_actual === 'cancelado') {
+        return ['ok' => true, 'estado' => 'cancelado', 'turno_id' => $turno_id, 'mensaje' => 'Este turno ya estaba cancelado.'];
+    }
+
+    if ($estado_actual !== 'pendiente') {
+        return ['ok' => false, 'estado' => $estado_actual, 'turno_id' => $turno_id, 'mensaje' => 'Este turno ya no puede cancelarse online.'];
+    }
+
+    return [
+        'ok'       => true,
+        'estado'   => $estado_actual,
+        'turno_id' => $turno_id,
+        'numero'   => get_post_meta($turno_id, '_turno_numero', true),
+        'nombre'   => get_post_meta($turno_id, '_turno_nombre', true),
+        'fecha'    => get_post_meta($turno_id, '_turno_fecha', true),
+        'hora'     => get_post_meta($turno_id, '_turno_hora', true),
+    ];
+}
+
+function tp_cancelar_turno_por_ciudadano(string $numero, string $token): array {
+    $validacion = tp_validar_cancelacion_turno_por_ciudadano($numero, $token);
+    if (empty($validacion['ok'])) {
+        return $validacion;
+    }
+
+    if (($validacion['estado'] ?? '') === 'cancelado') {
+        return ['ok' => true, 'mensaje' => 'Este turno ya estaba cancelado.'];
+    }
+
+    $turno_id = (int) $validacion['turno_id'];
+    $numero   = (string) ($validacion['numero'] ?? $numero);
+
+    update_post_meta($turno_id, '_turno_estado', 'cancelado');
+    update_post_meta($turno_id, '_turno_cancelado_por', 'ciudadano');
+    update_post_meta($turno_id, '_turno_cancelado_at', current_time('mysql'));
+
+    $email  = get_post_meta($turno_id, '_turno_email', true);
+    $nombre = $validacion['nombre'] ?? get_post_meta($turno_id, '_turno_nombre', true);
+    $fecha  = $validacion['fecha'] ?? get_post_meta($turno_id, '_turno_fecha', true);
+    $hora   = $validacion['hora'] ?? get_post_meta($turno_id, '_turno_hora', true);
+
+    if ($email) {
+        tp_enviar_email_cancelacion($email, $nombre, $numero, $fecha, $hora);
+    }
+
+    return ['ok' => true, 'mensaje' => 'Tu turno fue cancelado y el horario volvió a quedar disponible.'];
+}
+
 // --- ¿El día está habilitado? ---
 function tp_dia_habilitado(string $fecha): bool {
     $ts = strtotime($fecha);
@@ -477,12 +590,13 @@ function tp_turno_metabox_cb($post) {
         '_turno_email'     => 'Email',
         '_turno_categoria' => 'Categoría',
         '_turno_numero'    => 'N° de Turno',
+        '_turno_cancel_token' => 'Token de cancelación',
     ];
     wp_nonce_field('tp_turno_save', 'tp_turno_nonce');
     echo '<table class="form-table"><tbody>';
     foreach ($fields as $key => $label) {
         $val = get_post_meta($post->ID, $key, true);
-        $readonly = $key === '_turno_numero' ? 'readonly' : '';
+        $readonly = in_array($key, ['_turno_numero', '_turno_cancel_token'], true) ? 'readonly' : '';
         echo "<tr><th><label>{$label}</label></th><td><input type='text' name='{$key}' value='" . esc_attr($val) . "' class='regular-text' {$readonly}></td></tr>";
     }
     $estado = get_post_meta($post->ID, '_turno_estado', true) ?: 'pendiente';
@@ -629,6 +743,7 @@ function tp_ajax_reservar() {
     }
 
     $numero = 'T' . strtoupper(substr(md5($fecha . $hora . $dni), 0, 6));
+    $cancel_token = wp_generate_password(32, false, false);
 
     $post_id = wp_insert_post([
         'post_type'   => 'tp_turno',
@@ -650,11 +765,12 @@ function tp_ajax_reservar() {
         '_turno_categoria' => $categoria,
         '_turno_estado'    => 'pendiente',
         '_turno_numero'    => $numero,
+        '_turno_cancel_token' => $cancel_token,
     ] as $key => $val) {
         update_post_meta($post_id, $key, $val);
     }
 
-    tp_enviar_email_confirmacion($email, $nombre, $numero, $fecha, $hora, $categoria);
+    tp_enviar_email_confirmacion($email, $nombre, $numero, $fecha, $hora, $categoria, $cancel_token);
 
     wp_send_json_success(['numero' => $numero, 'mensaje' => '¡Turno reservado con éxito!']);
 }
@@ -664,9 +780,13 @@ function tp_email_headers(): array {
     return ['Content-Type: text/html; charset=UTF-8', 'From: Municipalidad de Alderetes <' . TP_TURNO_EMAIL_ADMIN . '>'];
 }
 
-function tp_enviar_email_confirmacion(string $email, string $nombre, string $numero, string $fecha, string $hora, string $categoria): void {
+function tp_enviar_email_confirmacion(string $email, string $nombre, string $numero, string $fecha, string $hora, string $categoria, string $cancel_token): void {
     $fecha_fmt = date('d/m/Y', strtotime($fecha));
     $subject   = "✅ Turno confirmado – {$numero} | Municipalidad de Alderetes";
+    $cancel_url = add_query_arg([
+        'cancelar_turno' => rawurlencode($numero),
+        'token'          => rawurlencode($cancel_token),
+    ], home_url('/turnos-de-transito/'));
     $body = "
     <div style='font-family:sans-serif;max-width:560px;margin:0 auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden'>
       <div style='background:#1e4fa0;padding:24px;text-align:center'>
@@ -683,7 +803,13 @@ function tp_enviar_email_confirmacion(string $email, string $nombre, string $num
         </table>
         <p style='color:#374151'>📍 <strong>Lugar:</strong> Dirección de Tránsito – Municipalidad de Alderetes, Av. San Martín.</p>
         <p style='color:#374151'>⏰ Presentate <strong>5 minutos antes</strong> de tu turno con DNI en mano.</p>
-        <p style='color:#6b7280;font-size:13px'>Si no podés asistir, comunicate con nosotros para cancelar tu turno.</p>
+        <p style='color:#6b7280;font-size:13px'>Si no podés asistir, podés cancelar tu turno desde este enlace y el horario volverá a quedar disponible.</p>
+        <p style='margin-top:20px'>
+            <a href='" . esc_url($cancel_url) . "' style='display:inline-block;background:#dc2626;color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700'>
+                Cancelar turno
+            </a>
+        </p>
+        <p style='color:#9ca3af;font-size:12px'>Si el botón no funciona, copiá y pegá este enlace en tu navegador:<br>" . esc_html($cancel_url) . "</p>
       </div>
     </div>";
     wp_mail($email, $subject, $body, tp_email_headers());
@@ -710,5 +836,3 @@ function tp_enviar_email_cancelacion(string $email, string $nombre, string $nume
     </div>";
     wp_mail($email, $subject, $body, tp_email_headers());
 }
-
-

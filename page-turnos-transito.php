@@ -6,6 +6,35 @@
  */
 
 get_header();
+
+$cancelacion_notice = null;
+$cancelacion_confirmacion = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_POST['token'])) {
+    $resultado_cancelacion = tp_cancelar_turno_por_ciudadano(
+        wp_unslash($_POST['cancelar_turno']),
+        wp_unslash($_POST['token'])
+    );
+
+    $cancelacion_notice = [
+        'ok'      => !empty($resultado_cancelacion['ok']),
+        'mensaje' => $resultado_cancelacion['mensaje'] ?? 'No pudimos procesar la cancelación.',
+    ];
+} elseif (isset($_GET['cancelar_turno'], $_GET['token'])) {
+    $resultado_validacion = tp_validar_cancelacion_turno_por_ciudadano(
+        wp_unslash($_GET['cancelar_turno']),
+        wp_unslash($_GET['token'])
+    );
+
+    if (!empty($resultado_validacion['ok']) && ($resultado_validacion['estado'] ?? '') === 'pendiente') {
+        $cancelacion_confirmacion = $resultado_validacion;
+    } else {
+        $cancelacion_notice = [
+            'ok'      => !empty($resultado_validacion['ok']),
+            'mensaje' => $resultado_validacion['mensaje'] ?? 'No pudimos procesar la cancelación.',
+        ];
+    }
+}
 ?>
 
 <!-- Hero -->
@@ -53,6 +82,60 @@ get_header();
 <!-- Contenido principal -->
 <main class="py-10 bg-gray-50 min-h-screen">
     <div class="max-w-4xl mx-auto px-4">
+
+        <?php if ($cancelacion_notice) : ?>
+        <div class="mb-6 rounded-3xl border px-6 py-5 <?php echo $cancelacion_notice['ok'] ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'; ?>">
+            <div class="flex items-start gap-3">
+                <div class="mt-0.5">
+                    <?php if ($cancelacion_notice['ok']) : ?>
+                    <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <?php else : ?>
+                    <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <?php endif; ?>
+                </div>
+                <div>
+                    <p class="font-bold mb-1"><?php echo $cancelacion_notice['ok'] ? 'Turno cancelado' : 'No se pudo cancelar'; ?></p>
+                    <p class="text-sm"><?php echo esc_html($cancelacion_notice['mensaje']); ?></p>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($cancelacion_confirmacion) : ?>
+        <div class="mb-6 rounded-3xl border border-orange-200 bg-orange-50 px-6 py-6 text-orange-900">
+            <div class="flex items-start gap-4">
+                <svg class="w-6 h-6 text-orange-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div class="flex-1">
+                    <p class="font-bold text-lg mb-2">Confirmar cancelación del turno</p>
+                    <p class="text-sm mb-4">Estás por cancelar este turno. Esta acción liberará el horario para que otra persona pueda reservarlo.</p>
+                    <div class="bg-white/70 border border-orange-100 rounded-2xl p-4 text-sm mb-5">
+                        <p><strong>N° de Turno:</strong> <?php echo esc_html($cancelacion_confirmacion['numero']); ?></p>
+                        <p><strong>Nombre:</strong> <?php echo esc_html($cancelacion_confirmacion['nombre']); ?></p>
+                        <p><strong>Fecha:</strong> <?php echo esc_html(date_i18n('d/m/Y', strtotime($cancelacion_confirmacion['fecha']))); ?></p>
+                        <p><strong>Hora:</strong> <?php echo esc_html($cancelacion_confirmacion['hora']); ?> hs</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <form method="post" class="inline">
+                            <input type="hidden" name="cancelar_turno" value="<?php echo esc_attr($cancelacion_confirmacion['numero']); ?>">
+                            <input type="hidden" name="token" value="<?php echo esc_attr(wp_unslash($_GET['token'])); ?>">
+                            <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors">
+                                Sí, cancelar turno
+                            </button>
+                        </form>
+                        <a href="<?php echo esc_url(home_url('/turnos-de-transito/')); ?>" class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors">
+                            No, mantener turno
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <!-- PASO 1: Selección de fecha -->
         <div id="paso-1" class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
@@ -208,9 +291,12 @@ get_header();
                 📍 <strong>Lugar:</strong> Dirección de Tránsito, Av. San Martín – Municipalidad de Alderetes<br>
                 ⏱️ Presentate <strong>5 minutos antes</strong> con tu DNI en mano.
             </p>
-            <a href="<?php echo esc_url(home_url('/transito')); ?>" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-5 py-2.5 rounded-xl transition-colors text-sm">
-                Ver requisitos de licencia
-            </a>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <a href="<?php echo esc_url(home_url('/transito')); ?>" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-5 py-2.5 rounded-xl transition-colors text-sm">
+                    Ver requisitos de licencia
+                </a>
+                <p class="text-xs text-gray-400 w-full">Si no podés asistir, usá el enlace de cancelación que te enviamos por email para liberar el horario.</p>
+            </div>
         </div>
 
     </div>

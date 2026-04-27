@@ -5,47 +5,51 @@
  * @package TailPress
  */
 
-get_header();
-?>
+$hero_image_url = get_template_directory_uri() . '/resources/images/direccion-rentas.jpeg';
+$area_title     = 'Rentas';
+$area_tagline   = 'Gestión de tributos municipales, requisitos y beneficios.';
+$area_color     = 'bg-alderetes-green';
 
-<!-- Hero Section -->
-<section class="relative py-16 bg-gradient-to-br from-alderetes-blue to-blue-800 text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="text-center md:text-left">
-                <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm">Sección Trámites</span>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tight">Rentas</h1>
-                <p class="text-xl text-white/80 max-w-xl">Gestión de tributos municipales, requisitos y beneficios.</p>
-            </div>
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20">
-                <div class="flex items-center gap-4 mb-3">
-                    <div class="p-3 bg-alderetes-orange rounded-xl">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <span class="font-bold text-lg">Nota Importante</span>
-                </div>
-                <p class="text-sm text-white/90 uppercase font-bold tracking-wider leading-relaxed">
-                    "LOS TRÁMITES SON PERSONALES SIN EXCEPCIÓN ALGUNA"
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+get_header();
+
+get_template_part( 'template-parts/area-hero', null, [
+    'cover_image_url' => $hero_image_url,
+    'area_title'      => $area_title,
+    'area_tagline'    => $area_tagline,
+    'area_color'      => $area_color,
+    'height_classes'  => 'h-[420px] md:h-[520px]',
+] );
+?>
 
 <!-- Horarios de Atención -->
 <div class="bg-white border-b border-gray-200 py-4">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center sm:text-left">
         <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-alderetes-blue shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <svg class="w-5 h-5 text-alderetes-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span class="font-bold text-gray-800 uppercase tracking-wide text-sm">Horarios de Atención:</span>
-            <span class="text-gray-600 text-sm">Lunes a Viernes · <strong class="text-alderetes-blue">8:00 a 13:30 hs</strong></span>
+            <span class="text-gray-600 text-sm">Lunes a Viernes · <strong class="text-alderetes-green">8:00 a 13:30 hs</strong></span>
         </div>
         <span class="hidden sm:block text-gray-300">|</span>
-        <a href="<?php echo esc_url(home_url('/rentas')); ?>" class="inline-flex items-center gap-2 bg-alderetes-blue text-white font-bold px-5 py-2 rounded-xl hover:bg-blue-800 transition-colors text-sm shadow">
+        <a href="<?php echo esc_url(home_url('/rentas')); ?>" class="inline-flex items-center gap-2 bg-alderetes-green text-white font-bold px-5 py-2 rounded-xl hover:brightness-110 transition-colors text-sm shadow">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             TRÁMITES
         </a>
+    </div>
+</div>
+
+<div class="bg-gray-50 pb-8">
+    <div class="max-w-7xl mx-auto px-4 -mt-2">
+        <div class="bg-alderetes-green text-white rounded-3xl shadow-xl border border-white/10 p-6 md:p-8 max-w-2xl ml-auto">
+            <div class="flex items-center gap-4 mb-3">
+                <div class="p-3 bg-alderetes-orange rounded-xl">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <span class="font-bold text-xl">Nota Importante</span>
+            </div>
+            <p class="text-sm md:text-base text-white/90 uppercase font-bold tracking-wider leading-relaxed">
+                "LOS TRÁMITES SON PERSONALES SIN EXCEPCIÓN ALGUNA"
+            </p>
+        </div>
     </div>
 </div>
 
@@ -57,7 +61,7 @@ get_header();
 
             <!-- Tabs Header -->
             <div class="flex flex-wrap border-b border-gray-100 bg-gray-50/50">
-                <button onclick="switchTab('tem')" id="tab-btn-tem" class="tab-btn active flex-1 px-6 py-5 text-base font-bold transition-all border-b-4 border-alderetes-blue text-alderetes-blue bg-white">
+                <button onclick="switchTab('tem')" id="tab-btn-tem" class="tab-btn active flex-1 px-6 py-5 text-base font-bold transition-all border-b-4 border-alderetes-green text-alderetes-green bg-white">
                     COMERCIO (T.E.M.)
                 </button>
                 <button onclick="switchTab('cisi')" id="tab-btn-cisi" class="tab-btn flex-1 px-6 py-5 text-base font-bold transition-all border-b-4 border-transparent text-gray-400 hover:text-gray-600 hover:bg-white/50">
@@ -81,7 +85,7 @@ get_header();
                             <!-- Inscripción -->
                             <div>
                                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                                    <span class="w-10 h-10 bg-blue-100 text-alderetes-blue rounded-xl flex items-center justify-center font-black">1</span>
+                                    <span class="w-10 h-10 bg-green-100 text-alderetes-green rounded-xl flex items-center justify-center font-black">1</span>
                                     Requisitos para Inscripción T.E.M.
                                 </h2>
                                 <ul class="space-y-3">
@@ -96,13 +100,13 @@ get_header();
                                         "Arancel Administrativo.",
                                     ];
                                     foreach ($reqs_tem_ins as $req): ?>
-                                    <li class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl hover:bg-blue-50/50 transition-colors">
-                                        <svg class="w-5 h-5 text-alderetes-blue mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    <li class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl hover:bg-green-50 transition-colors">
+                                        <svg class="w-5 h-5 text-alderetes-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         <span class="text-gray-700"><?php echo esc_html($req); ?></span>
                                     </li>
                                     <?php endforeach; ?>
                                 </ul>
-                                <p class="mt-6 text-center text-sm font-bold text-alderetes-blue uppercase tracking-wider bg-blue-50 border border-blue-100 rounded-xl py-3 px-4">
+                                <p class="mt-6 text-center text-sm font-bold text-alderetes-green uppercase tracking-wider bg-green-50 border border-green-100 rounded-xl py-3 px-4">
                                     "LOS TRÁMITES SON PERSONALES SIN EXCEPCIÓN ALGUNA"
                                 </p>
                             </div>
@@ -110,7 +114,7 @@ get_header();
                             <!-- Exención -->
                             <div>
                                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                                    <span class="w-10 h-10 bg-blue-100 text-alderetes-blue rounded-xl flex items-center justify-center font-black">2</span>
+                                    <span class="w-10 h-10 bg-green-100 text-alderetes-green rounded-xl flex items-center justify-center font-black">2</span>
                                     Requisitos para Exención T.E.M.
                                 </h2>
                                 <ul class="space-y-3">
@@ -125,8 +129,8 @@ get_header();
                                         "Arancel administrativo.",
                                     ];
                                     foreach ($reqs_tem_exe as $req): ?>
-                                    <li class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl hover:bg-blue-50/50 transition-colors">
-                                        <svg class="w-5 h-5 text-alderetes-blue mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    <li class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl hover:bg-green-50 transition-colors">
+                                        <svg class="w-5 h-5 text-alderetes-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         <span class="text-gray-700"><?php echo esc_html($req); ?></span>
                                     </li>
                                     <?php endforeach; ?>
@@ -137,7 +141,7 @@ get_header();
 
                         <!-- Sidebar Descargas -->
                         <div class="lg:w-72 space-y-4">
-                            <div class="bg-alderetes-blue rounded-2xl p-6 text-white shadow-xl sticky top-24">
+                            <div class="bg-alderetes-green rounded-2xl p-6 text-white shadow-xl sticky top-24">
                                 <h3 class="font-bold text-lg mb-5 flex items-center gap-2">
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                     Descargas T.E.M.
@@ -147,9 +151,7 @@ get_header();
                                     $descargas = [
                                         ["nombre" => "Formulario R708 - Inscripción", "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORM-INSCRIPCION-TEM.pdf"],
                                         ["nombre" => "Declaración Jurada",            "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORMULARIO-DDJJ-TEM.pdf"],
-                                        ["nombre" => "Código Tributario",             "url" => "#"],
                                         ["nombre" => "Calendario de Vencimientos",    "url" => "#"],
-                                        ["nombre" => "Ordenanza Tributaria",          "url" => "#"],
                                     ];
                                     foreach ($descargas as $doc): ?>
                                     <a href="<?php echo esc_url( $doc['url'] ); ?>" <?php if ( $doc['url'] !== '#' ) echo 'target="_blank" rel="noopener noreferrer"'; ?> class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/25 rounded-xl text-sm transition-all border border-white/10 group">
@@ -330,12 +332,12 @@ get_header();
 function switchTab(tabId) {
     document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.add('hidden'); });
     document.querySelectorAll('.tab-btn').forEach(function(b) {
-        b.classList.remove('active', 'border-alderetes-blue', 'text-alderetes-blue', 'bg-white');
+        b.classList.remove('active', 'border-alderetes-green', 'text-alderetes-green', 'bg-white');
         b.classList.add('border-transparent', 'text-gray-400');
     });
     document.getElementById('tab-content-' + tabId).classList.remove('hidden');
     var btn = document.getElementById('tab-btn-' + tabId);
-    btn.classList.add('active', 'border-alderetes-blue', 'text-alderetes-blue', 'bg-white');
+    btn.classList.add('active', 'border-alderetes-green', 'text-alderetes-green', 'bg-white');
     btn.classList.remove('border-transparent', 'text-gray-400');
 }
 

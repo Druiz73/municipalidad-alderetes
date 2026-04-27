@@ -44,6 +44,7 @@
                     <li><a href="<?php echo esc_url(home_url('/deporte')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Deporte</a></li>
                     <li><a href="<?php echo esc_url(home_url('/educacion')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Educación y Cultura</a></li>
                     <li><a href="<?php echo esc_url(home_url('/obras-publicas')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Obras y Servicios Públicos</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/punto-digital')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Punto Digital</a></li>
                 </ul>
             </div>
 

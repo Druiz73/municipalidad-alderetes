@@ -7,17 +7,17 @@
 
 get_header();
 
-$cover_image_url = null;
+$cover_image_url = get_template_directory_uri() . '/resources/images/tribunal-faltas.jpeg';
 $area_title      = 'Tribunal de Faltas';
 $area_tagline    = 'Juzgamiento de contravenciones, multas de tránsito y normas de convivencia';
-$area_color      = 'bg-amber-600';
+$area_color      = 'bg-alderetes-blue';
 
 get_template_part( 'template-parts/area-hero', null, [
     'cover_image_url' => $cover_image_url,
     'area_title'      => $area_title,
     'area_tagline'    => $area_tagline,
     'area_color'      => $area_color,
-    'height_classes'  => 'h-[260px] md:h-[320px]',
+    'height_classes'  => 'h-[420px] md:h-[520px]',
 ] );
 ?>
 
@@ -26,7 +26,7 @@ get_template_part( 'template-parts/area-hero', null, [
     <div class="max-w-3xl mx-auto px-4">
 
         <div class="text-center mb-10">
-            <span class="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 text-sm font-medium rounded-full mb-4">Consulta Gratuita</span>
+            <span class="inline-block px-4 py-1.5 bg-blue-100 text-alderetes-blue text-sm font-medium rounded-full mb-4">Consulta Gratuita</span>
             <h2 class="text-3xl font-bold text-gray-900 mb-3">Libre Deuda Vehicular</h2>
             <p class="text-gray-600">Ingresá la patente de tu vehículo para verificar si tenés infracciones pendientes</p>
         </div>
@@ -137,7 +137,7 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
 
             <!-- Descripción -->
             <div class="lg:col-span-2">
-                <span class="inline-block px-4 py-1.5 bg-amber-100 text-amber-700 text-sm font-semibold rounded-full mb-6 uppercase tracking-wide">
+                <span class="inline-block px-4 py-1.5 bg-blue-100 text-alderetes-blue text-sm font-semibold rounded-full mb-6 uppercase tracking-wide">
                     Organismo Municipal
                 </span>
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">¿Qué es el Tribunal de Faltas?</h2>
@@ -166,8 +166,8 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                     ];
                     foreach ( $funciones as $f ) : ?>
                     <li class="flex items-center gap-3 text-gray-600">
-                        <span class="flex-shrink-0 w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center">
-                            <svg class="w-3.5 h-3.5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                            <svg class="w-3.5 h-3.5 text-alderetes-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                             </svg>
                         </span>
@@ -177,10 +177,10 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                 </ul>
 
                 <!-- Documentación necesaria -->
-                <div class="mt-10 p-6 bg-amber-50 border border-amber-200 rounded-2xl">
+                <div class="mt-10 p-6 bg-blue-50 border border-blue-200 rounded-2xl">
                     <div class="flex items-start gap-4">
-                        <div class="flex-shrink-0 p-2.5 bg-amber-100 rounded-xl">
-                            <svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="flex-shrink-0 p-2.5 bg-blue-100 rounded-xl">
+                            <svg class="w-6 h-6 text-alderetes-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
@@ -188,9 +188,9 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                             <h4 class="font-bold text-gray-900 mb-2">Documentación requerida</h4>
                             <p class="text-gray-600 text-sm">Para realizar cualquier trámite, presentarse con:</p>
                             <ul class="mt-2 space-y-1 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></span>DNI (Documento Nacional de Identidad)</li>
-                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></span>Licencia de conducir vigente</li>
-                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></span>Tarjeta verde del vehículo</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span>DNI (Documento Nacional de Identidad)</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span>Licencia de conducir vigente</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span>Tarjeta verde del vehículo</li>
                             </ul>
                         </div>
                     </div>
@@ -201,7 +201,7 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
             <div class="space-y-5">
 
                 <!-- Información de contacto -->
-                <div class="bg-gradient-to-br from-amber-600 to-amber-700 rounded-2xl p-6 text-white shadow-lg">
+                <div class="bg-gradient-to-br from-alderetes-blue to-blue-900 rounded-2xl p-6 text-white shadow-lg">
                     <h3 class="font-bold text-xl mb-5">Información de atención</h3>
                     <div class="space-y-4">
                         <div class="flex items-start gap-3">
