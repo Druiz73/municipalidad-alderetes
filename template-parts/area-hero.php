@@ -8,6 +8,7 @@
  *   area_tagline     string       Short descriptor shown below the title.
  *   area_color       string       Tailwind bg-* class for accent (e.g. 'bg-blue-700').
  *   height_classes   string       Tailwind height classes (default: 'h-[420px] md:h-[520px]').
+ *   cover_classes    string       Extra background-position / sizing classes for the cover image.
  *
  * @package TailPress
  */
@@ -17,13 +18,14 @@ $area_title      = $args['area_title']      ?? '';
 $area_tagline    = $args['area_tagline']    ?? '';
 $area_color      = $args['area_color']      ?? 'bg-alderetes-blue';
 $height_classes  = $args['height_classes']  ?? 'h-[520px] md:h-[640px]';
+$cover_classes   = $args['cover_classes']   ?? 'bg-top md:bg-center';
 
 ?>
 
 <section class="relative <?php echo esc_attr( $height_classes ); ?> overflow-hidden flex items-end">
 
     <?php if ( ! empty( $cover_image_url ) ) : ?>
-        <div class="absolute inset-0 bg-cover bg-center scale-105 transition-transform duration-700"
+        <div class="absolute inset-0 bg-cover transition-transform duration-700 <?php echo esc_attr( $cover_classes ); ?>"
              style="background-image: url('<?php echo esc_url( $cover_image_url ); ?>');"
              aria-hidden="true"></div>
     <?php else : ?>

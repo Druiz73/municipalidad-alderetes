@@ -18,6 +18,7 @@ get_template_part( 'template-parts/area-hero', null, [
     'area_tagline'    => $area_tagline,
     'area_color'      => $area_color,
     'height_classes'  => 'h-[420px] md:h-[520px]',
+    'cover_classes'   => 'bg-[position:60%_top] md:bg-top',
 ] );
 ?>
 

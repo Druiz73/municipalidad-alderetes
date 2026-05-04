@@ -18,6 +18,7 @@ get_template_part( 'template-parts/area-hero', null, [
     'area_tagline'    => $area_tagline,
     'area_color'      => $area_color,
     'height_classes'  => 'h-[420px] md:h-[520px]',
+    'cover_classes'   => 'bg-[position:68%_top] md:bg-top',
 ] );
 ?>
 
@@ -151,7 +152,7 @@ get_template_part( 'template-parts/area-hero', null, [
                                     $descargas = [
                                         ["nombre" => "Formulario R708 - Inscripción", "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORM-INSCRIPCION-TEM.pdf"],
                                         ["nombre" => "Declaración Jurada",            "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORMULARIO-DDJJ-TEM.pdf"],
-                                        ["nombre" => "Calendario de Vencimientos",    "url" => "#"],
+                                        ["nombre" => "Calendario de Vencimientos",    "url" => "https://municipalidadalderetes.com.ar/wp-content/uploads/2026/05/calendario-vencimiento-2026.pdf"],
                                     ];
                                     foreach ($descargas as $doc): ?>
                                     <a href="<?php echo esc_url( $doc['url'] ); ?>" <?php if ( $doc['url'] !== '#' ) echo 'target="_blank" rel="noopener noreferrer"'; ?> class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/25 rounded-xl text-sm transition-all border border-white/10 group">
