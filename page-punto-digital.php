@@ -243,12 +243,19 @@ get_template_part( 'template-parts/area-hero', null, [
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <?php foreach ( $gallery_images as $index => $image_url ) : ?>
+                <?php
+                $image_classes = 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500';
+
+                if ( 2 === $index ) {
+                    $image_classes = 'w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500';
+                }
+                ?>
                 <figure class="group overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
                     <div class="aspect-[4/3] overflow-hidden">
                         <img
                             src="<?php echo esc_url( $image_url ); ?>"
                             alt="<?php echo esc_attr( 'Punto Digital imagen destacada ' . ( $index + 1 ) ); ?>"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            class="<?php echo esc_attr( $image_classes ); ?>"
                             loading="lazy"
                         >
                     </div>
@@ -263,6 +270,7 @@ get_template_part( 'template-parts/area-hero', null, [
     <div class="max-w-2xl mx-auto px-4">
         <h3 class="text-2xl font-bold mb-3">¿Querés acercarte o recibir asesoramiento?</h3>
         <p class="text-white/80 mb-6">Contactá a la Municipalidad de Alderetes para obtener más información sobre actividades y servicios del Punto Digital.</p>
+        <p class="text-white font-medium mb-6">Llegarse por: 9 de Julio 200 - El Corte - Alderetes</p>
         <a href="<?php echo esc_url( home_url( '/contacto' ) ); ?>"
            class="inline-flex items-center gap-2 bg-alderetes-orange hover:bg-[#a95c1e] text-white font-semibold px-7 py-3 rounded-full transition-colors duration-300">
             Contactar
