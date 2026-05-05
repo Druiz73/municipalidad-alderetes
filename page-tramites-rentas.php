@@ -17,9 +17,12 @@ get_template_part( 'template-parts/area-hero', null, [
     'area_title'      => $area_title,
     'area_tagline'    => $area_tagline,
     'area_color'      => $area_color,
-    'height_classes'  => 'h-[420px] md:h-[520px]',
-    'cover_classes'   => 'bg-[position:68%_top] md:bg-top',
+    'height_classes'  => 'h-[360px] md:h-[520px]',
+    'cover_classes'   => 'bg-right-top md:bg-top',
 ] );
+
+$uploads = wp_upload_dir();
+$uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['baseurl'] ) : '';
 ?>
 
 <!-- Horarios de Atención -->
@@ -150,9 +153,9 @@ get_template_part( 'template-parts/area-hero', null, [
                                 <div class="space-y-2">
                                     <?php
                                     $descargas = [
-                                        ["nombre" => "Formulario R708 - Inscripción", "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORM-INSCRIPCION-TEM.pdf"],
-                                        ["nombre" => "Declaración Jurada",            "url" => "https://municipalidadalderetes.com.ar/staging/wp-content/uploads/2026/03/FORMULARIO-DDJJ-TEM.pdf"],
-                                        ["nombre" => "Calendario de Vencimientos",    "url" => "https://municipalidadalderetes.com.ar/wp-content/uploads/2026/05/calendario-vencimiento-2026.pdf"],
+                                        ["nombre" => "Formulario R708 - Inscripción", "url" => $uploads_base_url . "/2026/03/FORM-INSCRIPCION-TEM.pdf"],
+                                        ["nombre" => "Declaración Jurada",            "url" => $uploads_base_url . "/2026/03/FORMULARIO-DDJJ-TEM.pdf"],
+                                        ["nombre" => "Calendario de Vencimientos",    "url" => $uploads_base_url . "/2026/05/calendario-vencimiento-2026.pdf"],
                                     ];
                                     foreach ($descargas as $doc): ?>
                                     <a href="<?php echo esc_url( $doc['url'] ); ?>" <?php if ( $doc['url'] !== '#' ) echo 'target="_blank" rel="noopener noreferrer"'; ?> class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/25 rounded-xl text-sm transition-all border border-white/10 group">

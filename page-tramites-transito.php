@@ -172,7 +172,7 @@ $color_map = [
     'area_tagline'    => $area_tagline,
     'area_color'      => 'bg-[#0055a4]',
     'height_classes'  => 'h-[420px] md:h-[520px]',
-    'cover_classes'   => 'bg-[position:62%_top] md:bg-top',
+    'cover_classes'   => 'bg-right-top md:bg-top',
 ] ); ?>
 
 <!-- Duplicado - destacado arriba -->

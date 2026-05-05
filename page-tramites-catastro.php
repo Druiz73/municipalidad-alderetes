@@ -51,6 +51,7 @@ $descargas = [
     'area_tagline'    => $area_tagline,
     'area_color'      => 'bg-alderetes-orange',
     'height_classes'  => 'h-[420px] md:h-[520px]',
+    'cover_classes'   => 'bg-right-top md:bg-top',
 ] ); ?>
 
 <!-- Contenido -->
