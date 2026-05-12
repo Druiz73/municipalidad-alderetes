@@ -8,7 +8,8 @@
 @source '../../vendor/tailpress/framework/**/**/*.php';
 @source '../../*.php';
 @source '../../template-parts/**/*.php';
-@source inline("h-[520px] md:h-[640px] h-[260px] md:h-[320px]");
+@source '../js/**/*.js';
+@source inline("h-[520px] md:h-[640px] h-[260px] md:h-[320px] w-2 w-6 h-2 bg-alderetes-blue bg-gray-300 hover:bg-gray-400 rounded-full transition-all duration-300");
 @source '../../parts/**/*.php';
 
 @utility container {

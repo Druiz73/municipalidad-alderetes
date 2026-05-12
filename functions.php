@@ -893,3 +893,236 @@ function tp_enviar_email_cancelacion(string $email, string $nombre, string $nume
     </div>";
     wp_mail($email, $subject, $body, tp_email_headers());
 }
+
+/* =====================================================================
+ *  NOTICIAS — Custom Post Type editable desde el admin de WordPress
+ *  --------------------------------------------------------------------
+ *  Crea un menú "Noticias" en el admin para que el equipo de la
+ *  Municipalidad pueda dar de alta noticias con título, bajada, imagen
+ *  destacada y categoría. Las noticias se renderizan en la home
+ *  (template-parts/noticias-section.php).
+ * ===================================================================== */
+
+add_action('init', function () {
+
+    // CPT: noticia
+    register_post_type('noticia', [
+        'labels' => [
+            'name'                  => 'Noticias',
+            'singular_name'         => 'Noticia',
+            'menu_name'             => 'Noticias',
+            'add_new'               => 'Añadir Noticia',
+            'add_new_item'          => 'Añadir Nueva Noticia',
+            'edit_item'             => 'Editar Noticia',
+            'new_item'              => 'Nueva Noticia',
+            'view_item'             => 'Ver Noticia',
+            'search_items'          => 'Buscar Noticias',
+            'not_found'             => 'No se encontraron noticias',
+            'not_found_in_trash'    => 'No hay noticias en la papelera',
+            'featured_image'        => 'Imagen de la noticia',
+            'set_featured_image'    => 'Establecer imagen de la noticia',
+            'remove_featured_image' => 'Quitar imagen de la noticia',
+            'use_featured_image'    => 'Usar como imagen de la noticia',
+        ],
+        'public'              => false,           // No se accede por URL pública
+        'publicly_queryable'  => false,
+        'exclude_from_search' => true,
+        'show_ui'             => true,            // Aparece en el admin
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-megaphone',
+        'supports'            => ['title', 'editor', 'excerpt', 'thumbnail'],
+        'has_archive'         => false,
+        'rewrite'             => false,
+    ]);
+
+    // Taxonomía: categoría de la noticia (Educación, Comunidad, Obras, etc.)
+    register_taxonomy('noticia_categoria', 'noticia', [
+        'labels' => [
+            'name'              => 'Categorías de Noticia',
+            'singular_name'     => 'Categoría',
+            'menu_name'         => 'Categorías',
+            'all_items'         => 'Todas las categorías',
+            'edit_item'         => 'Editar categoría',
+            'update_item'       => 'Actualizar categoría',
+            'add_new_item'      => 'Añadir nueva categoría',
+            'new_item_name'     => 'Nombre de la nueva categoría',
+            'search_items'      => 'Buscar categorías',
+        ],
+        'hierarchical'      => false,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'rewrite'           => false,
+    ]);
+});
+
+// Mensaje de ayuda en la pantalla de edición de la noticia
+add_action('edit_form_after_title', function ($post) {
+    if ($post->post_type !== 'noticia') return;
+    echo '<div style="background:#fff8e1;border:1px solid #facc15;border-left:4px solid #f59e0b;padding:12px 16px;margin:12px 0;border-radius:6px;font-size:13px;line-height:1.5">';
+    echo '<strong>Cómo se ve esta noticia en la web:</strong><br>';
+    echo '· El <em>Título</em> aparece en grande dentro de la tarjeta.<br>';
+    echo '· El <em>Resumen</em> (panel "Resumen" a la derecha o más abajo) es el texto corto que aparece debajo del título. Si lo dejás vacío, se usan las primeras palabras del contenido.<br>';
+    echo '· La <em>Imagen destacada</em> (panel a la derecha) es la foto principal. Recomendado: 1200×750px.<br>';
+    echo '· La <em>Categoría</em> aparece como etiqueta sobre la imagen (ej: "Educación", "Comunidad").';
+    echo '</div>';
+});
+
+// Asegurar que el panel "Resumen" esté visible por defecto al editar una noticia
+add_filter('default_hidden_meta_boxes', function ($hidden, $screen) {
+    if ($screen && $screen->post_type === 'noticia') {
+        $hidden = array_diff($hidden, ['postexcerpt']);
+    }
+    return $hidden;
+}, 10, 2);
+
+// Columna de imagen destacada en el listado del admin
+add_filter('manage_noticia_posts_columns', function ($cols) {
+    $new = [];
+    foreach ($cols as $key => $label) {
+        if ($key === 'title') {
+            $new['noticia_thumb'] = 'Imagen';
+        }
+        $new[$key] = $label;
+    }
+    return $new;
+});
+
+add_action('manage_noticia_posts_custom_column', function ($col, $post_id) {
+    if ($col === 'noticia_thumb') {
+        if (has_post_thumbnail($post_id)) {
+            echo get_the_post_thumbnail($post_id, [60, 40], ['style' => 'border-radius:4px;object-fit:cover']);
+        } else {
+            echo '<span style="color:#999">—</span>';
+        }
+    }
+}, 10, 2);
+
+/**
+ * Devuelve las últimas noticias publicadas, formateadas para el template.
+ *
+ * @param int $limit  Cantidad máxima de noticias a devolver.
+ * @return array
+ */
+function tp_get_noticias($limit = 10) {
+    $query = new WP_Query([
+        'post_type'      => 'noticia',
+        'post_status'    => 'publish',
+        'posts_per_page' => (int) $limit,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'no_found_rows'  => true,
+    ]);
+
+    $noticias = [];
+
+    foreach ($query->posts as $post) {
+        $thumb_id  = get_post_thumbnail_id($post->ID);
+        $image_url = $thumb_id ? wp_get_attachment_image_url($thumb_id, 'large') : '';
+
+        $tag_terms = get_the_terms($post->ID, 'noticia_categoria');
+        $tag       = (!is_wp_error($tag_terms) && !empty($tag_terms)) ? $tag_terms[0]->name : '';
+
+        $excerpt = has_excerpt($post) ? get_the_excerpt($post) : wp_trim_words(strip_shortcodes($post->post_content), 30, '…');
+
+        $noticias[] = [
+            'tag'     => $tag,
+            'title'   => get_the_title($post),
+            'excerpt' => $excerpt,
+            'image'   => $image_url,
+        ];
+    }
+
+    return $noticias;
+}
+
+/**
+ * Seeder: precarga las 2 noticias por defecto la primera vez que se
+ * activa el theme, así el equipo tiene contenido editable desde el día 1.
+ *
+ * Se ejecuta una sola vez (queda registrada la flag `tp_noticias_seeded`).
+ * Si ya existe alguna noticia publicada, no hace nada (evita duplicados).
+ */
+add_action('admin_init', 'tp_seed_default_noticias');
+function tp_seed_default_noticias() {
+    if (get_option('tp_noticias_seeded')) {
+        return;
+    }
+
+    // Si ya hay noticias cargadas, marcar como seedeado y salir.
+    $existing = get_posts([
+        'post_type'      => 'noticia',
+        'post_status'    => 'any',
+        'posts_per_page' => 1,
+        'fields'         => 'ids',
+        'no_found_rows'  => true,
+    ]);
+    if (! empty($existing)) {
+        update_option('tp_noticias_seeded', 1);
+        return;
+    }
+
+    $defaults = [
+        [
+            'title'    => 'Importante operativo de salud escolar en la Escuela Secundaria Barrio Rincón del Este',
+            'excerpt'  => 'Se realizaron fichas médicas, controles integrales y vacunación para acompañar las trayectorias educativas de los estudiantes del establecimiento.',
+            'category' => 'Educación',
+            'image'    => 'INICIO 1.jpg',
+        ],
+        [
+            'title'    => 'Acompañamos actividades institucionales y encuentros de vecinos en distintos puntos de Alderetes',
+            'excerpt'  => 'La Municipalidad continúa articulando presencia territorial, participación comunitaria y acciones conjuntas para fortalecer el vínculo con cada barrio.',
+            'category' => 'Comunidad',
+            'image'    => 'INICIO 2.jpg',
+        ],
+    ];
+
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+
+    $images_dir = trailingslashit(get_template_directory()) . 'resources/images/fotos-areas/NOTICIAS/';
+
+    foreach ($defaults as $data) {
+        $post_id = wp_insert_post([
+            'post_type'    => 'noticia',
+            'post_status'  => 'publish',
+            'post_title'   => $data['title'],
+            'post_excerpt' => $data['excerpt'],
+            'post_content' => $data['excerpt'],
+        ]);
+
+        if (is_wp_error($post_id) || ! $post_id) {
+            continue;
+        }
+
+        // Asignar categoría (la crea si no existe).
+        wp_set_object_terms($post_id, $data['category'], 'noticia_categoria');
+
+        // Copiar la imagen del theme a la mediateca de WP y asignarla como imagen destacada.
+        $src_path = $images_dir . $data['image'];
+        if (file_exists($src_path)) {
+            $upload_dir    = wp_upload_dir();
+            $dest_filename = wp_unique_filename($upload_dir['path'], sanitize_file_name($data['image']));
+            $dest_path     = trailingslashit($upload_dir['path']) . $dest_filename;
+
+            if (@copy($src_path, $dest_path)) {
+                $filetype  = wp_check_filetype($dest_filename, null);
+                $attach_id = wp_insert_attachment([
+                    'post_mime_type' => $filetype['type'],
+                    'post_title'     => sanitize_file_name(pathinfo($dest_filename, PATHINFO_FILENAME)),
+                    'post_content'   => '',
+                    'post_status'    => 'inherit',
+                ], $dest_path, $post_id);
+
+                if (! is_wp_error($attach_id) && $attach_id) {
+                    $meta = wp_generate_attachment_metadata($attach_id, $dest_path);
+                    wp_update_attachment_metadata($attach_id, $meta);
+                    set_post_thumbnail($post_id, $attach_id);
+                }
+            }
+        }
+    }
+
+    update_option('tp_noticias_seeded', 1);
+}

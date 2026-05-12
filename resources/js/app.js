@@ -168,6 +168,72 @@ document.addEventListener('DOMContentLoaded', function () {
         startAutoplay()
     })
 
+    // News Carousel — carousel con múltiples items visibles (responsive).
+    // Usado por template-parts/noticias-section.php cuando hay 3+ noticias.
+    document.querySelectorAll('.tp-news-carousel').forEach(function (carousel) {
+        var track     = carousel.querySelector('.tp-news-carousel-track')
+        var slides    = carousel.querySelectorAll('.tp-news-carousel-slide')
+        var prevBtn   = carousel.querySelector('.tp-news-carousel-prev')
+        var nextBtn   = carousel.querySelector('.tp-news-carousel-next')
+        var dotsCt    = carousel.querySelector('.tp-news-carousel-dots')
+        var perDesk   = parseInt(carousel.getAttribute('data-items-desktop') || '2', 10)
+        var perMob    = parseInt(carousel.getAttribute('data-items-mobile') || '1', 10)
+        var total     = slides.length
+        var current   = 0
+
+        if (!track || total === 0) return
+
+        function itemsPerView() {
+            return window.matchMedia('(min-width: 768px)').matches ? perDesk : perMob
+        }
+
+        function maxIndex() {
+            return Math.max(0, total - itemsPerView())
+        }
+
+        function go(index) {
+            current = Math.max(0, Math.min(index, maxIndex()))
+            var step = 100 / itemsPerView()
+            track.style.transform = 'translateX(-' + (current * step) + '%)'
+            renderDots()
+            updateArrows()
+        }
+
+        function updateArrows() {
+            if (prevBtn) prevBtn.disabled = current === 0
+            if (nextBtn) nextBtn.disabled = current >= maxIndex()
+        }
+
+        function renderDots() {
+            if (!dotsCt) return
+            var pages = maxIndex() + 1
+            dotsCt.innerHTML = ''
+            for (var i = 0; i < pages; i++) {
+                var dot = document.createElement('button')
+                dot.type = 'button'
+                dot.className = 'h-2 rounded-full transition-all duration-300 ' +
+                    (i === current ? 'w-6 bg-alderetes-blue' : 'w-2 bg-gray-300 hover:bg-gray-400')
+                dot.setAttribute('aria-label', 'Ir a la página ' + (i + 1))
+                ;(function (idx) {
+                    dot.addEventListener('click', function () { go(idx) })
+                })(i)
+                dotsCt.appendChild(dot)
+            }
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', function () { go(current - 1) })
+        if (nextBtn) nextBtn.addEventListener('click', function () { go(current + 1) })
+
+        // Re-renderiza al cambiar el tamaño de pantalla (cambia items por vista).
+        var resizeTimer = null
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer)
+            resizeTimer = setTimeout(function () { go(current) }, 150)
+        })
+
+        go(0)
+    })
+
     // Dropdown Menu — toggle + close on outside click + keyboard
     document.querySelectorAll('.tp-dropdown-menu').forEach(function (dropdown) {
         var trigger = dropdown.querySelector('.tp-dropdown-trigger')
