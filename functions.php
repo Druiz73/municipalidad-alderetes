@@ -57,7 +57,7 @@ function tailpress_setup_pages(): void {
         ['title' => 'Tribunal de Faltas', 'slug' => 'tribunal-de-faltas', 'template' => 'page-tribunal-de-faltas.php'],
         ['title' => 'Catastro',        'slug' => 'catastro',         'template' => 'page-tramites-catastro.php'],
         ['title' => 'Obras Públicas',  'slug' => 'obras-publicas',   'template' => ''],
-        ['title' => 'Salud',           'slug' => 'salud',            'template' => ''],
+        ['title' => 'Oficina de Empleo', 'slug' => 'oficina-empleo',   'template' => 'page-oficina-empleo.php'],
         ['title' => 'Educación y Cultura', 'slug' => 'educacion',   'template' => ''],
         ['title' => 'Deporte',         'slug' => 'deporte',          'template' => ''],
         ['title' => 'Punto Digital',   'slug' => 'punto-digital',    'template' => 'page-punto-digital.php'],
@@ -120,7 +120,7 @@ function tailpress_setup_pages(): void {
             ]],
             ['title' => 'Áreas', 'slug' => '', 'children' => [
                 ['title' => 'Obras Públicas',      'slug' => 'obras-publicas'],
-                ['title' => 'Salud',               'slug' => 'salud'],
+                ['title' => 'Oficina de Empleo',   'slug' => 'oficina-empleo'],
                 ['title' => 'Educación y Cultura', 'slug' => 'educacion'],
                 ['title' => 'Deporte',             'slug' => 'deporte'],
                 ['title' => 'Seguridad',           'slug' => 'seguridad'],

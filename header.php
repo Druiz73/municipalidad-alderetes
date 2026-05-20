@@ -93,7 +93,7 @@
                     </button>
                     <div class="tp-nav-menu-content hidden absolute top-full left-0 w-64 z-50" style="padding-top:6px"><div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                         <a href="<?php echo esc_url(home_url('/obras-publicas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Obras Públicas</a>
-                        <a href="<?php echo esc_url(home_url('/salud')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Salud</a>
+                        <a href="<?php echo esc_url(home_url('/oficina-empleo')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Oficina de Empleo</a>
                         <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Educación</a>
                         <a href="<?php echo esc_url(home_url('/cultura')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Cultura</a>
                         <a href="<?php echo esc_url(home_url('/deporte')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Deporte</a>
@@ -184,7 +184,7 @@
                 </button>
                 <div class="mobile-submenu hidden ml-4 mt-1 space-y-1">
                     <a href="<?php echo esc_url(home_url('/obras-publicas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Obras Públicas</a>
-                    <a href="<?php echo esc_url(home_url('/salud')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Salud</a>
+                    <a href="<?php echo esc_url(home_url('/oficina-empleo')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Oficina de Empleo</a>
                     <a href="<?php echo esc_url(home_url('/educacion')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Educación</a>
                     <a href="<?php echo esc_url(home_url('/cultura')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Cultura</a>
                     <a href="<?php echo esc_url(home_url('/deporte')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Deporte</a>

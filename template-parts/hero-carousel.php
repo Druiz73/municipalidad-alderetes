@@ -29,9 +29,9 @@ $slides = [
         'subtitle' => 'Arte, eventos y programas para todos',
     ],
     [
-        'image'    => $base . 'FOTO15.jpeg',
-        'title'    => 'Salud para Todos',
-        'subtitle' => 'Hospital Modular con atención las 24 horas',
+        'image'    => get_template_directory_uri() . '/resources/images/fotos-areas/OFICINA-EMPLEO/portada.jpeg',
+        'title'    => 'Oficina de Empleo',
+        'subtitle' => 'Brindando herramientas y oportunidades laborales',
     ],
 ];
 

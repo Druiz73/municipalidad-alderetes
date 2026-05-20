@@ -53,7 +53,7 @@
                 <h4 class="font-semibold text-lg mb-6 text-white opacity-0">.</h4>
                 <ul class="space-y-3">
                     <li><a href="<?php echo esc_url(home_url('/rentas')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Rentas</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/salud')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Salud</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/oficina-empleo')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Oficina de Empleo</a></li>
                     <li><a href="<?php echo esc_url(home_url('/seguridad')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Seguridad</a></li>
                     <li><a href="<?php echo esc_url(home_url('/transito')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Tránsito</a></li>
                     <li><a href="<?php echo esc_url(home_url('/tribunal-de-faltas')); ?>" class="text-gray-300 hover:text-alderetes-gold transition-colors text-sm">Tribunal de Faltas</a></li>

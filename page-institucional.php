@@ -32,7 +32,7 @@ get_header();
             </div>
 
             <p class="mb-6 leading-relaxed">
-                A través de nuestras diversas áreas y secretarías, coordinamos acciones que abarcan desde obras públicas y salud hasta cultura y seguridad, siempre con el vecino como prioridad fundamental.
+                A través de nuestras diversas áreas y secretarías, coordinamos acciones que abarcan desde obras públicas y empleo hasta cultura y seguridad, siempre con el vecino como prioridad fundamental.
             </p>
         </div>
     </div>
