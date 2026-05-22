@@ -24,6 +24,7 @@ $categorias = [
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico clase \"C\".",
+                    "* Casilla de correo obligatoria.",
                 ],
             ],
             [
@@ -34,6 +35,7 @@ $categorias = [
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico clase \"D\".",
                     "Certificado Nacional de Antecedentes Penales clase \"D\".",
+                    "* Casilla de correo obligatoria.",
                 ],
             ],
             [
@@ -43,6 +45,17 @@ $categorias = [
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico clase \"E\".",
+                    "* Casilla de correo obligatoria.",
+                ],
+            ],
+            [
+                "titulo" => "Renovaciones Profesionales – Interjurisdiccional (Nacional)",
+                "reqs"   => [
+                    "Sólo impresión: E1 - D2 - D3 - C3.",
+                    "Fotocopia de DNI.",
+                    "Libre deuda.",
+                    "Certificado cargas generales o cargas peligrosas.",
+                    "Psicofísico impreso.",
                 ],
             ],
         ],
@@ -59,6 +72,7 @@ $categorias = [
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico (principiantes, originales a partir de los 3 meses de su vencimiento y clases \"C\").",
+                    "* Mayor de 21 años.",
                     "CURSOS: curso.seguridadvial.gob.ar (Auto, género y estrella amarilla).",
                     "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
                 ],
@@ -71,6 +85,7 @@ $categorias = [
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico (principiantes, originales a partir de los 3 meses de su vencimiento y clases \"D\").",
                     "Certificado de Antecedentes Penales Nacional (clase \"D\").",
+                    "* Mayor de 21 años.",
                     "CURSOS: curso.seguridadvial.gob.ar (Auto, género y estrella amarilla).",
                     "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
                 ],
@@ -82,6 +97,7 @@ $categorias = [
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico.",
+                    "* Mayor de 21 años.",
                     "CURSOS: curso.seguridadvial.gob.ar (Auto, género y estrella amarilla).",
                     "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
                 ],
@@ -99,6 +115,7 @@ $categorias = [
                     "Fotocopia de DNI y original a la vista.",
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
+                    "* Correo electrónico.",
                 ],
             ],
             [
@@ -108,6 +125,7 @@ $categorias = [
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Mayores de 65 años: electrocardiograma más informe.",
+                    "* Correo electrónico.",
                 ],
             ],
             [
@@ -118,6 +136,7 @@ $categorias = [
                     "Libre deuda Municipal (llevar cédula de identificación).",
                     "Análisis: Grupo sanguíneo, Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico (principiantes).",
+                    "* Saber leer y escribir.",
                     "CURSOS: curso.seguridadvial.gob.ar (Auto, moto, género y estrella amarilla).",
                     "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
                 ],
@@ -130,6 +149,7 @@ $categorias = [
                     "Análisis: Glucemia, Colesterol y Triglicéridos.",
                     "Informe psicológico (principiantes).",
                     "Menores de 18: autorización de padre, madre o tutor en entidad policial, más copia de DNI.",
+                    "* Saber leer y escribir.",
                     "CURSOS: curso.seguridadvial.gob.ar (Auto, moto, género y estrella amarilla).",
                     "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
                 ],
@@ -224,25 +244,44 @@ $color_map = [
                         <span class="w-2 h-2 <?php echo $c['dot']; ?> rounded-full mt-1.5 shrink-0"></span>
                         <?php echo esc_html($cat['titulo']); ?>
                     </h3>
+                    <?php
+                    $normal_reqs = [];
+                    $featured_reqs = [];
+                    foreach ($cat['reqs'] as $req) {
+                        if (strpos($req, 'CURSOS') !== false || strpos($req, 'Examen') !== false) {
+                            $featured_reqs[] = $req;
+                        } else {
+                            $normal_reqs[] = $req;
+                        }
+                    }
+                    ?>
                     <ul class="space-y-2.5 flex-1">
-                        <?php foreach ($cat['reqs'] as $req):
-                            $is_curso = (strpos($req, 'CURSOS') !== false);
-                            $is_examen = (strpos($req, 'Examen') !== false);
+                        <?php foreach ($normal_reqs as $req):
+                            $display_req = (strpos($req, '*') === 0) ? ltrim($req, '* ') : $req;
                         ?>
-                        <li class="flex items-start gap-2.5 text-sm <?php echo ($is_curso || $is_examen) ? 'bg-blue-50 border border-blue-100 rounded-lg px-3 py-2' : ''; ?>">
-                            <?php if ($is_curso): ?>
-                                <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                                <span class="text-blue-700 font-medium"><?php echo esc_html($req); ?></span>
-                            <?php elseif ($is_examen): ?>
-                                <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                                <span class="text-blue-700 font-medium"><?php echo esc_html($req); ?></span>
-                            <?php else: ?>
-                                <svg class="w-4 h-4 <?php echo $c['check']; ?> mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                <span class="text-gray-600"><?php echo esc_html($req); ?></span>
-                            <?php endif; ?>
+                        <li class="flex items-start gap-2.5 text-sm">
+                            <svg class="w-4 h-4 <?php echo $c['check']; ?> mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span class="text-gray-600"><?php echo esc_html($display_req); ?></span>
                         </li>
                         <?php endforeach; ?>
                     </ul>
+                    <?php if (!empty($featured_reqs)) : ?>
+                    <div class="mt-4 space-y-3">
+                        <?php foreach ($featured_reqs as $req):
+                            $is_curso = (strpos($req, 'CURSOS') !== false);
+                            $display_req = (strpos($req, '*') === 0) ? ltrim($req, '* ') : $req;
+                        ?>
+                        <div class="flex items-start gap-2.5 text-sm bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
+                            <?php if ($is_curso): ?>
+                                <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            <?php else: ?>
+                                <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            <?php endif; ?>
+                            <span class="text-blue-700 font-medium"><?php echo esc_html($display_req); ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
             </div>
