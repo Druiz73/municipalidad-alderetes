@@ -7,135 +7,133 @@
 
 get_header();
 
+if (!function_exists('alderetes_funcionario_image_url')) {
+    function alderetes_funcionario_image_url($path) {
+        $segments = array_map('rawurlencode', explode('/', $path));
+        return get_template_directory_uri() . '/' . implode('/', $segments);
+    }
+}
+
 $estructura = [
     [
         'secretaria' => 'Secretaría de Gobierno',
         'titular'    => 'Aldo Gabriel Salomón',
+        'imagen'     => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/Secretario de Gobierno - ALDO GABRIEL SALOMÓN.jpg',
         'color'      => 'blue',
         'subsecretarias' => [
             [
                 'cargo'   => 'Subsecretaría de Gobierno',
                 'titular' => 'Dr. Pablo Saldívar',
+                'imagen'  => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Subsecretario de Gobierno - Dr. Pablo Saldívar.jpg',
                 'direcciones' => [
-                    ['cargo' => 'Dirección de Despacho',                  'titular' => 'Dra. Jessica Pérez'],
-                    ['cargo' => 'Dirección de Relaciones Institucionales', 'titular' => 'Dra. Silvia Moyano'],
-                    ['cargo' => 'Dirección de Defensa Civil',              'titular' => 'Adrián Campos'],
-                    ['cargo' => 'Dirección de la Función Pública',         'titular' => 'Domingo López'],
-                    ['cargo' => 'Dirección de Transporte Público',         'titular' => 'Rodríguez'],
+                    ['cargo' => 'Dirección de Despacho',                  'titular' => 'Dra. Jessica Pérez', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de Despacho/Dra. Jessica Pérez.jpg'],
+                    ['cargo' => 'Dirección de Relaciones Institucionales', 'titular' => 'Dra. Silvia Moyano', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de Relaciones Institucionales/Dra. Silvia Moyano.jpg'],
+                    ['cargo' => 'Dirección de Defensa Civil',              'titular' => 'Adrián Campos',      'imagen' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de Defensa Civil/Adrián Campos.jpg'],
+                    ['cargo' => 'Dirección de la Función Pública',         'titular' => 'Domingo López',      'imagen' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de la Función Pública/Domingo López.jpg'],
                 ],
             ],
         ],
     ],
     [
-        'secretaria' => 'Secretaría de Cultura y Educación',
+        'secretaria' => 'Secretaría de Educación',
         'titular'    => 'Lic. Rosana Sansone',
+        'imagen'     => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Secr. de Educación - Lic. Rosana Sansone.jpg',
         'color'      => 'purple',
         'subsecretarias' => [],
         'direcciones_directas' => [
-            ['cargo' => 'Dirección de Integración y Promoción Cultural',      'titular' => 'Prof. José Romano'],
-            ['cargo' => 'Dirección de Coordinación e Integración Educativa',  'titular' => 'Lic. David Ponce'],
+            ['cargo' => 'Dirección de Integración y Promoción Cultural',     'titular' => 'Prof. José Romano', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Dirección de Integración y Promoción Cultural/Prof. José Romano.jpg'],
         ],
     ],
     [
         'secretaria' => 'Secretaría de Hacienda',
         'titular'    => 'Luis Romano',
+        'imagen'     => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Secretario de Hacienda - Luis Romano.jpg',
         'color'      => 'green',
         'subsecretarias' => [
             [
                 'cargo'   => 'Subsecretaría de Economía y Hacienda',
-                'titular' => 'Martín Soro',
+                'titular' => '',
                 'direcciones' => [
-                    ['cargo' => 'Dirección de Administración',            'titular' => 'Ctdor. Franco Casavalle'],
-                    ['cargo' => 'Dirección de Compras y Contrataciones',  'titular' => 'César Barrera'],
-                    ['cargo' => 'Dirección de Sistemas',                  'titular' => 'Ing. Cecilia Palavecino'],
-                    ['cargo' => 'Dirección de Tesorería General',         'titular' => 'C.P.N. Denis Pérez Díaz'],
+                    ['cargo' => 'Dirección de Compras y Contrataciones', 'titular' => 'César Barrera',          'imagen' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Hacienda/Dirección de Compras y Contrataciones/César Barrera.jpg'],
+                    ['cargo' => 'Dirección de Sistemas',                 'titular' => 'Ing. Cecilia Palavecino', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Hacienda/Dirección de Sistemas/Ing. Cecilia Palavecino.jpg'],
                 ],
             ],
             [
                 'cargo'   => 'Subsecretaría de Ingresos Públicos',
-                'titular' => '',
+                'titular' => 'Dr. Sergio Altamiranda',
+                'imagen'  => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Ingresos Públicos/Dr. Sergio Altamiranda.jpg',
                 'direcciones' => [],
             ],
         ],
     ],
     [
         'secretaria' => 'Secretaría de Obras Públicas',
-        'titular'    => 'Patricio Figueroa',
+        'titular'    => '',
         'color'      => 'orange',
         'subsecretarias' => [
             [
                 'cargo'   => 'Subsecretaría de Obras Públicas',
-                'titular' => 'Ing. Gustavo Bossini',
+                'titular' => '',
                 'direcciones' => [
-                    ['cargo' => 'Dirección de Obras Públicas',                              'titular' => 'Ing. Federico Díaz'],
-                    ['cargo' => 'Dirección de Alumbrado Público',                           'titular' => 'Osvaldo Escobar'],
-                    ['cargo' => 'Dirección de Servicios Públicos',                          'titular' => 'Víctor Jaime'],
-                    ['cargo' => 'Dirección de Espacios Verdes',                             'titular' => 'Alfredo Sánchez'],
-                    ['cargo' => 'Dirección de Cuidados del Ambiente y Gestión de Residuos', 'titular' => 'Arq. Manuel Flores'],
-                    ['cargo' => 'Jefatura de Mantenimiento Urbano',                         'titular' => 'Antonio Cardozo'],
-                    ['cargo' => 'Jefatura de Saneamiento Ambiental',                        'titular' => 'Raúl Lazarte'],
-                    ['cargo' => 'Dirección de Información Catastral y Cartografía',         'titular' => 'Arq. Joaquín García Arenas'],
-                    ['cargo' => 'Dirección de Proyectos y Hábitat',                         'titular' => 'Arq. Adrián Serrizuela'],
+                    ['cargo' => 'Dirección de Alumbrado Público',    'titular' => 'Osvaldo Escobar',  'imagen' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Dirección de Alumbrado Público/Osvaldo Escobar.jpg'],
+                    ['cargo' => 'Dirección de Espacios Verdes',      'titular' => 'Alfredo Sánchez',  'imagen' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Dirección de Espacios Verde/Alfredo Sanchez.jpg'],
+                    ['cargo' => 'Jefatura de Saneamiento Ambiental', 'titular' => 'Raúl Lazarte',     'imagen' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Jefatura de Saneamiento Ambiental/Raúl Lazarte.jpg'],
                 ],
-            ],
-            [
-                'cargo'   => 'Unidad Ejecutora Municipal',
-                'titular' => 'Ing. Oscar Parrado',
-                'direcciones' => [],
             ],
         ],
     ],
     [
         'secretaria' => 'Secretaría de Políticas Sociales',
-        'titular'    => 'Dra. Noemí Salomón',
+        'titular'    => '',
         'color'      => 'pink',
         'subsecretarias' => [],
         'direcciones_directas' => [
-            ['cargo' => 'Dirección de Acción Social',         'titular' => 'José Amado Ale'],
-            ['cargo' => 'Dirección de Deportes y Recreación', 'titular' => 'Prof. Hernán Caldas'],
+            ['cargo' => 'Dirección de Acción Social',         'titular' => 'José Amado Ale',     'imagen' => 'resources/images/funcionarios/SECRETARIA DE POLÍTICAS SOCIALES/Dirección de Acción Social/José Amado Ale.jpg'],
+            ['cargo' => 'Dirección de Deportes y Recreación', 'titular' => 'Prof. Hernán Caldas', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE POLÍTICAS SOCIALES/Dirección de Deportes y Recreación/Prof. Hernán Caldas.jpg'],
         ],
     ],
     [
         'secretaria' => 'Secretaría de Coordinación',
         'titular'    => 'Pablo Caldas',
+        'imagen'     => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Coord. General - Pablo Caldas.jpg',
         'color'      => 'teal',
         'subsecretarias' => [
             [
                 'cargo'   => 'Subsecretaría de Información Pública',
                 'titular' => 'Juan Mafhoud',
+                'imagen'  => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Subsecretaría de Información Pública/Juan Mafhoud.jpg',
                 'direcciones' => [],
             ],
             [
                 'cargo'   => 'Subsecretaría de Multimedios y Difusión',
                 'titular' => 'Hugo García',
+                'imagen'  => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Subsecretaría de Multimedios y Difusión/Hugo García.jpg',
                 'direcciones' => [],
             ],
         ],
         'direcciones_directas' => [
-            ['cargo' => 'Dirección de Desarrollo y Economía Social',        'titular' => 'Ramón Galarce'],
-            ['cargo' => 'Dirección de Empleo y Emprendimiento Productivo',  'titular' => 'Marcos Altamiranda'],
+            ['cargo' => 'Dirección de Empleo', 'titular' => 'Marcos Altamiranda', 'imagen' => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Dirección de Empleo/Marcos Altamiranda.jpg'],
         ],
     ],
     [
         'secretaria' => 'Secretaría de Protección Ciudadana',
-        'titular'    => 'Julio Romano',
+        'titular'    => '',
         'color'      => 'red',
         'subsecretarias' => [],
         'direcciones_directas' => [
-            ['cargo' => 'Dirección de Prevención del Delito y la Violencia', 'titular' => 'Genaro Soria'],
-            ['cargo' => 'Tribunal de Faltas',                                'titular' => 'Dra. María de los Ángeles Luque'],
+            ['cargo' => 'Tribunal de Faltas', 'titular' => 'Dra. María de Los Ángeles Luque', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE PROTECCIÓN CIUDADANA/Tribunal de Faltas/Dra. María de Los Ángeles Luque.jpg'],
         ],
     ],
 ];
 
 $color_map = [
-    'blue'   => ['light' => 'bg-blue-50',   'border' => 'border-blue-200',   'text' => 'text-blue-700',   'hex' => '#60a5fa'],
-    'purple' => ['light' => 'bg-purple-50', 'border' => 'border-purple-200', 'text' => 'text-purple-700', 'hex' => '#c084fc'],
-    'green'  => ['light' => 'bg-emerald-50','border' => 'border-emerald-200','text' => 'text-emerald-700','hex' => '#34d399'],
-    'orange' => ['light' => 'bg-orange-50', 'border' => 'border-orange-200', 'text' => 'text-orange-700', 'hex' => '#fb923c'],
-    'pink'   => ['light' => 'bg-pink-50',   'border' => 'border-pink-200',   'text' => 'text-pink-700',   'hex' => '#f472b6'],
-    'teal'   => ['light' => 'bg-teal-50',   'border' => 'border-teal-200',   'text' => 'text-teal-700',   'hex' => '#2dd4bf'],
-    'red'    => ['light' => 'bg-red-50',    'border' => 'border-red-200',    'text' => 'text-red-700',    'hex' => '#f87171'],
+    'blue'   => ['hex' => '#60a5fa'],
+    'purple' => ['hex' => '#c084fc'],
+    'green'  => ['hex' => '#34d399'],
+    'orange' => ['hex' => '#fb923c'],
+    'pink'   => ['hex' => '#f472b6'],
+    'teal'   => ['hex' => '#2dd4bf'],
+    'red'    => ['hex' => '#f87171'],
 ];
 ?>
 
@@ -189,13 +187,21 @@ $color_map = [
                 <button onclick="toggleSec('<?php echo $id; ?>')"
                         class="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-gray-50 transition-colors">
                     <div class="flex items-center gap-4">
-                        <div class="w-3 h-3 rounded-full shrink-0" style="background-color:<?php echo $c['hex']; ?>"></div>
+                        <?php if (!empty($sec['imagen'])): ?>
+                            <img src="<?php echo esc_url(alderetes_funcionario_image_url($sec['imagen'])); ?>"
+                                 alt="<?php echo esc_attr($sec['titular']); ?>"
+                                 class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
+                        <?php else: ?>
+                            <div class="w-20 h-20 rounded-full shrink-0 flex items-center justify-center bg-gray-50 border border-gray-100">
+                                <span class="w-3 h-3 rounded-full" style="background-color:<?php echo esc_attr($c['hex']); ?>"></span>
+                            </div>
+                        <?php endif; ?>
                         <div>
                             <p class="font-bold text-gray-900 text-base leading-tight"><?php echo esc_html($sec['secretaria']); ?></p>
                             <?php if (!empty($sec['titular'])): ?>
                                 <p class="text-sm text-gray-500 mt-0.5"><?php echo esc_html($sec['titular']); ?></p>
                             <?php else: ?>
-                                <p class="text-sm text-gray-300 italic mt-0.5">— Por confirmar —</p>
+                                <p class="text-sm text-gray-300 italic mt-0.5">Área municipal</p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -208,22 +214,40 @@ $color_map = [
                 <div id="<?php echo $id; ?>" class="hidden border-t border-gray-100 px-5 pb-5 pt-4 space-y-4">
 
                     <?php foreach ($sec['subsecretarias'] as $sub): ?>
-                    <div class="<?php echo $c['light']; ?> <?php echo $c['border']; ?> border rounded-xl p-4">
-                        <p class="text-xs font-bold <?php echo $c['text']; ?> uppercase tracking-wide mb-0.5">Subsecretaría</p>
-                        <p class="font-bold text-gray-800"><?php echo esc_html($sub['cargo']); ?></p>
-                        <?php if (!empty($sub['titular'])): ?>
-                            <p class="text-sm text-gray-500"><?php echo esc_html($sub['titular']); ?></p>
-                        <?php endif; ?>
+                    <div class="rounded-xl border border-gray-100 bg-white p-4 shadow-sm" style="border-left:4px solid <?php echo esc_attr($c['hex']); ?>;">
+                        <div class="flex items-center gap-4">
+                            <?php if (!empty($sub['imagen'])): ?>
+                                <img src="<?php echo esc_url(alderetes_funcionario_image_url($sub['imagen'])); ?>"
+                                     alt="<?php echo esc_attr($sub['titular']); ?>"
+                                     class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
+                            <?php endif; ?>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide mb-1" style="color:<?php echo esc_attr($c['hex']); ?>;">Subsecretaría</p>
+                                <p class="font-bold text-gray-900 leading-tight"><?php echo esc_html($sub['cargo']); ?></p>
+                                <?php if (!empty($sub['titular'])): ?>
+                                    <p class="text-sm text-gray-500 mt-0.5"><?php echo esc_html($sub['titular']); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
 
                         <?php if (!empty($sub['direcciones'])): ?>
-                        <div class="mt-3 space-y-2 pl-3 border-l-2 <?php echo $c['border']; ?>">
+                        <div class="mt-4 space-y-3 pl-4 border-l border-gray-200">
                             <?php foreach ($sub['direcciones'] as $dir): ?>
-                            <div class="flex items-start gap-2">
-                                <div class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style="background-color:<?php echo $c['hex']; ?>"></div>
+                            <div class="flex items-center gap-4 rounded-lg bg-gray-50/80 p-3">
+                                <?php if (!empty($dir['imagen'])): ?>
+                                    <img src="<?php echo esc_url(alderetes_funcionario_image_url($dir['imagen'])); ?>"
+                                         alt="<?php echo esc_attr($dir['titular']); ?>"
+                                         class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
+                                <?php else: ?>
+                                    <div class="w-20 h-20 rounded-full shrink-0 flex items-center justify-center bg-white border border-gray-100">
+                                        <span class="w-2 h-2 rounded-full" style="background-color:<?php echo esc_attr($c['hex']); ?>"></span>
+                                    </div>
+                                <?php endif; ?>
                                 <div>
-                                    <p class="text-sm font-semibold text-gray-700 leading-tight"><?php echo esc_html($dir['cargo']); ?></p>
+                                    <p class="text-xs font-bold uppercase tracking-wide mb-1" style="color:<?php echo esc_attr($c['hex']); ?>;">Dirección</p>
+                                    <p class="text-sm font-semibold text-gray-800 leading-tight"><?php echo esc_html($dir['cargo']); ?></p>
                                     <?php if (!empty($dir['titular'])): ?>
-                                        <p class="text-xs text-gray-400"><?php echo esc_html($dir['titular']); ?></p>
+                                        <p class="text-sm text-gray-500 mt-0.5"><?php echo esc_html($dir['titular']); ?></p>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -234,14 +258,23 @@ $color_map = [
                     <?php endforeach; ?>
 
                     <?php if ($has_dir_directas): ?>
-                    <div class="space-y-2 pl-3 border-l-2 <?php echo $c['border']; ?>">
+                    <div class="space-y-3">
                         <?php foreach ($sec['direcciones_directas'] as $dir): ?>
-                        <div class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style="background-color:<?php echo $c['hex']; ?>"></div>
+                        <div class="flex items-center gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-sm" style="border-left:4px solid <?php echo esc_attr($c['hex']); ?>;">
+                            <?php if (!empty($dir['imagen'])): ?>
+                                <img src="<?php echo esc_url(alderetes_funcionario_image_url($dir['imagen'])); ?>"
+                                     alt="<?php echo esc_attr($dir['titular']); ?>"
+                                     class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
+                            <?php else: ?>
+                                <div class="w-20 h-20 rounded-full shrink-0 flex items-center justify-center bg-gray-50 border border-gray-100">
+                                    <span class="w-2 h-2 rounded-full" style="background-color:<?php echo esc_attr($c['hex']); ?>"></span>
+                                </div>
+                            <?php endif; ?>
                             <div>
-                                <p class="text-sm font-semibold text-gray-700 leading-tight"><?php echo esc_html($dir['cargo']); ?></p>
+                                <p class="text-xs font-bold uppercase tracking-wide mb-1" style="color:<?php echo esc_attr($c['hex']); ?>;">Dirección</p>
+                                <p class="text-sm font-semibold text-gray-800 leading-tight"><?php echo esc_html($dir['cargo']); ?></p>
                                 <?php if (!empty($dir['titular'])): ?>
-                                    <p class="text-xs text-gray-400"><?php echo esc_html($dir['titular']); ?></p>
+                                    <p class="text-sm text-gray-500 mt-0.5"><?php echo esc_html($dir['titular']); ?></p>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ $categorias = [
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>',
         "items"  => [
             [
-                "titulo" => "Renovación Categoría \"C\"",
+                "titulo" => "Renovación Categoría \"C1-C2\"",
                 "reqs"   => [
                     "Fotocopia de DNI y original a la vista.",
                     "Libre deuda Municipal (llevar cédula de identificación).",
@@ -28,7 +28,7 @@ $categorias = [
                 ],
             ],
             [
-                "titulo" => "Renovación Categoría \"D\"",
+                "titulo" => "Renovación Categoría \"D1-D2-D3\"",
                 "reqs"   => [
                     "Fotocopia de DNI y original a la vista.",
                     "Libre deuda Municipal (llevar cédula de identificación).",
@@ -39,7 +39,7 @@ $categorias = [
                 ],
             ],
             [
-                "titulo" => "Renovación Categoría \"E\"",
+                "titulo" => "Renovación Categoría \"E2\"",
                 "reqs"   => [
                     "Fotocopia de DNI y original a la vista.",
                     "Libre deuda Municipal (llevar cédula de identificación).",

@@ -248,9 +248,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_P
                             class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alderetes-blue focus:ring-2 focus:ring-blue-100 transition-all bg-white">
                         <option value="">Seleccioná una categoría...</option>
                         <option value="Renovación A+B (Particular)">Renovación A+B (Particular)</option>
-                        <option value="Renovación C (Profesional)">Renovación C (Profesional)</option>
-                        <option value="Renovación D (Profesional)">Renovación D (Profesional)</option>
-                        <option value="Renovación E (Profesional)">Renovación E (Profesional)</option>
+                        <option value="Renovación C1-C2 (Profesional)">Renovación C1-C2 (Profesional)</option>
+                        <option value="Renovación D1-D2-D3 (Profesional)">Renovación D1-D2-D3 (Profesional)</option>
+                        <option value="Renovación E2 (Profesional)">Renovación E2 (Profesional)</option>
                         <option value="Ampliación C">Ampliación C</option>
                         <option value="Ampliación D">Ampliación D</option>
                         <option value="Ampliación E">Ampliación E</option>
