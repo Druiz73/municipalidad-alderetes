@@ -42,6 +42,7 @@ $estructura = [
         'subsecretarias' => [],
         'direcciones_directas' => [
             ['cargo' => 'Dirección de Integración y Promoción Cultural',     'titular' => 'Prof. José Romano', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Dirección de Integración y Promoción Cultural/Prof. José Romano.jpg'],
+            ['cargo' => 'Dirección de Coordinación e Integración Educativa', 'titular' => 'Prof. José Romano', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Dirección de Coordinación e Integración Educativa/Prof. José Romano.jpg'],
         ],
     ],
     [
@@ -52,10 +53,13 @@ $estructura = [
         'subsecretarias' => [
             [
                 'cargo'   => 'Subsecretaría de Economía y Hacienda',
-                'titular' => '',
+                'titular' => 'Martín Soro',
+                'imagen'  => 'resources/images/funcionarios/Martin Soro - Subsecretaría de Hacienda.jpg',
                 'direcciones' => [
+                    ['cargo' => 'Dirección de Administración',           'titular' => 'Ctdor. Franco Casavalle', 'imagen' => 'resources/images/funcionarios/Ctdor. Franco Casavalle - Dirección de Administración.jpg'],
                     ['cargo' => 'Dirección de Compras y Contrataciones', 'titular' => 'César Barrera',          'imagen' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Hacienda/Dirección de Compras y Contrataciones/César Barrera.jpg'],
                     ['cargo' => 'Dirección de Sistemas',                 'titular' => 'Ing. Cecilia Palavecino', 'imagen' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Hacienda/Dirección de Sistemas/Ing. Cecilia Palavecino.jpg'],
+                    ['cargo' => 'Dirección de Tesorería General',        'titular' => 'CPN. Denis Pérez Díaz',   'imagen' => 'resources/images/funcionarios/CPN. Denis Pérez Díaz -  Dirección de Tesorería General.jpg'],
                 ],
             ],
             [
@@ -68,17 +72,26 @@ $estructura = [
     ],
     [
         'secretaria' => 'Secretaría de Obras Públicas',
-        'titular'    => '',
+        'titular'    => 'Patricio Figueroa',
+        'imagen'     => 'resources/images/funcionarios/Patricio Figueroa - Secretario de Obras Públicas.jpg',
         'color'      => 'orange',
         'subsecretarias' => [
             [
                 'cargo'   => 'Subsecretaría de Obras Públicas',
                 'titular' => '',
                 'direcciones' => [
+                    ['cargo' => 'Dirección de Obras Públicas',                      'titular' => 'Ing. Federico Díaz',          'imagen' => 'resources/images/funcionarios/Ing. Federico Díaz - Dirección de Obras Públicas.jpg'],
                     ['cargo' => 'Dirección de Alumbrado Público',    'titular' => 'Osvaldo Escobar',  'imagen' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Dirección de Alumbrado Público/Osvaldo Escobar.jpg'],
                     ['cargo' => 'Dirección de Espacios Verdes',      'titular' => 'Alfredo Sánchez',  'imagen' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Dirección de Espacios Verde/Alfredo Sanchez.jpg'],
                     ['cargo' => 'Jefatura de Saneamiento Ambiental', 'titular' => 'Raúl Lazarte',     'imagen' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Jefatura de Saneamiento Ambiental/Raúl Lazarte.jpg'],
+                    ['cargo' => 'Dirección de Información Catastral y Cartografía', 'titular' => 'Arq. Joaquín García Arenas', 'imagen' => 'resources/images/funcionarios/Arq. Joaquín García Arenas- Dirección de Información Catastral y Cartografía.jpg'],
                 ],
+            ],
+            [
+                'cargo'   => 'Unidad Ejecutora Municipal',
+                'titular' => 'Ing. Oscar Parrado',
+                'imagen'  => 'resources/images/funcionarios/Ing. Oscar Parrado -  Unidad Ejecutora Municipal.jpg',
+                'direcciones' => [],
             ],
         ],
     ],
