@@ -5,6 +5,7 @@ if (is_file(__DIR__.'/vendor/autoload_packages.php')) {
 }
 
 require_once __DIR__ . '/inc/ui.php';
+require_once __DIR__ . '/inc/editable-content.php';
 
 function tailpress(): TailPress\Framework\Theme
 {

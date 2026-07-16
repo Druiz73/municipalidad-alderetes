@@ -148,16 +148,17 @@ $color_map = [
     'teal'   => ['hex' => '#2dd4bf'],
     'red'    => ['hex' => '#f87171'],
 ];
+$mayor_photo_url = tp_content_image_url( 'mayor_photo' );
 ?>
 
 <!-- Hero -->
 <section class="relative py-20 bg-gradient-to-br from-alderetes-orange via-alderetes-blue to-alderetes-green overflow-hidden text-white">
     <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
     <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
-        <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm">Período 2023 – 2027</span>
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Organigrama Municipal</h1>
+        <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm"><?php echo esc_html( tp_content( 'hero_period' ) ); ?></span>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4"><?php echo esc_html( tp_content( 'hero_title' ) ); ?></h1>
         <div class="w-20 h-1 bg-alderetes-orange mx-auto rounded-full mb-4"></div>
-        <p class="text-white/70 max-w-xl mx-auto text-lg">Estructura de gobierno de la Municipalidad de Alderetes bajo la gestión de la Intendenta Graciela Gutiérrez.</p>
+        <p class="text-white/70 max-w-xl mx-auto text-lg"><?php echo esc_html( tp_content( 'hero_text' ) ); ?></p>
     </div>
 </section>
 
@@ -168,16 +169,22 @@ $color_map = [
         <div class="flex justify-center mb-10">
             <div class="bg-white rounded-3xl shadow-xl border-2 border-alderetes-orange p-8 text-center w-full max-w-sm relative">
                 <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-alderetes-orange text-white text-xs font-bold px-4 py-1 rounded-full shadow">
-                    Poder Ejecutivo
+                    <?php echo esc_html( tp_content( 'executive_label' ) ); ?>
                 </div>
-                <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-alderetes-orange to-orange-400 flex items-center justify-center shadow-lg">
-                    <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
-                </div>
-                <span class="inline-block bg-alderetes-orange/10 text-alderetes-orange text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-wider">Intendenta</span>
-                <h2 class="text-2xl font-black text-gray-900">Graciela Gutiérrez</h2>
-                <p class="text-gray-400 text-sm mt-1">Período 2023 – 2027</p>
+                <?php if ( $mayor_photo_url ) : ?>
+                    <img src="<?php echo esc_url( $mayor_photo_url ); ?>"
+                         alt="<?php echo esc_attr( tp_content( 'mayor_name' ) ); ?>"
+                         class="w-20 h-20 mx-auto mb-4 rounded-full object-cover border-2 border-white shadow-lg">
+                <?php else : ?>
+                    <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-alderetes-orange to-orange-400 flex items-center justify-center shadow-lg">
+                        <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                    </div>
+                <?php endif; ?>
+                <span class="inline-block bg-alderetes-orange/10 text-alderetes-orange text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-wider"><?php echo esc_html( tp_content( 'mayor_role' ) ); ?></span>
+                <h2 class="text-2xl font-black text-gray-900"><?php echo esc_html( tp_content( 'mayor_name' ) ); ?></h2>
+                <p class="text-gray-400 text-sm mt-1"><?php echo esc_html( tp_content( 'mayor_period' ) ); ?></p>
             </div>
         </div>
 
@@ -305,15 +312,15 @@ $color_map = [
             <svg class="w-10 h-10 mx-auto mb-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
             </svg>
-            <span class="inline-block bg-white/10 text-white/80 text-xs font-bold px-4 py-1 rounded-full mb-3 uppercase tracking-wider">Poder Legislativo Local</span>
-            <h3 class="text-2xl font-black mb-2">Honorable Concejo Deliberante</h3>
+            <span class="inline-block bg-white/10 text-white/80 text-xs font-bold px-4 py-1 rounded-full mb-3 uppercase tracking-wider"><?php echo esc_html( tp_content( 'legislative_label' ) ); ?></span>
+            <h3 class="text-2xl font-black mb-2"><?php echo esc_html( tp_content( 'legislative_title' ) ); ?></h3>
             <p class="text-gray-400 max-w-lg mx-auto text-sm leading-relaxed">
-                El HCD es el órgano legislativo del Municipio, encargado de representar a la comunidad y de dictar las normas que regulan la vida local.
+                <?php echo esc_html( tp_content( 'legislative_text' ) ); ?>
             </p>
         </div>
 
         <p class="text-center text-xs text-gray-400 mt-8 italic">
-            * La información del organigrama se actualiza conforme a los cambios oficiales en la estructura municipal.
+            <?php echo esc_html( tp_content( 'update_note' ) ); ?>
         </p>
 
     </div>

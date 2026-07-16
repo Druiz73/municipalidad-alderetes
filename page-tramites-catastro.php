@@ -7,9 +7,9 @@
 
 get_header();
 
-$hero_image_url = get_template_directory_uri() . '/resources/images/direccion-catastro.jpeg';
+$hero_image_url = tp_content_image_url( 'hero_image' );
 $area_title     = 'Catastro';
-$area_tagline   = 'Gestión, registro y actualización de la información territorial del municipio.';
+$area_tagline   = tp_content( 'hero_tagline' );
 
 $descargas = [
     [
@@ -71,15 +71,11 @@ $descargas = [
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
-                        <h2 class="text-2xl font-bold text-gray-900">¿Qué hacemos?</h2>
+                        <h2 class="text-2xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'intro_heading' ) ); ?></h2>
                     </div>
                     <div class="space-y-4 text-gray-600 leading-relaxed">
-                        <p>
-                            El Área de Catastro de la Municipalidad de Alderetes es responsable de la <strong class="text-gray-800">gestión, registro y actualización</strong> de la información territorial del municipio. Esta área mantiene el registro de todas las parcelas, propiedades y modificaciones territoriales dentro del ejido municipal.
-                        </p>
-                        <p>
-                            Brindamos servicios de <strong class="text-gray-800">consulta catastral, emisión de certificados, aprobación de planos de mensura y subdivisión</strong>, y asesoramiento técnico para trámites relacionados con la propiedad inmueble.
-                        </p>
+                        <p><?php echo wp_kses_post( tp_content( 'intro_1' ) ); ?></p>
+                        <p><?php echo wp_kses_post( tp_content( 'intro_2' ) ); ?></p>
                     </div>
                 </div>
 
@@ -89,7 +85,7 @@ $descargas = [
                         <svg class="w-6 h-6 text-alderetes-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                         </svg>
-                        <h2 class="text-2xl font-bold text-gray-900">Descargas</h2>
+                        <h2 class="text-2xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'downloads_heading' ) ); ?></h2>
                         <div class="flex-1 h-px bg-gray-200"></div>
                     </div>
 
@@ -107,7 +103,7 @@ $descargas = [
                                 <p class="font-semibold text-gray-800 group-hover:text-alderetes-orange transition-colors text-sm leading-tight"><?php echo esc_html($archivo['nombre']); ?></p>
                                 <span class="inline-flex items-center gap-1 mt-1.5 text-xs bg-gray-100 group-hover:bg-orange-100 text-gray-500 group-hover:text-alderetes-orange px-2 py-0.5 rounded-full transition-all">
                                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    Descargar PDF
+                                    <?php echo esc_html( tp_content( 'download_button' ) ); ?>
                                 </span>
                             </div>
                             <!-- Flecha -->
@@ -126,15 +122,15 @@ $descargas = [
 
                     <!-- Atención -->
                     <div class="bg-gray-900 text-white rounded-2xl p-6 shadow-xl">
-                        <h3 class="font-bold text-base mb-5 pb-3 border-b border-white/20 uppercase tracking-wider">Atención</h3>
+                        <h3 class="font-bold text-base mb-5 pb-3 border-b border-white/20 uppercase tracking-wider"><?php echo esc_html( tp_content( 'attention_heading' ) ); ?></h3>
                         <div class="space-y-5">
                             <div class="flex items-start gap-3">
                                 <div class="p-2 bg-white/10 rounded-lg shrink-0">
                                     <svg class="w-5 h-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-white/50 uppercase font-bold mb-0.5">Dirección</p>
-                                    <p class="text-sm text-white/80">Edificio Municipal – Caseros y Urquiza</p>
+                                    <p class="text-xs text-white/50 uppercase font-bold mb-0.5"><?php echo esc_html( tp_content( 'address_label' ) ); ?></p>
+                                    <p class="text-sm text-white/80"><?php echo esc_html( tp_content( 'address' ) ); ?></p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
@@ -142,8 +138,8 @@ $descargas = [
                                     <svg class="w-5 h-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-white/50 uppercase font-bold mb-0.5">Horario</p>
-                                    <p class="text-sm text-white/80">Lunes a viernes de 08:00 a 13:00 hs</p>
+                                    <p class="text-xs text-white/50 uppercase font-bold mb-0.5"><?php echo esc_html( tp_content( 'hours_label' ) ); ?></p>
+                                    <p class="text-sm text-white/80"><?php echo esc_html( tp_content( 'hours' ) ); ?></p>
                                 </div>
                             </div>
                         </div>

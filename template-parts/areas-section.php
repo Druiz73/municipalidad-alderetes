@@ -77,6 +77,14 @@ $areas = [
         'color'       => 'bg-alderetes-blue-light',
     ],
 ];
+
+foreach (tp_content_rows('areas_cards', 'inicio') as $index => $row) {
+    if (!isset($areas[$index])) {
+        break;
+    }
+    $areas[$index]['title'] = $row[0] ?? $areas[$index]['title'];
+    $areas[$index]['description'] = $row[1] ?? $areas[$index]['description'];
+}
 ?>
 
 <section class="py-20 bg-gray-50">
@@ -84,13 +92,13 @@ $areas = [
 
         <div class="text-center mb-14">
             <span class="inline-block px-4 py-1.5 bg-alderetes-cream text-alderetes-green text-sm font-medium rounded-full mb-4 border border-[#e7dcc8]">
-                Gestión Municipal
+                <?php echo esc_html( tp_content( 'areas_badge', 'inicio' ) ); ?>
             </span>
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Áreas del Municipio
+                <?php echo esc_html( tp_content( 'areas_title', 'inicio' ) ); ?>
             </h2>
             <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                Conocé las diferentes áreas que trabajan para mejorar la calidad de vida de todos los vecinos
+                <?php echo esc_html( tp_content( 'areas_text', 'inicio' ) ); ?>
             </p>
         </div>
 

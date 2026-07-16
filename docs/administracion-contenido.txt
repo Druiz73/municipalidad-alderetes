@@ -1,0 +1,55 @@
+Administración de textos – Municipalidad de Alderetes
+Guía breve para el personal municipal
+
+¿Qué se puede editar?
+El panel permite actualizar los textos institucionales de Inicio, Institucional, Organigrama, Contacto, las principales áreas, Punto Digital, Rentas, Tránsito, Catastro y la portada del sistema de turnos.
+
+También se pueden reemplazar las cinco fotos del carrusel, las imágenes de portada de las páginas diseñadas, el logo de Punto Digital y la foto de la intendenta.
+
+El diseño, los colores, los enlaces, los íconos, las galerías automáticas y el funcionamiento de los turnos están protegidos. No hace falta usar Elementor ni editar código.
+
+Cómo cambiar un texto
+1. Entrá al dominio oficial del sitio y agregá /wp-admin.
+2. En el menú izquierdo elegí Páginas.
+3. Abrí la página que querés modificar.
+4. Buscá la caja titulada "Contenido de...".
+5. Cambiá únicamente el campo necesario.
+6. Hacé clic en Actualizar.
+7. Abrí la página pública y comprobá el resultado.
+
+Importante
+- Si un campo se deja vacío, el sitio conserva el texto original aprobado.
+- Si no se selecciona una imagen nueva, el sitio conserva automáticamente la imagen actual.
+- En los campos con varias líneas, respetá el formato indicado debajo del nombre del campo.
+- En las tarjetas, no borres el carácter | que separa el título de la descripción.
+- Para evitar errores, no cambies la plantilla, la página superior, el enlace permanente ni el título de WordPress.
+
+Cómo cambiar una imagen
+1. Abrí la página correspondiente desde Páginas.
+2. En el campo "Imagen de portada" o "Carrusel — imagen", hacé clic sobre la miniatura actual.
+3. Elegí una foto existente de la Biblioteca de medios o subí una nueva.
+4. Usá preferentemente una imagen horizontal de al menos 1600 × 900 píxeles.
+5. Hacé clic en Actualizar y revisá la página pública.
+
+Para volver a la imagen original, eliminá la selección del campo y actualizá la página. El sitio recuperará automáticamente la foto incluida en el diseño aprobado.
+
+Foto de la intendenta
+1. Abrí Páginas > Organigrama.
+2. En "Foto de la intendenta", elegí la imagen desde la biblioteca o subí la fotografía oficial.
+3. Usá preferentemente una imagen vertical o cuadrada, nítida y con el rostro centrado.
+4. Hacé clic en Actualizar.
+
+Noticias
+Las noticias, mientras esa sección esté activa, se administran desde el menú Noticias y no desde Páginas.
+
+Turnos
+Los turnos se gestionan desde Turnos de Tránsito. La edición de textos de la página de turnos no modifica los horarios ni las reservas.
+
+Rentas, TEM, CISI y Cementerio
+Estas cuatro direcciones usan una plantilla compartida. Los textos, requisitos y la imagen principal se administran desde Páginas > Rentas. Los cambios correspondientes aparecen automáticamente en TEM, CISI o Cementerio.
+
+Acción Social y Salud
+Estas páginas todavía no tienen contenido ni diseño institucional aprobado dentro del tema. No se incorporaron textos inventados. Cuando el municipio entregue el contenido, se pueden sumar al mismo sistema editable.
+
+Módulo de infracciones
+La consulta real de infracciones queda pendiente hasta que el municipio entregue una fuente de datos válida, como un archivo actualizado o una API. No debe presentarse como una consulta conectada a datos reales hasta completar esa integración.

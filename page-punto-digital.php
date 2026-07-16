@@ -6,10 +6,10 @@
  */
 
 $hero_filename   = 'ACTIVIDADES EN COORDINACION CON LAS ESCUELAS2.jpg';
-$hero_image_url  = get_template_directory_uri() . '/resources/images/punto-digital/' . rawurlencode( $hero_filename );
-$logo_image_url  = get_template_directory_uri() . '/resources/images/punto-digital/' . rawurlencode( 'LOGO PUNTO DIGITAL.jpg' );
+$hero_image_url  = tp_content_image_url( 'hero_image' );
+$logo_image_url  = tp_content_image_url( 'logo_image' );
 $area_title      = 'Punto Digital';
-$area_tagline    = 'Tecnología, formación y servicios digitales para acompañar a la comunidad de Alderetes';
+$area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-alderetes-blue-light';
 $gallery_dir     = get_template_directory() . '/resources/images/punto-digital';
 $gallery_images  = [];
@@ -82,16 +82,16 @@ get_template_part( 'template-parts/area-hero', null, [
         <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-10 items-start">
             <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-alderetes-blue-light pl-4">
-                    Punto Digital Alderetes
+                    <?php echo esc_html( tp_content( 'intro_heading' ) ); ?>
                 </h2>
                 <p class="text-lg text-gray-700 leading-relaxed mb-5">
-                    El Punto Digital de Alderetes es un espacio público destinado a brindar acceso a herramientas tecnológicas y servicios digitales, promoviendo la inclusión y el desarrollo de la comunidad.
+                    <?php echo esc_html( tp_content( 'intro_1' ) ); ?>
                 </p>
                 <p class="text-gray-600 leading-relaxed mb-5">
-                    El Punto Digital es un servicio gratuito para la comunidad, que tiene como objetivo garantizar el acceso igualitario a la tecnología, facilitando el uso de computadoras, el asesoramiento en distintos trámites, el uso de una sala de entretenimiento, la proyección de películas en una sala de cine totalmente equipada, entre otras actividades destinadas a los vecinos de Alderetes.
+                    <?php echo esc_html( tp_content( 'intro_2' ) ); ?>
                 </p>
                 <p class="text-gray-600 leading-relaxed">
-                    A través de este espacio se fortalecen la formación, la recreación y el acompañamiento en gestiones digitales, generando más oportunidades para niños, jóvenes y adultos.
+                    <?php echo esc_html( tp_content( 'intro_3' ) ); ?>
                 </p>
             </div>
 
@@ -102,8 +102,8 @@ get_template_part( 'template-parts/area-hero', null, [
                     class="w-36 h-36 object-contain mx-auto mb-5"
                     loading="lazy"
                 >
-                <p class="font-semibold text-alderetes-blue text-center mb-2">Servicio gratuito para la comunidad</p>
-                <p class="text-sm text-gray-700 text-center">Un espacio de acceso tecnológico, formación, recreación y acompañamiento en trámites digitales.</p>
+                <p class="font-semibold text-alderetes-blue text-center mb-2"><?php echo esc_html( tp_content( 'card_heading' ) ); ?></p>
+                <p class="text-sm text-gray-700 text-center"><?php echo esc_html( tp_content( 'card_text' ) ); ?></p>
             </div>
         </div>
     </div>
@@ -113,9 +113,9 @@ get_template_part( 'template-parts/area-hero', null, [
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-10">
             <span class="inline-flex items-center px-4 py-1.5 bg-alderetes-cream text-alderetes-green text-sm font-medium rounded-full mb-4 border border-[#e7dcc8]">
-                Servicios
+                <?php echo esc_html( tp_content( 'services_badge' ) ); ?>
             </span>
-            <h2 class="text-3xl font-bold text-gray-900">¿Qué ofrece el Punto Digital?</h2>
+            <h2 class="text-3xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'services_heading' ) ); ?></h2>
         </div>
 
         <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
@@ -143,6 +143,14 @@ get_template_part( 'template-parts/area-hero', null, [
                 ],
             ];
 
+            foreach (tp_content_rows('services') as $index => $row) {
+                if (!isset($servicios[$index])) {
+                    break;
+                }
+                $servicios[$index]['titulo'] = $row[0] ?? $servicios[$index]['titulo'];
+                $servicios[$index]['descripcion'] = $row[1] ?? $servicios[$index]['descripcion'];
+            }
+
             foreach ( $servicios as $servicio ) : ?>
                 <div class="bg-white rounded-2xl border border-[#ebe4d8] p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="w-12 h-12 rounded-2xl bg-alderetes-blue-light flex items-center justify-center mb-4">
@@ -164,10 +172,10 @@ get_template_part( 'template-parts/area-hero', null, [
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
             <div>
                 <span class="inline-flex items-center px-4 py-1.5 bg-blue-50 text-alderetes-blue text-sm font-medium rounded-full mb-4 border border-blue-100">
-                    Galerías
+                    <?php echo esc_html( tp_content( 'galleries_badge' ) ); ?>
                 </span>
-                <h2 class="text-3xl font-bold text-gray-900">Espacios y actividades del Punto Digital</h2>
-                <p class="text-gray-600 mt-3 max-w-3xl">Cada carpeta ahora se muestra como una sección propia para ordenar mejor las fotos y el contenido de cada espacio.</p>
+                <h2 class="text-3xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'galleries_heading' ) ); ?></h2>
+                <p class="text-gray-600 mt-3 max-w-3xl"><?php echo esc_html( tp_content( 'galleries_text' ) ); ?></p>
             </div>
         </div>
 
@@ -189,7 +197,7 @@ get_template_part( 'template-parts/area-hero', null, [
                                 <?php echo esc_html( (string) $group['count'] ); ?>
                             </span>
                         </div>
-                        <p class="text-sm text-gray-600">Ver fotos de esta sección</p>
+                        <p class="text-sm text-gray-600"><?php echo esc_html( tp_content( 'gallery_link' ) ); ?></p>
                     </div>
                 </a>
             <?php endforeach; ?>
@@ -236,9 +244,9 @@ get_template_part( 'template-parts/area-hero', null, [
     <div class="max-w-6xl mx-auto px-4">
         <div class="mb-8">
             <span class="inline-flex items-center px-4 py-1.5 bg-alderetes-cream text-alderetes-green text-sm font-medium rounded-full mb-4 border border-[#e7dcc8]">
-                Destacadas
+                <?php echo esc_html( tp_content( 'featured_badge' ) ); ?>
             </span>
-            <h2 class="text-3xl font-bold text-gray-900">Imágenes generales</h2>
+            <h2 class="text-3xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'featured_heading' ) ); ?></h2>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -268,12 +276,12 @@ get_template_part( 'template-parts/area-hero', null, [
 
 <section class="py-14 bg-gradient-to-br from-alderetes-blue to-alderetes-green text-white text-center">
     <div class="max-w-2xl mx-auto px-4">
-        <h3 class="text-2xl font-bold mb-3">¿Querés acercarte o recibir asesoramiento?</h3>
-        <p class="text-white/80 mb-6">Contactá a la Municipalidad de Alderetes para obtener más información sobre actividades y servicios del Punto Digital.</p>
-        <p class="text-white font-medium mb-6">Llegarse por: 9 de Julio 200 - El Corte - Alderetes</p>
+        <h3 class="text-2xl font-bold mb-3"><?php echo esc_html( tp_content( 'cta_title' ) ); ?></h3>
+        <p class="text-white/80 mb-6"><?php echo esc_html( tp_content( 'cta_text' ) ); ?></p>
+        <p class="text-white font-medium mb-6"><?php echo esc_html( tp_content( 'cta_address' ) ); ?></p>
         <a href="<?php echo esc_url( home_url( '/contacto' ) ); ?>"
            class="inline-flex items-center gap-2 bg-alderetes-orange hover:bg-[#a95c1e] text-white font-semibold px-7 py-3 rounded-full transition-colors duration-300">
-            Contactar
+            <?php echo esc_html( tp_content( 'cta_button' ) ); ?>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
             </svg>

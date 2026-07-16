@@ -24,8 +24,8 @@
                     >
                 </div>
                     <div class="min-w-0">
-                        <p class="text-white font-semibold leading-tight">Municipalidad de Alderetes</p>
-                        <p class="text-white/55 text-sm mt-1">Tucumán, Argentina</p>
+                        <p class="text-white font-semibold leading-tight"><?php echo esc_html( tp_content( 'footer_site_name', 'inicio' ) ); ?></p>
+                        <p class="text-white/55 text-sm mt-1"><?php echo esc_html( tp_content( 'footer_subtitle', 'inicio' ) ); ?></p>
                     </div>
                 </div>
 
@@ -33,21 +33,21 @@
                     <div class="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-3">
                         <svg class="w-5 h-5 text-alderetes-gold mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         <div>
-                            <p class="text-white/50 text-xs font-semibold uppercase tracking-wide">Dirección</p>
-                            <p class="text-gray-200 text-sm mt-0.5">Caseros y Urquiza<br>Alderetes, Tucumán</p>
+                            <p class="text-white/50 text-xs font-semibold uppercase tracking-wide"><?php echo esc_html( tp_content( 'footer_address_label', 'inicio' ) ); ?></p>
+                            <p class="text-gray-200 text-sm mt-0.5"><?php echo implode('<br>', array_map('esc_html', tp_content_lines('footer_address', 'inicio'))); ?></p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-3">
                         <svg class="w-5 h-5 text-alderetes-gold mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <div>
-                            <p class="text-white/50 text-xs font-semibold uppercase tracking-wide">Horario</p>
-                            <p class="text-gray-200 text-sm mt-0.5">Lunes a viernes<br>08:00 a 13:00 hs</p>
+                            <p class="text-white/50 text-xs font-semibold uppercase tracking-wide"><?php echo esc_html( tp_content( 'footer_hours_label', 'inicio' ) ); ?></p>
+                            <p class="text-gray-200 text-sm mt-0.5"><?php echo implode('<br>', array_map('esc_html', tp_content_lines('footer_hours', 'inicio'))); ?></p>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <h4 class="font-semibold text-sm mb-3 text-white/60 uppercase tracking-wide">Seguinos</h4>
+                    <h4 class="font-semibold text-sm mb-3 text-white/60 uppercase tracking-wide"><?php echo esc_html( tp_content( 'footer_social_heading', 'inicio' ) ); ?></h4>
                     <div class="flex gap-3">
                         <a href="https://www.facebook.com/MunicipalidaddeAlderetes" target="_blank" rel="noopener noreferrer" class="w-11 h-11 bg-white/10 hover:bg-alderetes-orange rounded-xl flex items-center justify-center transition-colors" aria-label="Facebook Municipalidad de Alderetes">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -61,7 +61,7 @@
 
             <!-- Columna 2: Áreas -->
             <div class="md:order-3 md:col-span-2 lg:order-2 lg:col-span-1">
-                <h4 class="font-semibold text-lg mb-4 text-white">Áreas del Municipio</h4>
+                <h4 class="font-semibold text-lg mb-4 text-white"><?php echo esc_html( tp_content( 'footer_areas_heading', 'inicio' ) ); ?></h4>
                 <nav class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-2" aria-label="Áreas del Municipio">
                     <a href="<?php echo esc_url(home_url('/alumbrado')); ?>" class="rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2.5 text-gray-200 hover:text-alderetes-gold transition-colors text-sm">Alumbrado Público</a>
                     <a href="<?php echo esc_url(home_url('/catastro')); ?>" class="rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2.5 text-gray-200 hover:text-alderetes-gold transition-colors text-sm">Catastro</a>
@@ -79,7 +79,7 @@
 
             <!-- Columna 3: Mapa -->
             <div class="md:order-2 lg:order-3">
-                <h4 class="font-semibold text-lg mb-4 text-white">Ubicación</h4>
+                <h4 class="font-semibold text-lg mb-4 text-white"><?php echo esc_html( tp_content( 'footer_location_heading', 'inicio' ) ); ?></h4>
                 <div class="rounded-xl overflow-hidden shadow-lg h-44 md:h-48">
                     <iframe
                         src="https://www.google.com/maps?q=Esquina+Casero+y+Urquiza,+Alderetes,+Tucum%C3%A1n&output=embed"
@@ -102,11 +102,11 @@
         <div class="max-w-7xl mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-gray-400 text-sm text-center md:text-left">
-                    &copy; <?php echo date('Y'); ?> Municipalidad de Alderetes. Todos los derechos reservados.
+                    &copy; <?php echo date('Y'); ?> <?php echo esc_html( tp_content( 'footer_copyright', 'inicio' ) ); ?>
                 </p>
                 <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-                    <a href="<?php echo esc_url(home_url('/institucional')); ?>" class="text-gray-400 hover:text-alderetes-gold transition-colors">Políticas de Privacidad</a>
-                    <a href="<?php echo esc_url(home_url('/contacto')); ?>" class="text-gray-400 hover:text-alderetes-gold transition-colors">Términos y Condiciones</a>
+                    <a href="<?php echo esc_url(home_url('/institucional')); ?>" class="text-gray-400 hover:text-alderetes-gold transition-colors"><?php echo esc_html( tp_content( 'footer_privacy', 'inicio' ) ); ?></a>
+                    <a href="<?php echo esc_url(home_url('/contacto')); ?>" class="text-gray-400 hover:text-alderetes-gold transition-colors"><?php echo esc_html( tp_content( 'footer_terms', 'inicio' ) ); ?></a>
                 </div>
             </div>
         </div>

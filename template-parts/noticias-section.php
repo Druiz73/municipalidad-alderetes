@@ -97,9 +97,9 @@ $render_card = function ( $item ) {
         <div class="flex flex-col justify-between items-start gap-4 mb-8 md:mb-14">
             <div>
                 <span class="inline-block px-4 py-1.5 bg-alderetes-cream text-alderetes-green text-sm font-medium rounded-full mb-4 border border-[#e7dcc8]">
-                    Actualidad
+                    <?php echo esc_html( tp_content( 'news_badge', 'inicio' ) ); ?>
                 </span>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Últimas Noticias</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'news_title', 'inicio' ) ); ?></h2>
             </div>
         </div>
 

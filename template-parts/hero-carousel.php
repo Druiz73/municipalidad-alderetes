@@ -6,30 +6,29 @@
  * @package TailPress
  */
 
-$base   = get_template_directory_uri() . '/resources/images/fotos-areas/CARRUSEL/';
 $slides = [
     [
-        'image'    => $base . 'FOTO1.jpg',
+        'image'    => tp_content_image_url( 'hero_image_1', 'inicio' ),
         'title'    => 'Bienvenidos a Alderetes',
         'subtitle' => 'Trabajando juntos por una ciudad mejor',
     ],
     [
-        'image'    => $base . 'FOTO2.jpg',
+        'image'    => tp_content_image_url( 'hero_image_2', 'inicio' ),
         'title'    => 'Servicios Municipales',
         'subtitle' => 'Trámites online, rápidos y seguros',
     ],
     [
-        'image'    => $base . 'FOTO3.jpg',
+        'image'    => tp_content_image_url( 'hero_image_3', 'inicio' ),
         'title'    => 'Desarrollo Urbano',
         'subtitle' => 'Construyendo el futuro de nuestra ciudad',
     ],
     [
-        'image'    => $base . 'FOTO12.jpg',
+        'image'    => tp_content_image_url( 'hero_image_4', 'inicio' ),
         'title'    => 'Cultura y Comunidad',
         'subtitle' => 'Arte, eventos y programas para todos',
     ],
     [
-        'image'    => get_template_directory_uri() . '/resources/images/fotos-areas/OFICINA-EMPLEO/portada.jpeg',
+        'image'    => tp_content_image_url( 'hero_image_5', 'inicio' ),
         'title'    => 'Oficina de Empleo',
         'subtitle' => 'Brindando herramientas y oportunidades laborales',
     ],
@@ -51,7 +50,7 @@ $slides = [
             <div class="relative z-10 h-full max-w-7xl mx-auto px-4 flex items-center">
                 <div class="max-w-2xl">
                     <p class="text-3xl md:text-4xl lg:text-5xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg">
-                        Para seguir creciendo
+                        <?php echo esc_html( tp_content( 'hero_slogan', 'inicio' ) ); ?>
                     </p>
                 </div>
             </div>

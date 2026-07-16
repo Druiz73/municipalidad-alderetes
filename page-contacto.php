@@ -13,11 +13,11 @@ get_header();
     <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
     <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
         <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-6 backdrop-blur-sm">
-            Estamos para ayudarte
+            <?php echo esc_html( tp_content( 'hero_badge' ) ); ?>
         </span>
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Contacto</h1>
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4"><?php echo esc_html( tp_content( 'hero_title' ) ); ?></h1>
         <p class="text-xl text-white/80 max-w-2xl mx-auto">
-            Comunicate con nosotros para realizar consultas, sugerencias o cualquier inquietud
+            <?php echo esc_html( tp_content( 'hero_text' ) ); ?>
         </p>
     </div>
 </section>
@@ -30,8 +30,8 @@ get_header();
             <!-- Información de contacto -->
             <div class="space-y-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Información de Contacto</h2>
-                    <p class="text-gray-600">Estamos a tu disposición para atender tus consultas y brindarte la mejor atención.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4"><?php echo esc_html( tp_content( 'info_heading' ) ); ?></h2>
+                    <p class="text-gray-600"><?php echo esc_html( tp_content( 'info_text' ) ); ?></p>
                 </div>
 
                 <div class="space-y-4">
@@ -40,8 +40,8 @@ get_header();
                             <svg class="w-6 h-6 text-alderetes-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-gray-900">Dirección</h3>
-                            <p class="text-gray-600 text-sm mt-1">Caseros y Urquiza<br>Alderetes, Tucumán</p>
+                            <h3 class="font-semibold text-gray-900"><?php echo esc_html( tp_content( 'address_label' ) ); ?></h3>
+                            <p class="text-gray-600 text-sm mt-1"><?php echo implode('<br>', array_map('esc_html', tp_content_lines('address'))); ?></p>
                         </div>
                     </div>
 
@@ -50,8 +50,8 @@ get_header();
                             <svg class="w-6 h-6 text-alderetes-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-gray-900">Horario de Atención</h3>
-                            <p class="text-gray-600 text-sm mt-1">Lunes a viernes de 08:00 a 13:00 hs</p>
+                            <h3 class="font-semibold text-gray-900"><?php echo esc_html( tp_content( 'hours_label' ) ); ?></h3>
+                            <p class="text-gray-600 text-sm mt-1"><?php echo esc_html( tp_content( 'hours' ) ); ?></p>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ get_header();
 
                     <!-- Formulario -->
                     <div id="form-container">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Envianos tu consulta</h2>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6"><?php echo esc_html( tp_content( 'form_heading' ) ); ?></h2>
                         <form id="contacto-form" class="space-y-6" novalidate>
                             <?php wp_nonce_field('contacto_form', 'contacto_nonce'); ?>
                             <input type="hidden" name="contacto_ts" value="<?php echo esc_attr( time() ); ?>">
@@ -142,8 +142,8 @@ get_header();
         <!-- Mapa -->
         <div class="mt-16 bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
             <div class="p-6 border-b border-gray-100">
-                <h2 class="text-xl font-bold text-gray-900">Ubicación</h2>
-                <p class="text-gray-600 text-sm mt-1">Encontranos en el centro de Alderetes</p>
+                <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'map_heading' ) ); ?></h2>
+                <p class="text-gray-600 text-sm mt-1"><?php echo esc_html( tp_content( 'map_text' ) ); ?></p>
             </div>
             <div class="h-96">
                 <iframe
