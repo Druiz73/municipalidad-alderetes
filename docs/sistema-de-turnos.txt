@@ -8,11 +8,10 @@ El personal de Tránsito puede ver, editar y gestionar todos los turnos desde el
 
 Para el ciudadano – Cómo sacar un turno
 > [!NOTE]
-> La página pública está disponible en: aldereteslocal.local/turnos-transito/
-> (en producción será la URL del dominio oficial)
+> La página pública está disponible agregando /turnos-de-transito/ al dominio oficial.
 Pasos:
 ① Elegir fecha — El calendario muestra solo los días disponibles (lunes a viernes, sin feriados). Los días grises no tienen turnos.
-② Elegir horario — Aparecen los 8 horarios del día:
+② Elegir horario — Aparecen los 10 horarios del día:
 | Turno | Horario |
 |---|---|
 | 1 | 08:00 hs |
@@ -23,6 +22,8 @@ Pasos:
 | 6 | 10:30 hs |
 | 7 | 11:00 hs |
 | 8 | 11:30 hs |
+| 9 | 12:00 hs |
+| 10 | 12:30 hs |
 Los horarios ocupados aparecen en gris y no se pueden seleccionar.
 ③ Completar datos — El ciudadano ingresa nombre, DNI, teléfono, email y categoría de licencia.
 ④ Confirmación — Al confirmar, recibe un número de turno en pantalla y un email de confirmación con todos los detalles.
@@ -32,7 +33,7 @@ Para el personal – Panel de Administración
 > [!IMPORTANT]
 > Necesitás acceso al Panel de WordPress (WP Admin). Pedile el usuario y contraseña al administrador del sitio.
 Ver los turnos del día
-Entrá al panel: aldereteslocal.local/wp-admin
+Entrá al dominio oficial del sitio y agregá /wp-admin
 En el menú izquierdo hacé clic en 📅 Turnos de Tránsito
 Aparece la lista de todos los turnos
 Para filtrar por fecha: usá el campo de fecha en la parte superior y hacé clic en Filtrar.

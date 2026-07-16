@@ -6,9 +6,9 @@
  */
 
 $base    = get_template_directory_uri() . '/resources/images/fotos-areas/OBRAS-PUBLICAS/';
-$cover_image_url = $base . 'FOTO6.jpg';
-$area_title      = 'Obras Públicas';
-$area_tagline    = 'Infraestructura y desarrollo urbano para mejorar la calidad de vida de los vecinos';
+$cover_image_url = tp_content_image_url( 'hero_image' );
+$area_title      = get_the_title();
+$area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-orange-500';
 
 $gallery_images = [
@@ -35,13 +35,13 @@ get_template_part( 'template-parts/area-hero', null, [
             <!-- Texto -->
             <div class="md:col-span-2 prose prose-lg max-w-none text-gray-700">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-alderetes-orange pl-4 not-prose">
-                    Acerca del Área
+                    <?php echo esc_html( tp_content( 'intro_heading' ) ); ?>
                 </h2>
                 <p class="mb-5 leading-relaxed">
-                    La Secretaría o Dirección de Obras Públicas de la municipalidad es el área encargada de planificar, construir y mantener la infraestructura de la ciudad para mejorar la calidad de vida de los vecinos.
+                    <?php echo wp_kses_post( tp_content( 'intro_1' ) ); ?>
                 </p>
                 <p class="leading-relaxed">
-                    Durante el período 2025, la Municipalidad de Alderetes llevó adelante un programa sostenido de inversión en infraestructura urbana, enmarcado en un <strong>Plan Integral y Estratégico de Obras Públicas</strong>, orientado a mejorar la calidad de vida de los vecinos, fortalecer la conectividad urbana, optimizar el sistema hidráulico y consolidar el desarrollo ordenado de la ciudad.
+                    <?php echo wp_kses_post( tp_content( 'intro_2' ) ); ?>
                 </p>
             </div>
 
@@ -54,25 +54,15 @@ get_template_part( 'template-parts/area-hero', null, [
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-gray-900">Obras Públicas</h3>
+                    <h3 class="font-bold text-gray-900"><?php echo esc_html( tp_content( 'sidebar_heading' ) ); ?></h3>
                 </div>
                 <ul class="space-y-2 text-sm text-gray-600">
-                    <li class="flex items-start gap-2">
-                        <span class="text-orange-500 mt-0.5">▸</span>
-                        Planificación de infraestructura urbana
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-orange-500 mt-0.5">▸</span>
-                        Conectividad vial y accesibilidad
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-orange-500 mt-0.5">▸</span>
-                        Optimización del sistema hidráulico
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-orange-500 mt-0.5">▸</span>
-                        Desarrollo urbano ordenado
-                    </li>
+                    <?php foreach ( tp_content_lines( 'sidebar_items' ) as $item ) : ?>
+                        <li class="flex items-start gap-2">
+                            <span class="text-orange-500 mt-0.5">▸</span>
+                            <?php echo esc_html( $item ); ?>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
@@ -85,11 +75,11 @@ get_template_part( 'template-parts/area-hero', null, [
 <!-- CTA Contacto -->
 <section class="py-14 bg-gradient-to-br from-alderetes-blue to-blue-900 text-white text-center">
     <div class="max-w-2xl mx-auto px-4">
-        <h3 class="text-2xl font-bold mb-3">¿Necesitás comunicarte con el área?</h3>
-        <p class="text-blue-200 mb-6">Contactá a la Municipalidad de Alderetes para consultas sobre obras en tu barrio.</p>
+        <h3 class="text-2xl font-bold mb-3"><?php echo esc_html( tp_content( 'cta_title' ) ); ?></h3>
+        <p class="text-blue-200 mb-6"><?php echo esc_html( tp_content( 'cta_text' ) ); ?></p>
         <a href="<?php echo esc_url( home_url( '/contacto' ) ); ?>"
            class="inline-flex items-center gap-2 bg-alderetes-orange hover:bg-orange-600 text-white font-semibold px-7 py-3 rounded-full transition-colors duration-300">
-            Contactar
+            <?php echo esc_html( tp_content( 'cta_button' ) ); ?>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
             </svg>

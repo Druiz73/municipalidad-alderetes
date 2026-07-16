@@ -7,9 +7,9 @@
 
 get_header();
 
-$hero_image_url = get_template_directory_uri() . '/resources/images/direccion-transito.jpeg';
+$hero_image_url = tp_content_image_url( 'hero_image' );
 $area_title     = 'Tránsito';
-$area_tagline   = 'Requisitos para licencias de conducir: renovaciones, ampliaciones y permisos.';
+$area_tagline   = tp_content( 'hero_tagline' );
 
 $categorias = [
     [
@@ -296,8 +296,8 @@ $color_map = [
                 </svg>
             </div>
             <div class="text-center md:text-left">
-                <p class="font-bold text-lg mb-1">Cursos de Seguridad Vial</p>
-                <p class="text-blue-200 text-sm mb-3">Los cursos obligatorios se realizan de forma online en la plataforma oficial del gobierno nacional.</p>
+                <p class="font-bold text-lg mb-1"><?php echo esc_html( tp_content( 'courses_heading' ) ); ?></p>
+                <p class="text-blue-200 text-sm mb-3"><?php echo esc_html( tp_content( 'courses_text' ) ); ?></p>
                 <a href="https://curso.seguridadvial.gob.ar" target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center gap-2 bg-white text-alderetes-blue font-bold px-5 py-2.5 rounded-xl hover:bg-blue-50 transition-colors text-sm shadow">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>

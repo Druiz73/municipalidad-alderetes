@@ -41,17 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_P
 <section class="relative py-14 bg-gradient-to-br from-alderetes-blue to-blue-900 text-white overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image:url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
     <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
-        <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm">Dirección de Tránsito</span>
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Sacar Turno</h1>
-        <p class="text-xl text-white/75 max-w-xl mx-auto">Licencias de conducir · Renovaciones · Duplicados</p>
+        <span class="inline-block px-4 py-1.5 bg-white/20 text-white text-sm font-medium rounded-full mb-4 backdrop-blur-sm"><?php echo esc_html( tp_content( 'hero_badge' ) ); ?></span>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4"><?php echo esc_html( tp_content( 'hero_title' ) ); ?></h1>
+        <p class="text-xl text-white/75 max-w-xl mx-auto"><?php echo esc_html( tp_content( 'hero_text' ) ); ?></p>
         <div class="flex flex-wrap justify-center gap-4 mt-6 text-sm">
             <span class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Lunes a Viernes · 8:00 a 13:00 hs
+                <?php echo esc_html( tp_content( 'hero_hours' ) ); ?>
             </span>
             <span class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                Intervalos de 30 minutos
+                <?php echo esc_html( tp_content( 'hero_interval' ) ); ?>
             </span>
         </div>
     </div>

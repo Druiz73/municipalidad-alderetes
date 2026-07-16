@@ -23,12 +23,12 @@ $variant = $args['variant'] ?? 'primary';
                     </svg>
                 </div>
                 <div class="text-white">
-                    <h3 class="font-bold text-xl">¡Nuevo sistema de turnos online!</h3>
-                    <p class="text-white/80">Sacá tu turno para el carnet de manejo sin salir de casa</p>
+                    <h3 class="font-bold text-xl"><?php echo esc_html( tp_content( 'turnos_title', 'inicio' ) ); ?></h3>
+                    <p class="text-white/80"><?php echo esc_html( tp_content( 'turnos_text', 'inicio' ) ); ?></p>
                 </div>
             </div>
             <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="flex items-center gap-2 px-6 py-3 bg-white text-alderetes-blue font-semibold rounded-xl hover:bg-alderetes-cream transition-colors shadow-lg">
-                Solicitar turno
+                <?php echo esc_html( tp_content( 'turnos_button', 'inicio' ) ); ?>
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
         </div>
@@ -52,13 +52,13 @@ $variant = $args['variant'] ?? 'primary';
                     </svg>
                 </div>
                 <div class="text-white">
-                    <p class="text-white/70 text-sm">Horario de atención</p>
-                    <p class="font-bold text-lg">08:00 a 13:00 hs</p>
+                    <p class="text-white/70 text-sm"><?php echo esc_html( tp_content( 'hours_label', 'inicio' ) ); ?></p>
+                    <p class="font-bold text-lg"><?php echo esc_html( tp_content( 'hours', 'inicio' ) ); ?></p>
                 </div>
             </div>
             <div class="flex justify-center md:justify-end">
                 <a href="<?php echo esc_url(home_url('/contacto')); ?>" class="flex items-center gap-2 px-6 py-3 bg-white text-alderetes-green font-semibold rounded-xl hover:bg-alderetes-cream transition-colors shadow-lg">
-                    Contactanos
+                    <?php echo esc_html( tp_content( 'contact_button', 'inicio' ) ); ?>
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
             </div>

@@ -39,6 +39,14 @@ $tramites = [
         'hover_text'  => 'text-purple-700',
     ],
 ];
+
+foreach (tp_content_rows('tramites_cards', 'inicio') as $index => $row) {
+    if (!isset($tramites[$index])) {
+        break;
+    }
+    $tramites[$index]['title'] = $row[0] ?? $tramites[$index]['title'];
+    $tramites[$index]['description'] = $row[1] ?? $tramites[$index]['description'];
+}
 ?>
 
 <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
@@ -46,13 +54,13 @@ $tramites = [
 
         <div class="text-center mb-14">
             <span class="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 text-sm font-medium rounded-full mb-4">
-                Servicios Online
+                <?php echo esc_html( tp_content( 'tramites_badge', 'inicio' ) ); ?>
             </span>
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Trámites Municipales
+                <?php echo esc_html( tp_content( 'tramites_title', 'inicio' ) ); ?>
             </h2>
             <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                Realizá tus gestiones de forma rápida y sencilla desde cualquier lugar
+                <?php echo esc_html( tp_content( 'tramites_text', 'inicio' ) ); ?>
             </p>
         </div>
 
@@ -72,7 +80,7 @@ $tramites = [
                     <?php echo esc_html($tramite['description']); ?>
                 </p>
                 <div class="flex items-center gap-2 <?php echo esc_attr($tramite['hover_text']); ?> font-bold text-sm">
-                    <span>TRÁMITES</span>
+                    <span><?php echo esc_html( tp_content( 'tramites_card_button', 'inicio' ) ); ?></span>
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>

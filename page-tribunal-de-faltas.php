@@ -7,9 +7,9 @@
 
 get_header();
 
-$cover_image_url = get_template_directory_uri() . '/resources/images/tribunal-faltas.jpeg';
+$cover_image_url = tp_content_image_url( 'hero_image' );
 $area_title      = 'Tribunal de Faltas';
-$area_tagline    = 'Juzgamiento de contravenciones, multas de tránsito y normas de convivencia';
+$area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-alderetes-blue';
 
 get_template_part( 'template-parts/area-hero', null, [
@@ -27,9 +27,9 @@ get_template_part( 'template-parts/area-hero', null, [
     <div class="max-w-3xl mx-auto px-4">
 
         <div class="text-center mb-10">
-            <span class="inline-block px-4 py-1.5 bg-blue-100 text-alderetes-blue text-sm font-medium rounded-full mb-4">Consulta Gratuita</span>
-            <h2 class="text-3xl font-bold text-gray-900 mb-3">Libre Deuda Vehicular</h2>
-            <p class="text-gray-600">Ingresá la patente de tu vehículo para verificar si tenés infracciones pendientes</p>
+            <span class="inline-block px-4 py-1.5 bg-blue-100 text-alderetes-blue text-sm font-medium rounded-full mb-4"><?php echo esc_html( tp_content( 'query_badge' ) ); ?></span>
+            <h2 class="text-3xl font-bold text-gray-900 mb-3"><?php echo esc_html( tp_content( 'query_heading' ) ); ?></h2>
+            <p class="text-gray-600"><?php echo esc_html( tp_content( 'query_text' ) ); ?></p>
         </div>
 
         <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
@@ -46,7 +46,7 @@ get_template_part( 'template-parts/area-hero', null, [
                 />
                 <button type="submit"
                         class="px-8 py-4 bg-alderetes-blue text-white font-bold rounded-2xl hover:bg-blue-800 transition-colors shadow-lg whitespace-nowrap">
-                    Consultar
+                    <?php echo esc_html( tp_content( 'query_button' ) ); ?>
                 </button>
             </form>
 
@@ -139,32 +139,20 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
             <!-- Descripción -->
             <div class="lg:col-span-2">
                 <span class="inline-block px-4 py-1.5 bg-blue-100 text-alderetes-blue text-sm font-semibold rounded-full mb-6 uppercase tracking-wide">
-                    Organismo Municipal
+                    <?php echo esc_html( tp_content( 'intro_badge' ) ); ?>
                 </span>
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">¿Qué es el Tribunal de Faltas?</h2>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6"><?php echo esc_html( tp_content( 'intro_heading' ) ); ?></h2>
                 <div class="prose prose-lg text-gray-600 space-y-4">
-                    <p>
-                        El Tribunal de Faltas de la Municipalidad de Alderetes es el organismo encargado de resolver multas y actas de contravención dentro de la jurisdicción del municipio.
-                    </p>
-                    <p>
-                        Gestiona infracciones municipales, de tránsito y de convivencia, garantizando el cumplimiento de las ordenanzas municipales y el orden urbano de la ciudad.
-                    </p>
-                    <p>
-                        Para realizar trámites se recomienda presentarse con <strong>DNI</strong>, <strong>licencia de conducir</strong> y <strong>tarjeta verde del vehículo</strong>.
-                    </p>
+                    <p><?php echo esc_html( tp_content( 'intro_1' ) ); ?></p>
+                    <p><?php echo esc_html( tp_content( 'intro_2' ) ); ?></p>
+                    <p><?php echo wp_kses_post( tp_content( 'intro_3' ) ); ?></p>
                 </div>
 
                 <!-- Funciones -->
-                <h3 class="text-xl font-bold text-gray-900 mt-10 mb-5">Funciones principales</h3>
+                <h3 class="text-xl font-bold text-gray-900 mt-10 mb-5"><?php echo esc_html( tp_content( 'functions_heading' ) ); ?></h3>
                 <ul class="space-y-3">
                     <?php
-                    $funciones = [
-                        'Juzgamiento de contravenciones municipales',
-                        'Resolución de multas de tránsito',
-                        'Gestión de normas de convivencia',
-                        'Atención de actas de infracción',
-                        'Tramitación de apelaciones y descargos',
-                    ];
+                    $funciones = tp_content_lines( 'functions' );
                     foreach ( $funciones as $f ) : ?>
                     <li class="flex items-center gap-3 text-gray-600">
                         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
@@ -186,12 +174,12 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                             </svg>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 mb-2">Documentación requerida</h4>
-                            <p class="text-gray-600 text-sm">Para realizar cualquier trámite, presentarse con:</p>
+                            <h4 class="font-bold text-gray-900 mb-2"><?php echo esc_html( tp_content( 'documents_heading' ) ); ?></h4>
+                            <p class="text-gray-600 text-sm"><?php echo esc_html( tp_content( 'documents_text' ) ); ?></p>
                             <ul class="mt-2 space-y-1 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span>DNI (Documento Nacional de Identidad)</li>
-                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span>Licencia de conducir vigente</li>
-                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span>Tarjeta verde del vehículo</li>
+                                <?php foreach ( tp_content_lines( 'documents' ) as $document ) : ?>
+                                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-alderetes-blue flex-shrink-0"></span><?php echo esc_html( $document ); ?></li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
@@ -203,7 +191,7 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
 
                 <!-- Información de contacto -->
                 <div class="bg-gradient-to-br from-alderetes-blue to-blue-900 rounded-2xl p-6 text-white shadow-lg">
-                    <h3 class="font-bold text-xl mb-5">Información de atención</h3>
+                    <h3 class="font-bold text-xl mb-5"><?php echo esc_html( tp_content( 'attention_heading' ) ); ?></h3>
                     <div class="space-y-4">
                         <div class="flex items-start gap-3">
                             <div class="flex-shrink-0 p-2 bg-white/20 rounded-lg">
@@ -213,9 +201,10 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-white/70 text-xs font-medium uppercase tracking-wide">Dirección</p>
-                                <p class="font-semibold">Rivadavia 1000</p>
-                                <p class="text-white/80 text-sm">Alderetes, Tucumán</p>
+                                <p class="text-white/70 text-xs font-medium uppercase tracking-wide"><?php echo esc_html( tp_content( 'address_label' ) ); ?></p>
+                                <?php foreach ( tp_content_lines( 'address' ) as $index => $line ) : ?>
+                                    <p class="<?php echo esc_attr( $index === 0 ? 'font-semibold' : 'text-white/80 text-sm' ); ?>"><?php echo esc_html( $line ); ?></p>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
@@ -225,9 +214,9 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-white/70 text-xs font-medium uppercase tracking-wide">Horario</p>
-                                <p class="font-semibold">Atención</p>
-                                <p class="text-white/80 text-sm">de 08:00 a 13:00 hs.</p>
+                                <p class="text-white/70 text-xs font-medium uppercase tracking-wide"><?php echo esc_html( tp_content( 'hours_label' ) ); ?></p>
+                                <p class="font-semibold"><?php echo esc_html( tp_content( 'hours_heading' ) ); ?></p>
+                                <p class="text-white/80 text-sm"><?php echo esc_html( tp_content( 'hours' ) ); ?></p>
                             </div>
                         </div>
                     </div>
@@ -241,7 +230,7 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                         </svg>
-                        Ver en Google Maps
+                        <?php echo esc_html( tp_content( 'map_button' ) ); ?>
                     </a>
                 </div>
 
@@ -252,7 +241,7 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         <p class="text-gray-500 text-sm">
-                            Próximamente se habilitará información adicional sobre trámites online y consulta de deuda.
+                            <?php echo esc_html( tp_content( 'pending_note' ) ); ?>
                         </p>
                     </div>
                 </div>
@@ -265,11 +254,11 @@ document.getElementById('form-libre-deuda').addEventListener('submit', function 
 <!-- CTA Contacto -->
 <section class="py-14 bg-gradient-to-br from-alderetes-blue to-blue-900 text-white text-center">
     <div class="max-w-2xl mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3">¿Tenés alguna consulta?</h2>
-        <p class="text-white/80 mb-8">Contactate con el municipio y te responderemos a la brevedad.</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3"><?php echo esc_html( tp_content( 'cta_title' ) ); ?></h2>
+        <p class="text-white/80 mb-8"><?php echo esc_html( tp_content( 'cta_text' ) ); ?></p>
         <a href="<?php echo esc_url( home_url( '/contacto' ) ); ?>"
            class="inline-block px-8 py-3.5 bg-white text-alderetes-blue font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg">
-            Contactar al municipio
+            <?php echo esc_html( tp_content( 'cta_button' ) ); ?>
         </a>
     </div>
 </section>
