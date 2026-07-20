@@ -11,15 +11,27 @@ $cancelacion_notice = null;
 $cancelacion_confirmacion = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_POST['token'])) {
-    $resultado_cancelacion = tp_cancelar_turno_por_ciudadano(
-        wp_unslash($_POST['cancelar_turno']),
-        wp_unslash($_POST['token'])
-    );
+    $numero_cancelacion = sanitize_text_field(wp_unslash($_POST['cancelar_turno']));
 
-    $cancelacion_notice = [
-        'ok'      => !empty($resultado_cancelacion['ok']),
-        'mensaje' => $resultado_cancelacion['mensaje'] ?? 'No pudimos procesar la cancelación.',
-    ];
+    if (
+        !isset($_POST['tp_cancel_nonce'])
+        || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['tp_cancel_nonce'])), 'tp_cancelar_' . $numero_cancelacion)
+    ) {
+        $cancelacion_notice = [
+            'ok'      => false,
+            'mensaje' => 'La confirmación venció. Volvé a abrir el enlace recibido por email.',
+        ];
+    } else {
+        $resultado_cancelacion = tp_cancelar_turno_por_ciudadano(
+            $numero_cancelacion,
+            wp_unslash($_POST['token'])
+        );
+
+        $cancelacion_notice = [
+            'ok'      => !empty($resultado_cancelacion['ok']),
+            'mensaje' => $resultado_cancelacion['mensaje'] ?? 'No pudimos procesar la cancelación.',
+        ];
+    }
 } elseif (isset($_GET['cancelar_turno'], $_GET['token'])) {
     $resultado_validacion = tp_validar_cancelacion_turno_por_ciudadano(
         wp_unslash($_GET['cancelar_turno']),
@@ -122,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_P
                     </div>
                     <div class="flex flex-wrap gap-3">
                         <form method="post" class="inline">
+                            <?php wp_nonce_field('tp_cancelar_' . $cancelacion_confirmacion['numero'], 'tp_cancel_nonce'); ?>
                             <input type="hidden" name="cancelar_turno" value="<?php echo esc_attr($cancelacion_confirmacion['numero']); ?>">
                             <input type="hidden" name="token" value="<?php echo esc_attr(wp_unslash($_GET['token'])); ?>">
                             <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors">
@@ -220,6 +233,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_P
             </div>
 
             <form id="form-turno" class="space-y-4">
+                <input type="hidden" id="turno-ts" value="<?php echo esc_attr(time()); ?>">
+                <div class="absolute left-[-10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                    <label for="turno-website">Sitio web</label>
+                    <input type="text" id="turno-website" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nombre completo *</label>
@@ -492,7 +510,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_P
         const body = new URLSearchParams({
             action: 'tp_reservar', nonce: NONCE,
             fecha: fechaSeleccionada, hora: horaSeleccionada,
-            nombre, dni, telefono, email, categoria
+            nombre, dni, telefono, email, categoria,
+            turno_ts: document.getElementById('turno-ts').value,
+            turno_website: document.getElementById('turno-website').value
         });
 
         fetch(AJAX_URL, { method:'POST', body })

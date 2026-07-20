@@ -6,6 +6,7 @@ if (is_file(__DIR__.'/vendor/autoload_packages.php')) {
 
 require_once __DIR__ . '/inc/ui.php';
 require_once __DIR__ . '/inc/editable-content.php';
+require_once __DIR__ . '/inc/security-hardening.php';
 
 function tailpress(): TailPress\Framework\Theme
 {
@@ -524,8 +525,23 @@ function tp_cancelar_turno_por_ciudadano(string $numero, string $token): array {
 
 // --- ¿El día está habilitado? ---
 function tp_dia_habilitado(string $fecha): bool {
-    $ts = strtotime($fecha);
-    $dow = (int) date('N', $ts); // 1=Lun, 7=Dom
+    $timezone = wp_timezone();
+    $hoy = new DateTimeImmutable('today', $timezone);
+    $max_fecha = $hoy->modify('+30 days');
+    $fecha_obj = DateTimeImmutable::createFromFormat('!Y-m-d', $fecha, $timezone);
+    $errores = DateTimeImmutable::getLastErrors();
+
+    if (
+        !$fecha_obj
+        || ($errores !== false && ($errores['warning_count'] > 0 || $errores['error_count'] > 0))
+        || $fecha_obj->format('Y-m-d') !== $fecha
+        || $fecha_obj < $hoy
+        || $fecha_obj > $max_fecha
+    ) {
+        return false;
+    }
+
+    $dow = (int) $fecha_obj->format('N'); // 1=Lun, 7=Dom
     if ($dow >= 6) return false; // Sábado/Domingo
     if (in_array($fecha, tp_feriados_argentina(), true)) return false;
     $bloqueados = get_option('tp_dias_bloqueados', []);
@@ -670,6 +686,7 @@ function tp_turno_metabox_cb($post) {
 add_action('save_post_tp_turno', function ($post_id) {
     if (!isset($_POST['tp_turno_nonce']) || !wp_verify_nonce($_POST['tp_turno_nonce'], 'tp_turno_save')) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
     $fields = ['_turno_fecha','_turno_hora','_turno_nombre','_turno_dni','_turno_telefono','_turno_email','_turno_categoria','_turno_estado'];
     $old_estado = get_post_meta($post_id, '_turno_estado', true);
     foreach ($fields as $f) {
@@ -780,14 +797,68 @@ function tp_ajax_reservar() {
     $fecha     = sanitize_text_field($_POST['fecha']     ?? '');
     $hora      = sanitize_text_field($_POST['hora']      ?? '');
     $nombre    = sanitize_text_field($_POST['nombre']    ?? '');
-    $dni       = sanitize_text_field($_POST['dni']       ?? '');
+    $dni       = preg_replace('/\D+/', '', sanitize_text_field($_POST['dni'] ?? ''));
     $telefono  = sanitize_text_field($_POST['telefono']  ?? '');
     $email     = sanitize_email($_POST['email']          ?? '');
     $categoria = sanitize_text_field($_POST['categoria'] ?? '');
+    $form_ts   = absint($_POST['turno_ts'] ?? 0);
+
+    if (!empty($_POST['turno_website'])) {
+        wp_send_json_error(['mensaje' => 'No pudimos procesar la solicitud. Intentá nuevamente.']);
+    }
+
+    if (!$form_ts || (time() - $form_ts) < 4 || (time() - $form_ts) > HOUR_IN_SECONDS) {
+        wp_send_json_error(['mensaje' => 'La sesión del formulario no es válida. Recargá la página e intentá nuevamente.']);
+    }
 
     if (!$fecha || !$hora || !$nombre || !$dni || !$email) {
         wp_send_json_error(['mensaje' => 'Faltan datos obligatorios.']);
     }
+    if (!preg_match('/^\d{7,8}$/', $dni)) {
+        wp_send_json_error(['mensaje' => 'Ingresá un DNI válido, sin puntos ni espacios.']);
+    }
+    if (!is_email($email)) {
+        wp_send_json_error(['mensaje' => 'Ingresá una dirección de email válida.']);
+    }
+
+    $categorias_validas = [
+        'Renovación A+B (Particular)',
+        'Renovación C1-C2 (Profesional)',
+        'Renovación D1-D2-D3 (Profesional)',
+        'Renovación E2 (Profesional)',
+        'Ampliación C',
+        'Ampliación D',
+        'Ampliación E',
+        'Principiante Mayor de Edad',
+        'Principiante Menor de Edad',
+        'Mayores de 65 Años',
+        'Duplicado',
+    ];
+    if (!in_array($categoria, $categorias_validas, true)) {
+        wp_send_json_error(['mensaje' => 'Seleccioná una categoría de licencia válida.']);
+    }
+
+    $ip = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+    $rate_key = 'tp_turno_rate_' . md5($ip);
+    $attempts = get_transient($rate_key);
+    $attempts = is_array($attempts) ? $attempts : [];
+    $cutoff = time() - (15 * MINUTE_IN_SECONDS);
+    $attempts = array_values(array_filter($attempts, static function ($timestamp) use ($cutoff): bool {
+        return is_numeric($timestamp) && (int) $timestamp >= $cutoff;
+    }));
+
+    if (count($attempts) >= 5) {
+        wp_send_json_error(['mensaje' => 'Se realizaron varias solicitudes desde esta conexión. Esperá 15 minutos antes de intentar nuevamente.']);
+    }
+
+    $attempts[] = time();
+    set_transient($rate_key, $attempts, 15 * MINUTE_IN_SECONDS);
+
+    $fingerprint_key = 'tp_turno_request_' . md5(strtolower($fecha . '|' . $hora . '|' . $dni . '|' . $email));
+    if (get_transient($fingerprint_key)) {
+        wp_send_json_error(['mensaje' => 'Esta solicitud ya fue recibida. Revisá tu email antes de volver a intentarlo.']);
+    }
+
     if (!tp_dia_habilitado($fecha)) {
         wp_send_json_error(['mensaje' => 'La fecha seleccionada no está disponible.']);
     }
@@ -795,12 +866,28 @@ function tp_ajax_reservar() {
     if (!in_array($hora, $slots_validos, true)) {
         wp_send_json_error(['mensaje' => 'El horario seleccionado no es válido.']);
     }
+    $lock_option = '_tp_turno_lock_' . md5($fecha . '|' . $hora);
+    if (!add_option($lock_option, time(), '', false)) {
+        $lock_created_at = (int) get_option($lock_option, 0);
+        if ($lock_created_at < (time() - MINUTE_IN_SECONDS)) {
+            delete_option($lock_option);
+        }
+
+        if (!add_option($lock_option, time(), '', false)) {
+            wp_send_json_error(['mensaje' => 'Ese horario se está procesando. Esperá unos segundos y volvé a intentarlo.']);
+        }
+    }
+
     $ocupados = tp_get_turnos_ocupados($fecha);
     if (in_array($hora, $ocupados, true)) {
+        delete_option($lock_option);
         wp_send_json_error(['mensaje' => 'Ese horario ya está reservado. Por favor elegí otro.']);
     }
 
-    $numero = 'T' . strtoupper(substr(md5($fecha . $hora . $dni), 0, 6));
+    do {
+        $numero = 'T' . strtoupper(wp_generate_password(6, false, false));
+    } while (tp_buscar_turno_por_numero($numero));
+
     $cancel_token = wp_generate_password(32, false, false);
 
     $post_id = wp_insert_post([
@@ -810,6 +897,7 @@ function tp_ajax_reservar() {
     ]);
 
     if (!$post_id || is_wp_error($post_id)) {
+        delete_option($lock_option);
         wp_send_json_error(['mensaje' => 'Error al guardar el turno. Intentá de nuevo.']);
     }
 
@@ -827,6 +915,9 @@ function tp_ajax_reservar() {
     ] as $key => $val) {
         update_post_meta($post_id, $key, $val);
     }
+
+    set_transient($fingerprint_key, true, 10 * MINUTE_IN_SECONDS);
+    delete_option($lock_option);
 
     tp_enviar_email_confirmacion($email, $nombre, $numero, $fecha, $hora, $categoria, $cancel_token);
 
