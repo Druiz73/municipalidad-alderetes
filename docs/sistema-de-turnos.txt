@@ -8,7 +8,8 @@ El personal de Tránsito puede ver, editar y gestionar todos los turnos desde el
 
 Para el ciudadano – Cómo sacar un turno
 > [!NOTE]
-> La página pública está disponible agregando /turnos-de-transito/ al dominio oficial.
+> La página pública de prueba está disponible en: aldereteslocal.local/turnos-transito/
+> En producción se utilizará la URL del dominio oficial.
 Pasos:
 ① Elegir fecha — El calendario muestra solo los días disponibles (lunes a viernes, sin feriados). Los días grises no tienen turnos.
 ② Elegir horario — Aparecen los 10 horarios del día:
@@ -33,10 +34,11 @@ Para el personal – Panel de Administración
 > [!IMPORTANT]
 > Necesitás acceso al Panel de WordPress (WP Admin). Pedile el usuario y contraseña al administrador del sitio.
 Ver los turnos del día
-Entrá al dominio oficial del sitio y agregá /wp-admin
+Entrá al panel: aldereteslocal.local/wp-admin
 En el menú izquierdo hacé clic en 📅 Turnos de Tránsito
 Aparece la lista de todos los turnos
-Para filtrar por fecha: usá el campo de fecha en la parte superior y hacé clic en Filtrar.
+Para filtrar por fecha: usá los campos Desde y Hasta en la parte superior y hacé clic en Filtrar. Podés completar uno solo o ambos.
+Para descargar el listado: opcionalmente aplicá un rango de fechas y hacé clic en Exportar CSV. El archivo se abre directamente con Excel.
 Columnas de la tabla de turnos
 | Columna | Descripción |
 |---|---|
@@ -61,6 +63,8 @@ En la sección "Datos del Turno" cambiá el campo Estado
 Hacé clic en Actualizar (botón azul arriba a la derecha)
 > [!IMPORTANT]
 > Si cambiás el estado a Cancelado, el ciudadano recibe automáticamente un email informándole de la cancelación.
+> [!NOTE]
+> Los estados son manuales: que pase la hora del turno no marca al ciudadano como atendido ni ausente. Para gestionar varios turnos juntos, seleccionalos en la lista y usá Acciones en lote.
 
 Para el administrador – Bloquear fechas
 Si hay un asueto, feriado provincial, o cualquier día en que no se darán turnos, podés bloquearlo manualmente.
