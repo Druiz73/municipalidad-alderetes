@@ -625,21 +625,119 @@ add_filter('manage_edit-tp_turno_sortable_columns', function ($cols) {
     return $cols;
 });
 
+// Acciones rápidas para la atención diaria. Los estados nunca cambian por el
+// paso del tiempo: sólo una persona del área puede confirmar una atención.
+add_filter('bulk_actions-edit-tp_turno', function ($actions) {
+    $actions['tp_marcar_atendido']  = 'Marcar como atendido';
+    $actions['tp_marcar_ausente']   = 'Marcar como ausente';
+    $actions['tp_marcar_cancelado'] = 'Marcar como cancelado';
+    return $actions;
+});
+
+add_filter('handle_bulk_actions-edit-tp_turno', function ($redirect, $action, $post_ids) {
+    $estados = [
+        'tp_marcar_atendido'  => 'atendido',
+        'tp_marcar_ausente'   => 'ausente',
+        'tp_marcar_cancelado' => 'cancelado',
+    ];
+    if (!isset($estados[$action])) return $redirect;
+
+    $actualizados = 0;
+    foreach ($post_ids as $post_id) {
+        if (!current_user_can('edit_post', $post_id)) continue;
+        $estado_anterior = get_post_meta($post_id, '_turno_estado', true) ?: 'pendiente';
+        update_post_meta($post_id, '_turno_estado', $estados[$action]);
+        if ($estados[$action] === 'cancelado' && $estado_anterior !== 'cancelado') {
+            $email = get_post_meta($post_id, '_turno_email', true);
+            if ($email) {
+                tp_enviar_email_cancelacion(
+                    $email,
+                    get_post_meta($post_id, '_turno_nombre', true),
+                    get_post_meta($post_id, '_turno_numero', true),
+                    get_post_meta($post_id, '_turno_fecha', true),
+                    get_post_meta($post_id, '_turno_hora', true)
+                );
+            }
+        }
+        $actualizados++;
+    }
+    return add_query_arg('tp_actualizados', $actualizados, $redirect);
+}, 10, 3);
+
+add_action('admin_notices', function () {
+    if (empty($_GET['tp_actualizados'])) return;
+    printf('<div class="notice notice-success is-dismissible"><p>%d turno(s) actualizado(s).</p></div>', (int) $_GET['tp_actualizados']);
+});
+
 // Filtro por fecha en el listado admin
+add_filter('months_dropdown_results', function ($months, $post_type) {
+    // El selector estándar filtra por fecha de creación del registro, no por
+    // la fecha del turno; se oculta para evitar resultados engañosos.
+    return $post_type === 'tp_turno' ? [] : $months;
+}, 10, 2);
+
 add_action('restrict_manage_posts', function ($post_type) {
     if ($post_type !== 'tp_turno') return;
-    $fecha = isset($_GET['turno_fecha_filter']) ? sanitize_text_field($_GET['turno_fecha_filter']) : '';
-    echo '<input type="date" name="turno_fecha_filter" value="' . esc_attr($fecha) . '" style="margin-right:4px">';
+    $desde = isset($_GET['turno_fecha_desde']) ? sanitize_text_field($_GET['turno_fecha_desde']) : '';
+    $hasta = isset($_GET['turno_fecha_hasta']) ? sanitize_text_field($_GET['turno_fecha_hasta']) : '';
+    echo '<label style="margin-right:4px">Desde <input type="date" name="turno_fecha_desde" value="' . esc_attr($desde) . '"></label>';
+    echo '<label style="margin-right:4px">Hasta <input type="date" name="turno_fecha_hasta" value="' . esc_attr($hasta) . '"></label>';
+    $export_url = add_query_arg([
+        'action'              => 'tp_exportar_turnos_csv',
+        'turno_fecha_desde'   => $desde,
+        'turno_fecha_hasta'   => $hasta,
+    ], admin_url('admin-post.php'));
+    $export_url = wp_nonce_url($export_url, 'tp_exportar_turnos_csv');
+    echo '<a href="' . esc_url($export_url) . '" class="button" style="margin-left:4px">Exportar CSV</a>';
+});
+
+add_action('admin_post_tp_exportar_turnos_csv', function () {
+    if (!current_user_can('edit_posts')) wp_die('No tenés permisos para exportar turnos.');
+    check_admin_referer('tp_exportar_turnos_csv');
+
+    $desde = isset($_GET['turno_fecha_desde']) ? sanitize_text_field($_GET['turno_fecha_desde']) : '';
+    $hasta = isset($_GET['turno_fecha_hasta']) ? sanitize_text_field($_GET['turno_fecha_hasta']) : '';
+    $args = ['post_type' => 'tp_turno', 'post_status' => ['publish', 'pending'], 'posts_per_page' => -1];
+    $meta_query = ['relation' => 'AND'];
+    if ($desde) $meta_query[] = ['key' => '_turno_fecha', 'value' => $desde, 'compare' => '>=', 'type' => 'DATE'];
+    if ($hasta) $meta_query[] = ['key' => '_turno_fecha', 'value' => $hasta, 'compare' => '<=', 'type' => 'DATE'];
+    if (count($meta_query) > 1) {
+        $args['meta_query'] = $meta_query;
+    }
+    $turnos = get_posts($args);
+    usort($turnos, function ($a, $b) {
+        return strcmp(get_post_meta($a->ID, '_turno_fecha', true) . get_post_meta($a->ID, '_turno_hora', true), get_post_meta($b->ID, '_turno_fecha', true) . get_post_meta($b->ID, '_turno_hora', true));
+    });
+
+    $periodo = $desde || $hasta ? '-' . ($desde ?: 'inicio') . '-a-' . ($hasta ?: 'hoy') : '';
+    $nombre = 'turnos-transito' . $periodo . '.csv';
+    nocache_headers();
+    header('Content-Type: text/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="' . $nombre . '"');
+    $out = fopen('php://output', 'w');
+    fwrite($out, "\xEF\xBB\xBF"); // Excel reconoce correctamente los acentos.
+    fputcsv($out, ['N° de turno', 'Fecha', 'Hora', 'Nombre', 'DNI', 'Teléfono', 'Email', 'Categoría', 'Estado'], ';');
+    foreach ($turnos as $turno) {
+        $id = $turno->ID;
+        fputcsv($out, [
+            get_post_meta($id, '_turno_numero', true), get_post_meta($id, '_turno_fecha', true), get_post_meta($id, '_turno_hora', true),
+            get_post_meta($id, '_turno_nombre', true), get_post_meta($id, '_turno_dni', true), get_post_meta($id, '_turno_telefono', true),
+            get_post_meta($id, '_turno_email', true), get_post_meta($id, '_turno_categoria', true), ucfirst(get_post_meta($id, '_turno_estado', true) ?: 'pendiente'),
+        ], ';');
+    }
+    fclose($out);
+    exit;
 });
 
 add_action('pre_get_posts', function ($query) {
     if (!is_admin() || $query->get('post_type') !== 'tp_turno') return;
-    if (!empty($_GET['turno_fecha_filter'])) {
-        $query->set('meta_query', [[
-            'key'     => '_turno_fecha',
-            'value'   => sanitize_text_field($_GET['turno_fecha_filter']),
-            'compare' => '=',
-        ]]);
+    $desde = !empty($_GET['turno_fecha_desde']) ? sanitize_text_field($_GET['turno_fecha_desde']) : '';
+    $hasta = !empty($_GET['turno_fecha_hasta']) ? sanitize_text_field($_GET['turno_fecha_hasta']) : '';
+    if ($desde || $hasta) {
+        $meta_query = ['relation' => 'AND'];
+        if ($desde) $meta_query[] = ['key' => '_turno_fecha', 'value' => $desde, 'compare' => '>=', 'type' => 'DATE'];
+        if ($hasta) $meta_query[] = ['key' => '_turno_fecha', 'value' => $hasta, 'compare' => '<=', 'type' => 'DATE'];
+        $query->set('meta_query', $meta_query);
         $query->set('orderby', 'meta_value');
         $query->set('order', 'ASC');
     } else {
@@ -683,12 +781,38 @@ function tp_turno_metabox_cb($post) {
     echo '</tbody></table>';
 }
 
+function tp_horario_ya_reservado(string $fecha, string $hora, int $excepto_id = 0): bool {
+    $turnos = get_posts([
+        'post_type'      => 'tp_turno',
+        'post_status'    => ['publish', 'pending'],
+        'posts_per_page' => -1,
+        'fields'         => 'ids',
+        'post__not_in'   => $excepto_id ? [$excepto_id] : [],
+        'meta_query'     => [
+            'relation' => 'AND',
+            ['key' => '_turno_fecha', 'value' => $fecha, 'compare' => '='],
+            ['key' => '_turno_hora', 'value' => $hora, 'compare' => '='],
+        ],
+    ]);
+    foreach ($turnos as $turno_id) {
+        if (get_post_meta($turno_id, '_turno_estado', true) !== 'cancelado') return true;
+    }
+    return false;
+}
+
 add_action('save_post_tp_turno', function ($post_id) {
     if (!isset($_POST['tp_turno_nonce']) || !wp_verify_nonce($_POST['tp_turno_nonce'], 'tp_turno_save')) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
     $fields = ['_turno_fecha','_turno_hora','_turno_nombre','_turno_dni','_turno_telefono','_turno_email','_turno_categoria','_turno_estado'];
     $old_estado = get_post_meta($post_id, '_turno_estado', true);
+    $fecha_nueva = isset($_POST['_turno_fecha']) ? sanitize_text_field($_POST['_turno_fecha']) : get_post_meta($post_id, '_turno_fecha', true);
+    $hora_nueva  = isset($_POST['_turno_hora']) ? sanitize_text_field($_POST['_turno_hora']) : get_post_meta($post_id, '_turno_hora', true);
+    $estado_nuevo = isset($_POST['_turno_estado']) ? sanitize_text_field($_POST['_turno_estado']) : $old_estado;
+    if ($estado_nuevo !== 'cancelado' && tp_horario_ya_reservado($fecha_nueva, $hora_nueva, (int) $post_id)) {
+        unset($_POST['_turno_fecha'], $_POST['_turno_hora']);
+        set_transient('tp_turno_conflicto_' . get_current_user_id(), true, MINUTE_IN_SECONDS);
+    }
     foreach ($fields as $f) {
         if (isset($_POST[$f])) {
             update_post_meta($post_id, $f, sanitize_text_field($_POST[$f]));
@@ -704,6 +828,13 @@ add_action('save_post_tp_turno', function ($post_id) {
         $numero  = get_post_meta($post_id, '_turno_numero', true);
         if ($email) tp_enviar_email_cancelacion($email, $nombre, $numero, $fecha, $hora);
     }
+});
+
+add_action('admin_notices', function () {
+    $key = 'tp_turno_conflicto_' . get_current_user_id();
+    if (!get_transient($key)) return;
+    delete_transient($key);
+    echo '<div class="notice notice-error is-dismissible"><p>No se modificaron la fecha ni la hora: ese horario ya está ocupado por otro turno activo.</p></div>';
 });
 
 // --- Página admin: Bloquear fechas ---
