@@ -11,12 +11,14 @@ $area_title      = get_the_title();
 $area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-blue-600';
 
-$gallery_images = [
+$gallery_fallback = [
     $base . 'SEGURIDAD1.JPG',
     $base . 'SEGURIDAD3.JPG',
     $base . 'SEGURIDAD4.JPG',
     $base . 'SEGURIDAD5.jpg',
 ];
+$gallery_custom = function_exists('tp_content_gallery_urls') ? tp_content_gallery_urls('gallery') : [];
+$gallery_images = !empty($gallery_custom) ? $gallery_custom : $gallery_fallback;
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [
@@ -30,11 +32,11 @@ $achievements = array_pad( tp_content_rows( 'achievements' ), 3, ['', ''] );
 
 <!-- Descripción principal -->
 <section class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-12 items-start">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-5 gap-12 items-start">
 
             <!-- Texto -->
-            <div class="md:col-span-2">
+            <div class="md:col-span-3">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-blue-600 pl-4">
                     <?php echo esc_html( tp_content( 'intro_heading' ) ); ?>
                 </h2>
@@ -85,7 +87,7 @@ $achievements = array_pad( tp_content_rows( 'achievements' ), 3, ['', ''] );
             </div>
 
             <!-- Card lateral -->
-            <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
+            <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 md:col-span-2 h-fit">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,6 +104,37 @@ $achievements = array_pad( tp_content_rows( 'achievements' ), 3, ['', ''] );
                         <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">▸</span> <?php echo esc_html( $item ); ?></li>
                     <?php endforeach; ?>
                 </ul>
+                <?php
+                $addr = tp_content('address');
+                $addr_label = tp_content('address_label');
+                $hrs = tp_content('hours');
+                $hrs_label = tp_content('hours_label');
+                if ($addr || $hrs): ?>
+                <div class="mt-4 pt-4 border-t border-current/10 space-y-3">
+                    <?php if ($addr): ?>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide opacity-70"><?php echo esc_html($addr_label); ?></p>
+                        <p class="text-sm font-medium whitespace-pre-line"><?php echo esc_html($addr); ?></p>
+                    </div>
+                    <?php endif; ?>
+                    <?php if ($hrs): ?>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide opacity-70"><?php echo esc_html($hrs_label); ?></p>
+                        <p class="text-sm font-medium"><?php echo esc_html($hrs); ?></p>
+                    </div>
+                    <?php endif; ?>
+                <?php $map_url = tp_content('map_url'); $map_embed = tp_content('map_embed'); if ($map_url || $map_embed): ?>
+                <div class="mt-4 pt-4 border-t border-current/10">
+                    <?php if ($map_embed): ?>
+                    <div class="rounded-xl overflow-hidden border border-current/10 aspect-video bg-white relative [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0"><?php echo wp_kses($map_embed, ['iframe'=>['src'=>[],'width'=>[],'height'=>[],'style'=>[],'allowfullscreen'=>[],'loading'=>[],'referrerpolicy'=>[],'frameborder'=>[],'class'=>[]]]); ?></div>
+                    <?php endif; ?>
+                    <?php if ($map_url): ?>
+                    <a href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4">Ver en Google Maps →</a>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </div>
 
         </div>

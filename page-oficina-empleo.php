@@ -11,11 +11,13 @@ $area_title      = get_the_title();
 $area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-emerald-600';
 
-$gallery_images = [
+$gallery_fallback = [
     $base . '1.jpeg',
     $base . '2.jpeg',
     $base . '3.jpeg',
 ];
+$gallery_custom = function_exists('tp_content_gallery_urls') ? tp_content_gallery_urls('gallery') : [];
+$gallery_images = !empty($gallery_custom) ? $gallery_custom : $gallery_fallback;
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [
@@ -28,7 +30,7 @@ get_template_part( 'template-parts/area-hero', null, [
 
 <!-- Descripción principal -->
 <section class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
         <div class="grid md:grid-cols-3 gap-12 items-start">
 
             <!-- Texto -->
@@ -82,6 +84,12 @@ get_template_part( 'template-parts/area-hero', null, [
                         <p class="text-xs font-semibold text-emerald-700 uppercase tracking-wide"><?php echo esc_html( tp_content( 'place_label' ) ); ?></p>
                         <p class="text-sm text-gray-900 font-medium"><?php echo esc_html( tp_content( 'place' ) ); ?></p>
                     </div>
+                    <?php $map_url = tp_content('map_url'); $map_embed = tp_content('map_embed'); if ($map_url || $map_embed): ?>
+                    <div class="pt-3 mt-3 border-t border-emerald-100">
+                        <?php if ($map_embed): ?><div class="rounded-xl overflow-hidden border border-emerald-100 aspect-video bg-white relative [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0"><?php echo wp_kses($map_embed, ['iframe'=>['src'=>[],'width'=>[],'height'=>[],'style'=>[],'allowfullscreen'=>[],'loading'=>[],'referrerpolicy'=>[],'frameborder'=>[],'class'=>[]]]); ?></div><?php endif; ?>
+                        <?php if ($map_url): ?><a href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 underline">Ver en Google Maps →</a><?php endif; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

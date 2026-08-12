@@ -1,0 +1,41 @@
+Administración del Organigrama Municipal – Municipalidad de Alderetes
+Guía de uso para el personal de administración
+
+¿Qué es la sección de Organigrama?
+El organigrama del sitio web se genera de manera dinámica desde la base de datos de WordPress. Permite mostrar la jerarquía de las diferentes dependencias municipales (Secretarías, Subsecretarías y Direcciones), indicando el nombre del cargo, el titular a cargo y su fotografía.
+
+Acceso al Panel
+1. Ingresá al panel de administración de WordPress (/wp-admin) con tus credenciales de administrador o editor.
+2. En el menú de la izquierda, verás un acceso con el icono de red llamado: 🕸️ Organigrama.
+
+Cómo agregar un nuevo Cargo
+1. En el menú izquierdo, hacé clic en Organigrama -> Añadir cargo.
+2. Escribí el nombre del cargo en el campo de título principal (ej: "Dirección de Despacho").
+3. En la sección inferior "Datos del cargo", completá la información:
+   - Titular / persona a cargo: Nombre completo del funcionario (ej: "Dra. Jessica Pérez"). Si está vacante, dejalo en blanco.
+   - Foto del titular: Hacé clic en "Elegir foto" para seleccionar una foto existente en la Biblioteca de medios o subir una nueva desde tu computadora.
+   - Color de la secretaría: Si estás creando una Secretaría (nivel superior sin cargo superior), elegí el color distintivo que tendrá en el sitio web. Para subsecretarías o direcciones, este valor no es necesario.
+4. Jerarquía (Muy Importante):
+   - A la derecha, en la caja "Atributos de página", buscá el campo "Superior".
+   - Si es una Secretaría (ej: Secretaría de Gobierno), elegí "(sin superior)".
+   - Si es una Subsecretaría (ej: Subsecretaría de Gobierno), elegí como Superior a la Secretaría de la cual depende.
+   - Si es una Dirección (ej: Dirección de Defensa Civil), elegí como Superior a la Subsecretaría (o Secretaría) de la cual depende.
+5. Orden visual:
+   - En la caja "Atributos de página", indicá un número en el campo "Orden".
+   - Las Secretarías con números más chicos (ej: 0, 1, 2) se mostrarán más arriba en la página.
+6. Publicar: Hacé clic en el botón azul "Publicar" a la derecha.
+
+Cómo editar un Cargo existente
+1. Hacé clic en Organigrama para ver la lista de todos los cargos creados.
+2. Posicioná el cursor sobre el cargo que querés modificar y hacé clic en "Editar".
+3. Modificá el nombre del cargo, el titular, reemplazá la fotografía haciendo clic en "Elegir foto" (o "Quitar foto" para dejar un avatar genérico) o cambia su dependencia jerárquica.
+4. Hacé clic en el botón azul "Actualizar" a la derecha.
+
+Cómo eliminar un Cargo
+1. En la lista de cargos, posicioná el cursor sobre el que querés borrar y hacé clic en "Enviar a la papelera".
+2. Recordá que si eliminas un cargo superior (como una Secretaría), debés reasignar el "Superior" de los cargos que dependían de él para que no queden sueltos en el diseño.
+
+Precarga inicial de fotos oficiales
+El sitio web viene configurado para precargar automáticamente las fotografías oficiales incluidas en el diseño original. Si por alguna razón alguna foto se desvincula o se muestra un avatar gris por error, podés forzar la precarga de fotos oficiales ingresando a la siguiente URL en tu navegador:
+[Sitio Web]/wp-admin/edit.php?post_type=page&tp_fix_organigrama_photos=1
+Este proceso enlazará las fotos del tema en la mediateca a sus respectivos cargos en la base de datos de manera automática.

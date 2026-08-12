@@ -46,7 +46,7 @@ $slides = [
         <?php foreach ($slides as $slide) : ?>
         <div class="tp-carousel-slide relative flex-shrink-0 w-full h-full">
             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url($slide['image']); ?>')"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#102744]/90 via-[#16345c]/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#102744]/45 via-[#16345c]/25 to-transparent"></div>
             <div class="relative z-10 h-full max-w-7xl mx-auto px-4 flex items-center">
                 <div class="max-w-2xl">
                     <p class="text-3xl md:text-4xl lg:text-5xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg">
