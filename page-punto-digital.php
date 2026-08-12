@@ -12,7 +12,7 @@ $area_title      = 'Punto Digital';
 $area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-alderetes-blue-light';
 $gallery_dir     = get_template_directory() . '/resources/images/punto-digital';
-$gallery_images  = [];
+$gallery_fallback  = [];
 $gallery_groups  = [];
 
 if ( is_dir( $gallery_dir ) ) {
@@ -29,7 +29,7 @@ if ( is_dir( $gallery_dir ) ) {
                 continue;
             }
 
-            $gallery_images[] = get_template_directory_uri() . '/resources/images/punto-digital/' . rawurlencode( $basename );
+            $gallery_fallback[] = get_template_directory_uri() . '/resources/images/punto-digital/' . rawurlencode( $basename );
         }
     }
 
@@ -67,6 +67,8 @@ if ( is_dir( $gallery_dir ) ) {
         }
     }
 }
+$gallery_custom = function_exists('tp_content_gallery_urls') ? tp_content_gallery_urls('gallery') : [];
+$gallery_images = !empty($gallery_custom) ? $gallery_custom : $gallery_fallback;
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [

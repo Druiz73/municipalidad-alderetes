@@ -58,16 +58,19 @@ function tailpress_setup_pages(): void {
         ['title' => 'Tránsito',        'slug' => 'transito',         'template' => 'page-tramites-transito.php'],
         ['title' => 'Tribunal de Faltas', 'slug' => 'tribunal-de-faltas', 'template' => 'page-tribunal-de-faltas.php'],
         ['title' => 'Catastro',        'slug' => 'catastro',         'template' => 'page-tramites-catastro.php'],
-        ['title' => 'Obras Públicas',  'slug' => 'obras-publicas',   'template' => ''],
+        ['title' => 'Obras Públicas',  'slug' => 'obras-publicas',   'template' => 'page-obras-publicas.php'],
         ['title' => 'Oficina de Empleo', 'slug' => 'oficina-empleo',   'template' => 'page-oficina-empleo.php'],
-        ['title' => 'Educación y Cultura', 'slug' => 'educacion',   'template' => ''],
-        ['title' => 'Deporte',         'slug' => 'deporte',          'template' => ''],
+        ['title' => 'Educación',       'slug' => 'educacion',        'template' => 'page-educacion.php'],
+        ['title' => 'Cultura',         'slug' => 'cultura',          'template' => 'page-cultura.php'],
+        ['title' => 'Deporte',         'slug' => 'deporte',          'template' => 'page-deporte.php'],
         ['title' => 'Punto Digital',   'slug' => 'punto-digital',    'template' => 'page-punto-digital.php'],
-        ['title' => 'Seguridad',       'slug' => 'seguridad',        'template' => ''],
-        ['title' => 'Alumbrado Público', 'slug' => 'alumbrado',      'template' => ''],
-        ['title' => 'Acción Social',   'slug' => 'accion-social',    'template' => ''],
-        ['title' => 'CISI y Cementerio', 'slug' => 'cisi',           'template' => ''],
-        ['title' => 'TEM',             'slug' => 'tem',              'template' => ''],
+        ['title' => 'Seguridad',       'slug' => 'seguridad',        'template' => 'page-seguridad.php'],
+        ['title' => 'Alumbrado Público', 'slug' => 'alumbrado',      'template' => 'page-alumbrado.php'],
+        ['title' => 'Políticas Sociales', 'slug' => 'politicas-sociales', 'template' => 'page-politicas-sociales.php'],
+        ['title' => 'Acción Social',   'slug' => 'accion-social',    'template' => 'page-politicas-sociales.php'],
+        ['title' => 'CISI',            'slug' => 'cisi',             'template' => 'page-tramites-rentas.php'],
+        ['title' => 'Cementerio',      'slug' => 'cementerio',       'template' => 'page-tramites-rentas.php'],
+        ['title' => 'TEM',             'slug' => 'tem',              'template' => 'page-tramites-rentas.php'],
         ['title' => 'Turnos Tránsito', 'slug' => 'turnos-de-transito', 'template' => 'page-turnos-transito.php'],
     ];
 
@@ -123,10 +126,13 @@ function tailpress_setup_pages(): void {
             ['title' => 'Áreas', 'slug' => '', 'children' => [
                 ['title' => 'Obras Públicas',      'slug' => 'obras-publicas'],
                 ['title' => 'Oficina de Empleo',   'slug' => 'oficina-empleo'],
-                ['title' => 'Educación y Cultura', 'slug' => 'educacion'],
+                ['title' => 'Educación',           'slug' => 'educacion'],
+                ['title' => 'Cultura',             'slug' => 'cultura'],
                 ['title' => 'Deporte',             'slug' => 'deporte'],
+                ['title' => 'Punto Digital',       'slug' => 'punto-digital'],
                 ['title' => 'Seguridad',           'slug' => 'seguridad'],
                 ['title' => 'Alumbrado Público',   'slug' => 'alumbrado'],
+                ['title' => 'Políticas Sociales',  'slug' => 'politicas-sociales'],
             ]],
             ['title' => 'Noticias', 'slug' => 'noticias', 'children' => []],
             ['title' => 'Contacto', 'slug' => 'contacto', 'children' => []],
@@ -228,6 +234,84 @@ function tailpress_ensure_turnos_transito_page(): void {
     }
 }
 add_action( 'init', 'tailpress_ensure_turnos_transito_page' );
+
+/**
+ * Repara páginas de áreas que quedaron sin template o sin crear en instalaciones previas.
+ * Cubre los 404 de Oficina de Empleo / Cultura / Educación y áreas con template vacío.
+ */
+function tailpress_ensure_area_pages(): void {
+    // Permitir forzar vía ?tp_fix_pages=1
+    $force_pages = isset($_GET['tp_fix_pages']) && current_user_can('edit_pages');
+    $map = [
+        'obras-publicas'      => 'page-obras-publicas.php',
+        'oficina-empleo'      => 'page-oficina-empleo.php',
+        'educacion'           => 'page-educacion.php',
+        'cultura'             => 'page-cultura.php',
+        'deporte'             => 'page-deporte.php',
+        'punto-digital'       => 'page-punto-digital.php',
+        'seguridad'           => 'page-seguridad.php',
+        'alumbrado'           => 'page-alumbrado.php',
+        'politicas-sociales'  => 'page-politicas-sociales.php',
+        'cisi'                => 'page-tramites-rentas.php',
+        'cementerio'          => 'page-tramites-rentas.php',
+        'tem'                 => 'page-tramites-rentas.php',
+        'accion-social'       => 'page-politicas-sociales.php',
+    ];
+
+    // Si todas ya están bien, no tocar rewrites ni DB.
+    $did_fix = false;
+    foreach ( $map as $slug => $template ) {
+        $page = get_page_by_path( $slug, OBJECT, 'page' );
+        if ( ! $page ) {
+            $title = ucwords( str_replace( '-', ' ', $slug ) );
+            // Títulos legibles para los casos especiales.
+            $titles = [
+                'obras-publicas' => 'Obras Públicas',
+                'oficina-empleo' => 'Oficina de Empleo',
+                'politicas-sociales' => 'Políticas Sociales',
+                'cisi' => 'CISI',
+                'cementerio' => 'Cementerio',
+                'tem' => 'TEM',
+                'accion-social' => 'Acción Social',
+                'alumbrado' => 'Alumbrado Público',
+            ];
+            if ( isset( $titles[ $slug ] ) ) {
+                $title = $titles[ $slug ];
+            }
+            $id = wp_insert_post( [
+                'post_title'   => $title,
+                'post_name'    => $slug,
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_content' => '',
+            ] );
+            if ( $id && ! is_wp_error( $id ) ) {
+                update_post_meta( $id, '_wp_page_template', $template );
+                $did_fix = true;
+            }
+            continue;
+        }
+        if ( get_page_template_slug( $page->ID ) !== $template ) {
+            update_post_meta( $page->ID, '_wp_page_template', $template );
+            $did_fix = true;
+        }
+        // Rehabilitar páginas en papelera o borrador que causan 404 intermitente.
+        if ( $page->post_status !== 'publish' ) {
+            wp_update_post( [ 'ID' => $page->ID, 'post_status' => 'publish' ] );
+            $did_fix = true;
+        }
+    }
+
+    if ( $did_fix ) {
+        flush_rewrite_rules( false );
+    }
+}
+add_action( 'init', 'tailpress_ensure_area_pages', 20 );
+
+// Aviso en admin si faltan páginas de áreas o galerías están vacías
+
+// Avisos temporales de galerías removidos para mantener el panel limpio.
+
 
 /**
  * Handle Contact Form Submission via AJAX
@@ -595,12 +679,32 @@ add_action('manage_tp_turno_posts_custom_column', function ($col, $post_id) {
         'turno_hora'      => '_turno_hora',
         'turno_nombre'    => '_turno_nombre',
         'turno_dni'       => '_turno_dni',
-        'turno_telefono'  => '_turno_telefono',
         'turno_email'     => '_turno_email',
         'turno_categoria' => '_turno_categoria',
     ];
     if (isset($map[$col])) {
         echo esc_html(get_post_meta($post_id, $map[$col], true));
+        return;
+    }
+    if ($col === 'turno_telefono') {
+        $tel = get_post_meta($post_id, '_turno_telefono', true);
+        echo esc_html($tel);
+        if ($tel) {
+            $clean_tel = preg_replace('/[^0-9]/', '', $tel);
+            if ($clean_tel !== '') {
+                if (substr($clean_tel, 0, 2) !== '54') {
+                    $clean_tel = '549' . ltrim($clean_tel, '0');
+                }
+                $nombre = get_post_meta($post_id, '_turno_nombre', true);
+                $fecha  = get_post_meta($post_id, '_turno_fecha', true);
+                $hora   = get_post_meta($post_id, '_turno_hora', true);
+                $num    = get_post_meta($post_id, '_turno_numero', true);
+                $cat    = get_post_meta($post_id, '_turno_categoria', true);
+                $msg    = rawurlencode("Hola {$nombre}, te recordamos tu turno de Licencia de Conducir N° {$num} ({$cat}) para el día {$fecha} a las {$hora} hs en la Dirección de Tránsito de Alderetes.");
+                $wa_url = "https://web.whatsapp.com/send?phone={$clean_tel}&text={$msg}";
+                echo ' <a href="' . esc_url($wa_url) . '" target="_blank" title="Enviar mensaje por WhatsApp al vecino" style="background:#25D366;color:#fff;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-decoration:none;margin-left:4px;display:inline-block;">WhatsApp</a>';
+            }
+        }
         return;
     }
     if ($col === 'turno_estado') {
@@ -843,7 +947,7 @@ add_action('admin_menu', function () {
         'edit.php?post_type=tp_turno',
         'Bloquear Fechas',
         'Bloquear Fechas',
-        'manage_options',
+        'edit_tp_turnos',
         'tp_bloquear_fechas',
         'tp_bloquear_fechas_page'
     );
@@ -1117,6 +1221,144 @@ function tp_enviar_email_cancelacion(string $email, string $nombre, string $nume
     wp_mail($email, $subject, $body, tp_email_headers());
 }
 
+// --- Roles específicos para Tribunal de Faltas y Tránsito ---
+// Se crean en init con capacidades mínimas para gestionar solo lo que necesitan.
+add_action('init', function () {
+    // Rol Tránsito: gestiona turnos (tp_turno) y lee páginas
+    if (!get_role('transito')) {
+        add_role('transito', 'Tránsito', [
+            'read' => true,
+            'edit_posts' => false,
+            'delete_posts' => false,
+            'publish_posts' => false,
+            'upload_files' => true,
+        ]);
+    }
+    // Asegurar caps sobre tp_turno
+    $role = get_role('transito');
+    if ($role) {
+        $caps = ['edit_tp_turno','read_tp_turno','delete_tp_turno','edit_tp_turnos','edit_others_tp_turnos','publish_tp_turnos','read_private_tp_turnos','delete_tp_turnos','delete_private_tp_turnos','delete_published_tp_turnos','delete_others_tp_turnos','edit_private_tp_turnos','edit_published_tp_turnos'];
+        foreach ($caps as $cap) { $role->add_cap($cap); }
+        $role->add_cap('read'); $role->add_cap('level_1');
+        $role->remove_cap('edit_pages');
+    }
+    // Rol Tribunal de Faltas: gestiona multas (tp_multa) y consulta
+    if (!get_role('tribunal_faltas')) {
+        add_role('tribunal_faltas', 'Tribunal de Faltas', [
+            'read' => true,
+            'edit_posts' => false,
+            'delete_posts' => false,
+            'publish_posts' => false,
+            'upload_files' => true,
+        ]);
+    }
+    $role2 = get_role('tribunal_faltas');
+    if ($role2) {
+        $caps2 = ['edit_tp_multa','read_tp_multa','delete_tp_multa','edit_tp_multas','edit_others_tp_multas','publish_tp_multas','read_private_tp_multas','delete_tp_multas','delete_private_tp_multas','delete_published_tp_multas','delete_others_tp_multas','edit_private_tp_multas','edit_published_tp_multas'];
+        foreach ($caps2 as $cap) { $role2->add_cap($cap); }
+        $role2->add_cap('read'); $role2->add_cap('level_1');
+        $role2->remove_cap('edit_pages');
+    }
+    // Admin y editor heredan todo
+    foreach (['administrator','editor'] as $r) {
+        $adm = get_role($r);
+        if ($adm) {
+            foreach (['edit_tp_turno','edit_tp_turnos','edit_others_tp_turnos','publish_tp_turnos','delete_tp_turnos','read_private_tp_turnos','edit_tp_multa','edit_tp_multas','edit_others_tp_multas','publish_tp_multas'] as $c) { $adm->add_cap($c); }
+        }
+    }
+});
+
+// CPT para Tribunal de Faltas: multas/infracciones
+add_action('init', function () {
+    register_post_type('tp_multa', [
+        'labels' => [
+            'name' => 'Tribunal de Faltas',
+            'singular_name' => 'Multa',
+            'menu_name' => 'Tribunal de Faltas',
+            'add_new' => 'Cargar multa',
+            'add_new_item' => 'Cargar nueva multa',
+            'edit_item' => 'Editar multa',
+            'new_item' => 'Nueva multa',
+            'view_item' => 'Ver multa',
+            'search_items' => 'Buscar multas',
+            'not_found' => 'No hay multas cargadas',
+            'not_found_in_trash' => 'No hay multas en la papelera',
+        ],
+        'public' => false,
+        'publicly_queryable' => false,
+        'exclude_from_search' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'menu_position' => 27,
+        'menu_icon' => 'dashicons-clipboard',
+        'supports' => ['title'],
+        'capability_type' => ['tp_multa','tp_multas'],
+        'map_meta_cap' => true,
+        'has_archive' => false,
+        'rewrite' => false,
+    ]);
+});
+add_action('add_meta_boxes_tp_multa', function () {
+    add_meta_box('tp_multa_datos', 'Datos de la multa', 'tp_multa_metabox_cb', 'tp_multa', 'normal', 'high');
+});
+function tp_multa_metabox_cb($post) {
+    wp_nonce_field('tp_multa_save','tp_multa_nonce');
+    $patente = get_post_meta($post->ID, '_tp_multa_patente', true);
+    $dni = get_post_meta($post->ID, '_tp_multa_dni', true);
+    $infraccion = get_post_meta($post->ID, '_tp_multa_infraccion', true);
+    $monto = get_post_meta($post->ID, '_tp_multa_monto', true);
+    $estado = get_post_meta($post->ID, '_tp_multa_estado', true) ?: 'pendiente';
+    $fecha = get_post_meta($post->ID, '_tp_multa_fecha', true);
+    ?>
+    <p><label><strong>Patente *</strong></label><br><input type="text" name="tp_multa_patente" value="<?php echo esc_attr($patente); ?>" class="regular-text" style="text-transform:uppercase" placeholder="Ej. AA123BB" required></p>
+    <p><label><strong>DNI / CUIT titular</strong></label><br><input type="text" name="tp_multa_dni" value="<?php echo esc_attr($dni); ?>" class="regular-text"></p>
+    <p><label><strong>Infracción / acta</strong></label><br><input type="text" name="tp_multa_infraccion" value="<?php echo esc_attr($infraccion); ?>" class="widefat" placeholder="Ej. Exceso de velocidad - Acta 1234"></p>
+    <p><label><strong>Monto</strong></label><br><input type="text" name="tp_multa_monto" value="<?php echo esc_attr($monto); ?>" class="regular-text" placeholder="Ej. 15000"></p>
+    <p><label><strong>Fecha de la infracción</strong></label><br><input type="date" name="tp_multa_fecha" value="<?php echo esc_attr($fecha); ?>"></p>
+    <p><label><strong>Estado</strong></label><br><select name="tp_multa_estado"><option value="pendiente" <?php selected($estado,'pendiente'); ?>>Pendiente</option><option value="pagada" <?php selected($estado,'pagada'); ?>>Pagada</option><option value="anulada" <?php selected($estado,'anulada'); ?>>Anulada</option></select></p>
+    <p class="description">La patente se usa para la consulta pública de Libre Deuda (normalizada a mayúsculas sin espacios).</p>
+    <?php
+}
+add_action('save_post_tp_multa', function ($post_id) {
+    if (!isset($_POST['tp_multa_nonce']) || !wp_verify_nonce($_POST['tp_multa_nonce'],'tp_multa_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post',$post_id)) return;
+    $pat = strtoupper(preg_replace('/\s+/','', sanitize_text_field($_POST['tp_multa_patente'] ?? '')));
+    if ($pat !== '') update_post_meta($post_id,'_tp_multa_patente',$pat); else delete_post_meta($post_id,'_tp_multa_patente');
+    update_post_meta($post_id,'_tp_multa_dni', sanitize_text_field($_POST['tp_multa_dni'] ?? ''));
+    update_post_meta($post_id,'_tp_multa_infraccion', sanitize_text_field($_POST['tp_multa_infraccion'] ?? ''));
+    update_post_meta($post_id,'_tp_multa_monto', sanitize_text_field($_POST['tp_multa_monto'] ?? ''));
+    update_post_meta($post_id,'_tp_multa_fecha', sanitize_text_field($_POST['tp_multa_fecha'] ?? ''));
+    $est = sanitize_key($_POST['tp_multa_estado'] ?? 'pendiente');
+    if (!in_array($est,['pendiente','pagada','anulada'],true)) $est='pendiente';
+    update_post_meta($post_id,'_tp_multa_estado',$est);
+});
+add_filter('manage_tp_multa_posts_columns', function ($cols) {
+    return ['cb'=>$cols['cb'],'title'=>'Acta / Título','tp_patente'=>'Patente','tp_estado'=>'Estado','tp_monto'=>'Monto','tp_fecha'=>'Fecha','date'=>'Fecha carga'];
+});
+add_action('manage_tp_multa_posts_custom_column', function ($col,$post_id){
+    if ($col==='tp_patente') echo esc_html(get_post_meta($post_id,'_tp_multa_patente',true));
+    elseif ($col==='tp_estado'){ $e=get_post_meta($post_id,'_tp_multa_estado',true)?:'pendiente'; $c=['pendiente'=>'#f59e0b','pagada'=>'#10b981','anulada'=>'#6b7280'][$e]??'#6b7280'; printf('<span style="background:%s;color:#fff;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600">%s</span>',$c,ucfirst($e));}
+    elseif ($col==='tp_monto') echo esc_html(get_post_meta($post_id,'_tp_multa_monto',true));
+    elseif ($col==='tp_fecha') echo esc_html(get_post_meta($post_id,'_tp_multa_fecha',true));
+},10,2);
+
+// Limitar qué ve cada rol en el admin (opcional: ocultar lo que no le compete)
+add_action('admin_menu', function (){
+    if (current_user_can('administrator')) return;
+    if (current_user_can('edit_tp_turno') && !current_user_can('edit_tp_multa')) {
+        remove_menu_page('edit.php?post_type=tp_multa');
+        remove_menu_page('edit.php?post_type=tp_cargo');
+        remove_menu_page('edit.php?post_type=noticia');
+    }
+    if (current_user_can('edit_tp_multa') && !current_user_can('edit_tp_turno')) {
+        remove_menu_page('edit.php?post_type=tp_turno');
+        remove_menu_page('edit.php?post_type=tp_cargo');
+        remove_menu_page('edit.php?post_type=noticia');
+    }
+}, 99);
+
+
 /* =====================================================================
  *  NOTICIAS — Custom Post Type editable desde el admin de WordPress
  *  --------------------------------------------------------------------
@@ -1349,3 +1591,704 @@ function tp_seed_default_noticias() {
 
     update_option('tp_noticias_seeded', 1);
 }
+
+/* =====================================================================
+ *  ORGANIGRAMA — CPT jerárquico editable desde el admin
+ *  --------------------------------------------------------------------
+ *  Estructura: Secretaría (nivel 0) → Subsecretaría (hija de secretaría)
+ *  → Dirección/Jefatura (hija de subsecretaría o de secretaría).
+ *  Título = nombre del cargo (ej. "Dirección de Empleo").
+ *  Metadatos: titular, foto (ID adjunto), color (solo secretarías).
+ *  Si no hay cargos cargados, page-organigrama.php usa el array
+ *  hardcodeado del tema (fallback sin romper el front).
+ * ===================================================================== */
+
+add_action('init', function () {
+    register_post_type('tp_cargo', [
+        'labels' => [
+            'name'               => 'Organigrama',
+            'singular_name'      => 'Cargo',
+            'menu_name'          => 'Organigrama',
+            'add_new'            => 'Añadir cargo',
+            'add_new_item'       => 'Añadir cargo al organigrama',
+            'edit_item'          => 'Editar cargo',
+            'new_item'           => 'Nuevo cargo',
+            'view_item'          => 'Ver cargo',
+            'search_items'       => 'Buscar cargos',
+            'not_found'          => 'No hay cargos cargados',
+            'not_found_in_trash' => 'No hay cargos en la papelera',
+            'parent_item_colon'  => 'Cargo superior:',
+        ],
+        'public'              => false,
+        'publicly_queryable'  => false,
+        'exclude_from_search' => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 26,
+        'menu_icon'           => 'dashicons-networking',
+        'supports'            => ['title', 'page-attributes'],
+        'hierarchical'        => true,
+        'has_archive'         => false,
+        'rewrite'             => false,
+        'capability_type'     => 'page',
+    ]);
+});
+
+// Metabox: titular + foto + color
+add_action('add_meta_boxes_tp_cargo', function () {
+    add_meta_box('tp_cargo_datos', 'Datos del cargo', 'tp_cargo_metabox_cb', 'tp_cargo', 'normal', 'high');
+});
+
+function tp_cargo_metabox_cb($post) {
+    wp_nonce_field('tp_cargo_save', 'tp_cargo_nonce');
+    $titular = get_post_meta($post->ID, '_tp_cargo_titular', true);
+    $foto_id = (int) get_post_meta($post->ID, '_tp_cargo_foto_id', true);
+    $color   = get_post_meta($post->ID, '_tp_cargo_color', true) ?: 'blue';
+    $foto_url = $foto_id ? wp_get_attachment_image_url($foto_id, 'medium') : '';
+    $es_secretaria = (int) $post->post_parent === 0;
+    $colores = ['blue'=>'Azul','purple'=>'Violeta','green'=>'Verde','orange'=>'Naranja','pink'=>'Rosa','teal'=>'Turquesa','red'=>'Rojo'];
+    ?>
+    <p>
+        <label for="tp_cargo_titular"><strong>Titular / persona a cargo</strong></label><br>
+        <input type="text" id="tp_cargo_titular" name="tp_cargo_titular" value="<?php echo esc_attr($titular); ?>" class="widefat" placeholder="Ej. Lic. Rosana Sansone — dejar vacío si el cargo está vacante">
+        <span class="description">Título de la entrada = nombre del cargo (ej. "Secretaría de Gobierno"). Este campo es la persona.</span>
+    </p>
+    <div style="margin:12px 0">
+        <label><strong>Foto del titular</strong></label><br>
+        <div id="tp_cargo_foto_preview" style="margin:8px 0">
+            <?php if ($foto_url): ?>
+                <img src="<?php echo esc_url($foto_url); ?>" style="width:80px;height:80px;object-fit:cover;border-radius:999px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)">
+            <?php else: ?>
+                <span style="color:#888;font-size:13px">Sin foto — se mostrará un avatar genérico.</span>
+            <?php endif; ?>
+        </div>
+        <input type="hidden" id="tp_cargo_foto_id" name="tp_cargo_foto_id" value="<?php echo esc_attr($foto_id); ?>">
+        <button type="button" class="button" id="tp_cargo_foto_pick">Elegir foto</button>
+        <button type="button" class="button" id="tp_cargo_foto_remove" <?php echo $foto_id ? '' : 'style="display:none"'; ?>>Quitar foto</button>
+        <p class="description">Recomendado: foto cuadrada o vertical, rostro centrado.</p>
+    </div>
+    <?php if ($es_secretaria): ?>
+    <p>
+        <label for="tp_cargo_color"><strong>Color de la secretaría</strong></label><br>
+        <select id="tp_cargo_color" name="tp_cargo_color">
+            <?php foreach ($colores as $k=>$label): ?>
+                <option value="<?php echo esc_attr($k); ?>" <?php selected($color,$k); ?>><?php echo esc_html($label); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <span class="description">Solo para nivel superior (sin cargo superior). Define el acento de color en el front.</span>
+    </p>
+    <?php else: ?>
+        <input type="hidden" name="tp_cargo_color" value="<?php echo esc_attr($color); ?>">
+    <?php endif; ?>
+    <p class="description" style="background:#f0f6ff;border-left:3px solid #3b82f6;padding:8px 10px">Jerarquía: elegí el <em>Cargo superior</em> (Atributos de página, a la derecha) para anidar. Ej.: Secretaría → Subsecretaría → Dirección. El orden se cambia con <em>Orden</em>.</p>
+    <script>
+    (function(){
+        var frame;
+        var pickBtn = document.getElementById('tp_cargo_foto_pick');
+        var removeBtn = document.getElementById('tp_cargo_foto_remove');
+        var input = document.getElementById('tp_cargo_foto_id');
+        var preview = document.getElementById('tp_cargo_foto_preview');
+        if(!pickBtn) return;
+        pickBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            if(frame) { frame.open(); return; }
+            frame = wp.media({ title:'Elegir foto del titular', button:{text:'Usar esta foto'}, multiple:false, library:{type:'image'} });
+            frame.on('select', function(){
+                var att = frame.state().get('selection').first().toJSON();
+                input.value = att.id;
+                preview.innerHTML = '<img src="'+att.sizes.medium.url+'" style="width:80px;height:80px;object-fit:cover;border-radius:999px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)">';
+                removeBtn.style.display = '';
+            });
+            frame.open();
+        });
+        if(removeBtn){
+            removeBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                input.value = '';
+                preview.innerHTML = '<span style="color:#888;font-size:13px">Sin foto — se mostrará un avatar genérico.</span>';
+                removeBtn.style.display = 'none';
+            });
+        }
+    })();
+    </script>
+    <?php
+}
+
+add_action('save_post_tp_cargo', function ($post_id) {
+    if (!isset($_POST['tp_cargo_nonce']) || !wp_verify_nonce($_POST['tp_cargo_nonce'], 'tp_cargo_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    update_post_meta($post_id, '_tp_cargo_titular', sanitize_text_field($_POST['tp_cargo_titular'] ?? ''));
+    $foto_id = absint($_POST['tp_cargo_foto_id'] ?? 0);
+    if ($foto_id) {
+        update_post_meta($post_id, '_tp_cargo_foto_id', $foto_id);
+    } else {
+        delete_post_meta($post_id, '_tp_cargo_foto_id');
+    }
+    $color = sanitize_key($_POST['tp_cargo_color'] ?? 'blue');
+    $allowed = ['blue','purple','green','orange','pink','teal','red'];
+    if (!in_array($color, $allowed, true)) $color = 'blue';
+    update_post_meta($post_id, '_tp_cargo_color', $color);
+});
+
+// Columnas en el listado
+add_filter('manage_tp_cargo_posts_columns', function ($cols) {
+    $new = [];
+    $new['cb'] = $cols['cb'];
+    $new['title'] = 'Cargo';
+    $new['tp_titular'] = 'Titular';
+    $new['tp_parent'] = 'Depende de';
+    $new['tp_foto'] = 'Foto';
+    return $new;
+});
+add_action('manage_tp_cargo_posts_custom_column', function ($col, $post_id) {
+    if ($col === 'tp_titular') {
+        $t = get_post_meta($post_id, '_tp_cargo_titular', true);
+        echo $t ? esc_html($t) : '<span style="color:#999;font-style:italic">Vacante</span>';
+    } elseif ($col === 'tp_parent') {
+        $parent = wp_get_post_parent_id($post_id);
+        echo $parent ? esc_html(get_the_title($parent)) : '<span style="color:#999">— Secretaría —</span>';
+    } elseif ($col === 'tp_foto') {
+        $fid = (int) get_post_meta($post_id, '_tp_cargo_foto_id', true);
+        if ($fid) {
+            echo '<img src="'.esc_url(wp_get_attachment_image_url($fid,'thumbnail')).'" style="width:32px;height:32px;object-fit:cover;border-radius:999px">';
+        } else {
+            echo '<span style="color:#999">—</span>';
+        }
+    }
+}, 10, 2);
+
+// Helper: devuelve la estructura del organigrama desde el CPT, o null si está vacío
+function tp_get_organigrama_estructura(): ?array {
+    $q = new WP_Query([
+        'post_type' => 'tp_cargo',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'orderby' => 'menu_order',
+        'order' => 'ASC',
+        'no_found_rows' => true,
+    ]);
+    if (!$q->have_posts()) return null;
+
+    $by_parent = [];
+    $by_id = [];
+    foreach ($q->posts as $p) {
+        $item = [
+            'id'      => $p->ID,
+            'cargo'   => $p->post_title,
+            'titular' => get_post_meta($p->ID, '_tp_cargo_titular', true),
+            'foto_id' => (int) get_post_meta($p->ID, '_tp_cargo_foto_id', true),
+            'color'   => get_post_meta($p->ID, '_tp_cargo_color', true) ?: 'blue',
+            'parent'  => (int) $p->post_parent,
+            'order'   => (int) $p->menu_order,
+        ];
+        $by_id[$p->ID] = $item;
+        $by_parent[$item['parent']][] = $p->ID;
+    }
+
+    // Construir árbol recursivo: secretaria -> hijos
+    $build = function($parent_id) use (&$build, $by_parent, $by_id) {
+        $out = [];
+        foreach (($by_parent[$parent_id] ?? []) as $id) {
+            $node = $by_id[$id];
+            $node['children'] = $build($id);
+            $out[] = $node;
+        }
+        return $out;
+    };
+
+    $tree = $build(0);
+    return empty($tree) ? null : $tree;
+}
+
+// --- Seed organigrama si está vacío (migra el array hardcodeado a tp_cargo) ---
+add_action('admin_init', function () {
+    if (get_option('tp_organigrama_seeded')) return;
+    if (!current_user_can('edit_pages')) return;
+    $existing = get_posts(['post_type'=>'tp_cargo','post_status'=>'any','posts_per_page'=>1,'fields'=>'ids','no_found_rows'=>true]);
+    if (!empty($existing)) { update_option('tp_organigrama_seeded', 1); return; }
+    // Solo si no hay cargos, importar el organigrama hardcodeado del tema
+    // Definición mínima (secretaría -> subsecretaría -> dirección) con colores
+    $estructura_seed = [
+        ['secretaria'=>'Secretaría de Gobierno','titular'=>'Aldo Gabriel Salomón','color'=>'blue','subsecretarias'=>[
+            ['cargo'=>'Subsecretaría de Gobierno','titular'=>'Dr. Pablo Saldívar','direcciones'=>[
+                ['cargo'=>'Dirección de Despacho','titular'=>'Dra. Jessica Pérez'],
+                ['cargo'=>'Dirección de Relaciones Institucionales','titular'=>'Dra. Silvia Moyano'],
+                ['cargo'=>'Dirección de Defensa Civil','titular'=>'Adrián Campos'],
+                ['cargo'=>'Dirección de la Función Pública','titular'=>'Domingo López'],
+            ]]
+        ],'direcciones_directas'=>[]],
+        ['secretaria'=>'Secretaría de Educación','titular'=>'Lic. Rosana Sansone','color'=>'purple','subsecretarias'=>[],'direcciones_directas'=>[
+            ['cargo'=>'Dirección de Integración y Promoción Cultural','titular'=>'Prof. José Romano'],
+            ['cargo'=>'Dirección de Coordinación e Integración Educativa','titular'=>'Prof. José Romano'],
+        ]],
+        ['secretaria'=>'Secretaría de Hacienda','titular'=>'Luis Romano','color'=>'green','subsecretarias'=>[
+            ['cargo'=>'Subsecretaría de Economía y Hacienda','titular'=>'Martín Soro','direcciones'=>[
+                ['cargo'=>'Dirección de Administración','titular'=>'Ctdor. Franco Casavalle'],
+                ['cargo'=>'Dirección de Compras y Contrataciones','titular'=>'César Barrera'],
+                ['cargo'=>'Dirección de Sistemas','titular'=>'Ing. Cecilia Palavecino'],
+                ['cargo'=>'Dirección de Tesorería General','titular'=>'CPN. Denis Pérez Díaz'],
+            ]],
+            ['cargo'=>'Subsecretaría de Ingresos Públicos','titular'=>'Dr. Sergio Altamiranda','direcciones'=>[]],
+        ],'direcciones_directas'=>[]],
+        ['secretaria'=>'Secretaría de Obras Públicas','titular'=>'Patricio Figueroa','color'=>'orange','subsecretarias'=>[
+            ['cargo'=>'Subsecretaría de Obras Públicas','titular'=>'','direcciones'=>[
+                ['cargo'=>'Dirección de Obras Públicas','titular'=>'Ing. Federico Díaz'],
+                ['cargo'=>'Dirección de Alumbrado Público','titular'=>'Osvaldo Escobar'],
+                ['cargo'=>'Dirección de Espacios Verdes','titular'=>'Alfredo Sánchez'],
+                ['cargo'=>'Jefatura de Saneamiento Ambiental','titular'=>'Raúl Lazarte'],
+                ['cargo'=>'Dirección de Información Catastral y Cartografía','titular'=>'Arq. Joaquín García Arenas'],
+            ]],
+            ['cargo'=>'Unidad Ejecutora Municipal','titular'=>'Ing. Oscar Parrado','direcciones'=>[]],
+        ],'direcciones_directas'=>[]],
+        ['secretaria'=>'Secretaría de Políticas Sociales','titular'=>'','color'=>'pink','subsecretarias'=>[],'direcciones_directas'=>[
+            ['cargo'=>'Dirección de Acción Social','titular'=>'José Amado Ale'],
+            ['cargo'=>'Dirección de Deportes y Recreación','titular'=>'Prof. Hernán Caldas'],
+        ]],
+        ['secretaria'=>'Secretaría de Coordinación','titular'=>'Pablo Caldas','color'=>'teal','subsecretarias'=>[
+            ['cargo'=>'Subsecretaría de Información Pública','titular'=>'Juan Mafhoud','direcciones'=>[]],
+            ['cargo'=>'Subsecretaría de Multimedios y Difusión','titular'=>'Hugo García','direcciones'=>[]],
+        ],'direcciones_directas'=>[
+            ['cargo'=>'Dirección de Empleo','titular'=>'Marcos Altamiranda'],
+        ]],
+        ['secretaria'=>'Secretaría de Protección Ciudadana','titular'=>'','color'=>'red','subsecretarias'=>[],'direcciones_directas'=>[
+            ['cargo'=>'Tribunal de Faltas','titular'=>'Dra. María de Los Ángeles Luque'],
+        ]],
+    ];
+    $order = 0;
+    foreach ($estructura_seed as $sec) {
+        $sec_id = wp_insert_post(['post_type'=>'tp_cargo','post_title'=>$sec['secretaria'],'post_status'=>'publish','post_parent'=>0,'menu_order'=>$order++]);
+        if (is_wp_error($sec_id) || !$sec_id) continue;
+        update_post_meta($sec_id,'_tp_cargo_titular',$sec['titular']);
+        update_post_meta($sec_id,'_tp_cargo_color',$sec['color']);
+        foreach (($sec['subsecretarias'] ?? []) as $sub) {
+            $sub_id = wp_insert_post(['post_type'=>'tp_cargo','post_title'=>$sub['cargo'],'post_status'=>'publish','post_parent'=>$sec_id,'menu_order'=>$order++]);
+            if (is_wp_error($sub_id) || !$sub_id) continue;
+            update_post_meta($sub_id,'_tp_cargo_titular',$sub['titular']);
+            update_post_meta($sub_id,'_tp_cargo_color','blue');
+            foreach (($sub['direcciones'] ?? []) as $dir) {
+                $dir_id = wp_insert_post(['post_type'=>'tp_cargo','post_title'=>$dir['cargo'],'post_status'=>'publish','post_parent'=>$sub_id,'menu_order'=>$order++]);
+                if (is_wp_error($dir_id) || !$dir_id) continue;
+                update_post_meta($dir_id,'_tp_cargo_titular',$dir['titular']);
+            }
+        }
+        foreach (($sec['direcciones_directas'] ?? []) as $dir) {
+            $dir_id = wp_insert_post(['post_type'=>'tp_cargo','post_title'=>$dir['cargo'],'post_status'=>'publish','post_parent'=>$sec_id,'menu_order'=>$order++]);
+            if (is_wp_error($dir_id) || !$dir_id) continue;
+            update_post_meta($dir_id,'_tp_cargo_titular',$dir['titular']);
+        }
+    }
+    update_option('tp_organigrama_seeded', 1);
+});
+
+/**
+ * Encola los scripts de la biblioteca de medios para el CPT tp_cargo en el admin.
+ */
+add_action('admin_enqueue_scripts', function ($hook) {
+    if (in_array($hook, ['post.php', 'post-new.php'], true)) {
+        $screen = get_current_screen();
+        if ($screen && $screen->post_type === 'tp_cargo') {
+            wp_enqueue_media();
+        }
+    }
+});
+
+/**
+ * Precarga las imágenes de los funcionarios en el organigrama.
+ * Importa cada foto local de resources/images/funcionarios/ a la mediateca si aún no está asignada.
+ */
+function tp_organigrama_preload_images(): array {
+    $result = ['imported'=>0, 'assigned'=>0, 'skipped'=>0, 'errors'=>[]];
+    
+    $map = [
+        'Secretaría de Gobierno' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/Secretario de Gobierno - ALDO GABRIEL SALOMÓN.jpg',
+        'Subsecretaría de Gobierno' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Subsecretario de Gobierno - Dr. Pablo Saldívar.jpg',
+        'Dirección de Despacho' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de Despacho/Dra. Jessica Pérez.jpg',
+        'Dirección de Relaciones Institucionales' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de Relaciones Institucionales/Dra. Silvia Moyano.jpg',
+        'Dirección de Defensa Civil' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de Defensa Civil/Adrián Campos.jpg',
+        'Dirección de la Función Pública' => 'resources/images/funcionarios/SECRETARIA DE GOBIERNO/SUBSECRETARIA DE GOBIERNO/Dirección de la Función Pública/Domingo López.jpg',
+        'Secretaría de Educación' => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Secr. de Educación - Lic. Rosana Sansone.jpg',
+        'Dirección de Integración y Promoción Cultural' => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Dirección de Integración y Promoción Cultural/Prof. José Romano.jpg',
+        'Dirección de Coordinación e Integración Educativa' => 'resources/images/funcionarios/SECRETARIA DE EDUCACIÓN/Dirección de Coordinación e Integración Educativa/Prof. José Romano.jpg',
+        'Secretaría de Hacienda' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Secretario de Hacienda - Luis Romano.jpg',
+        'Subsecretaría de Economía y Hacienda' => 'resources/images/funcionarios/Martin Soro - Subsecretaría de Hacienda.jpg',
+        'Dirección de Administración' => 'resources/images/funcionarios/Ctdor. Franco Casavalle - Dirección de Administración.jpg',
+        'Dirección de Compras y Contrataciones' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Hacienda/Dirección de Compras y Contrataciones/César Barrera.jpg',
+        'Dirección de Sistemas' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Hacienda/Dirección de Sistemas/Ing. Cecilia Palavecino.jpg',
+        'Dirección de Tesorería General' => 'resources/images/funcionarios/CPN. Denis Pérez Díaz -  Dirección de Tesorería General.jpg',
+        'Subsecretaría de Ingresos Públicos' => 'resources/images/funcionarios/SECRETARIA DE HACIENDA/Subsecretaría de Ingresos Públicos/Dr. Sergio Altamiranda.jpg',
+        'Secretaría de Obras Públicas' => 'resources/images/funcionarios/Patricio Figueroa - Secretario de Obras Públicas.jpg',
+        'Dirección de Obras Públicas' => 'resources/images/funcionarios/Ing. Federico Díaz - Dirección de Obras Públicas.jpg',
+        'Dirección de Alumbrado Público' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Dirección de Alumbrado Público/Osvaldo Escobar.jpg',
+        'Dirección de Espacios Verdes' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Dirección de Espacios Verde/Alfredo Sanchez.jpg',
+        'Jefatura de Saneamiento Ambiental' => 'resources/images/funcionarios/SECRETARÍA DE OBRAS PÚBLICAS/SUBSECRETARÍA DE OBRAS PÚBLICAS/Jefatura de Saneamiento Ambiental/Raúl Lazarte.jpg',
+        'Dirección de Información Catastral y Cartografía' => 'resources/images/funcionarios/Arq. Joaquín García Arenas- Dirección de Información Catastral y Cartografía.jpg',
+        'Unidad Ejecutora Municipal' => 'resources/images/funcionarios/Ing. Oscar Parrado -  Unidad Ejecutora Municipal.jpg',
+        'Dirección de Acción Social' => 'resources/images/funcionarios/SECRETARIA DE POLÍTICAS SOCIALES/Dirección de Acción Social/José Amado Ale.jpg',
+        'Dirección de Deportes y Recreación' => 'resources/images/funcionarios/SECRETARIA DE POLÍTICAS SOCIALES/Dirección de Deportes y Recreación/Prof. Hernán Caldas.jpg',
+        'Secretaría de Coordinación' => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Coord. General - Pablo Caldas.jpg',
+        'Subsecretaría de Información Pública' => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Subsecretaría de Información Pública/Juan Mafhoud.jpg',
+        'Subsecretaría de Multimedios and Difusión' => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Subsecretaría de Multimedios y Difusión/Hugo García.jpg',
+        'Dirección de Empleo' => 'resources/images/funcionarios/SECRETARÍA DE COORDINACIÓN/Dirección de Empleo/Marcos Altamiranda.jpg',
+        'Tribunal de Faltas' => 'resources/images/funcionarios/SECRETARIA DE PROTECCIÓN CIUDADANA/Tribunal de Faltas/Dra. María de Los Ángeles Luque.jpg',
+    ];
+    
+    foreach ($map as $cargo_title => $rel_path) {
+        $posts = get_posts([
+            'post_type' => 'tp_cargo',
+            'title' => $cargo_title,
+            'posts_per_page' => 1,
+            'post_status' => 'publish',
+        ]);
+        
+        if (empty($posts)) {
+            $result['errors'][] = $cargo_title . ': cargo no encontrado en base de datos.';
+            continue;
+        }
+        
+        $post = $posts[0];
+        
+        $existing_foto = (int) get_post_meta($post->ID, '_tp_cargo_foto_id', true);
+        if ($existing_foto) {
+            $result['skipped']++;
+            continue;
+        }
+        
+        $abs = trailingslashit(get_template_directory()) . $rel_path;
+        if (!is_file($abs)) {
+            if (class_exists('Normalizer')) {
+                $nfd_abs = Normalizer::normalize($abs, Normalizer::FORM_D);
+                $nfc_abs = Normalizer::normalize($abs, Normalizer::FORM_C);
+                if (is_file($nfd_abs)) {
+                    $abs = $nfd_abs;
+                } elseif (is_file($nfc_abs)) {
+                    $abs = $nfc_abs;
+                } else {
+                    $result['errors'][] = $cargo_title . ': archivo de foto no existe en ' . $rel_path;
+                    continue;
+                }
+            } else {
+                $result['errors'][] = $cargo_title . ': archivo de foto no existe en ' . $rel_path;
+                continue;
+            }
+        }
+        
+        if (function_exists('tp_editable_import_theme_image')) {
+            $source = ['path' => $abs, 'relative' => $rel_path];
+            $att_id = tp_editable_import_theme_image($source, 'Funcionario - ' . $cargo_title);
+            
+            if (is_wp_error($att_id)) {
+                $result['errors'][] = $cargo_title . ': ' . $att_id->get_error_message();
+                continue;
+            }
+            
+            update_post_meta($post->ID, '_tp_cargo_foto_id', $att_id);
+            $result['assigned']++;
+            $result['imported']++;
+        } else {
+            $result['errors'][] = 'Falta la función tp_editable_import_theme_image en el tema.';
+            break;
+        }
+    }
+    
+    return $result;
+}
+
+/**
+ * Hook para disparar la migración de imágenes del organigrama una sola vez.
+ */
+add_action('admin_init', function () {
+    // Permite forzar mediante parámetro en URL
+    if (isset($_GET['tp_fix_organigrama_photos']) && current_user_can('edit_pages') && current_user_can('upload_files')) {
+        $forced = tp_organigrama_preload_images();
+        update_option('tp_organigrama_photos_imported_report', $forced, false);
+        add_action('admin_notices', function() use ($forced) {
+            $msg = 'Fotos precargadas en organigrama: ' . (int)$forced['assigned'] . ' cargos asignados, ' . count($forced['errors']) . ' errores.';
+            echo '<div class="notice notice-success is-dismissible"><p><strong>Organigrama:</strong> ' . esc_html($msg) . '</p></div>';
+        });
+    }
+
+    if (get_option('tp_organigrama_photos_imported')) {
+        return;
+    }
+    if (!current_user_can('edit_pages') || !current_user_can('upload_files')) {
+        return;
+    }
+    if (!get_option('tp_organigrama_seeded')) {
+        return;
+    }
+    
+    $report = tp_organigrama_preload_images();
+    update_option('tp_organigrama_photos_imported', 1);
+    update_option('tp_organigrama_photos_imported_report', $report);
+}, 30);
+
+/**
+ * Consulta de patentes / Libre Deuda para el Tribunal de Faltas (Padrón masivo + Multas manuales).
+ */
+function tp_consultar_patente_tribunal(): void {
+    $patente = isset($_POST['patente']) ? strtoupper(preg_replace('/[^A-Z0-9]/', '', sanitize_text_field($_POST['patente']))) : '';
+
+    if (empty($patente)) {
+        wp_send_json_error(['mensaje' => 'Por favor ingresá una patente válida.']);
+    }
+
+    $registros = [];
+
+    // 1. Consultar en el padrón masivo (JSON indexado)
+    $json_file = get_template_directory() . '/inc/infracciones_index.json';
+    if (is_file($json_file)) {
+        $data = json_decode(file_get_contents($json_file), true);
+        if (is_array($data) && isset($data[$patente])) {
+            $registros = array_merge($registros, $data[$patente]);
+        }
+    }
+
+    // 2. Consultar multas manuales cargadas individualmente en WP Admin (CPT tp_multa)
+    $manual_query = new WP_Query([
+        'post_type'      => 'tp_multa',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'meta_query'     => [
+            'relation' => 'AND',
+            ['key' => '_tp_multa_patente', 'value' => $patente, 'compare' => '='],
+            ['key' => '_tp_multa_estado',  'value' => 'pendiente', 'compare' => '='],
+        ],
+    ]);
+
+    foreach ($manual_query->posts as $post) {
+        $infraccion = get_post_meta($post->ID, '_tp_multa_infraccion', true) ?: $post->post_title;
+        $monto = get_post_meta($post->ID, '_tp_multa_monto', true);
+        $registros[] = [
+            'causa'       => $infraccion . ($monto ? " ($" . $monto . ")" : ''),
+            'acta'        => 'Manual WP',
+            'empadronado' => 'SÍ',
+        ];
+    }
+
+    if (!empty($registros)) {
+        wp_send_json_success([
+            'tiene_infraccion' => true,
+            'patente'          => $patente,
+            'registros'        => $registros,
+            'total'            => count($registros),
+        ]);
+    } else {
+        wp_send_json_success([
+            'tiene_infraccion' => false,
+            'patente'          => $patente,
+        ]);
+    }
+}
+add_action('wp_ajax_tp_consultar_patente_tribunal', 'tp_consultar_patente_tribunal');
+add_action('wp_ajax_nopriv_tp_consultar_patente_tribunal', 'tp_consultar_patente_tribunal');
+
+/**
+ * Submenú e importador de Padrón CSV para Tribunal de Faltas en WP Admin.
+ */
+add_action('admin_menu', function () {
+    add_submenu_page(
+        'edit.php?post_type=tp_multa',
+        'Importar Padrón CSV',
+        'Importar Padrón CSV',
+        'edit_tp_multas',
+        'tp_importar_padron_tribunal',
+        'tp_importar_padron_tribunal_cb'
+    );
+});
+
+function tp_importar_padron_tribunal_cb() {
+    if (!current_user_can('edit_tp_multas')) wp_die('No tenés permisos.');
+    $mensaje = '';
+    $json_file = get_template_directory() . '/inc/infracciones_index.json';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csv_padron'])) {
+        check_admin_referer('tp_importar_padron_action', 'tp_importar_nonce');
+        $file = $_FILES['csv_padron'];
+        if (!empty($file['tmp_name']) && is_uploaded_file($file['tmp_name'])) {
+            $handle = fopen($file['tmp_name'], 'r');
+            if ($handle) {
+                $bom = fread($handle, 3);
+                if ($bom !== "\xEF\xBB\xBF") {
+                    rewind($handle);
+                }
+
+                $data = [];
+                $count = 0;
+                $patentes_set = [];
+
+                $first_line = fgets($handle);
+                rewind($handle);
+                if ($bom === "\xEF\xBB\xBF") fread($handle, 3);
+
+                $delimiter = (strpos($first_line, ';') !== false) ? ';' : ',';
+                fgetcsv($handle, 0, $delimiter); // Saltear encabezado
+
+                while (($row = fgetcsv($handle, 0, $delimiter)) !== false) {
+                    if (empty($row) || count($row) < 1) continue;
+                    $patente = strtoupper(preg_replace('/[^A-Z0-9]/', '', $row[0] ?? ''));
+                    if (empty($patente) || $patente === 'DOMINIO' || $patente === 'PATENTE') continue;
+
+                    $causa = trim($row[1] ?? '');
+                    $acta = trim($row[2] ?? '');
+                    $empadronado = trim($row[3] ?? '0');
+                    if (in_array(strtoupper($empadronado), ['1', 'SI', 'SÍ', 'TRUE'], true)) {
+                        $empadronado = 'SÍ';
+                    } else {
+                        $empadronado = 'NO';
+                    }
+
+                    if (!isset($data[$patente])) {
+                        $data[$patente] = [];
+                    }
+                    $data[$patente][] = [
+                        'causa'       => $causa,
+                        'acta'        => $acta,
+                        'empadronado' => $empadronado,
+                    ];
+                    $patentes_set[$patente] = true;
+                    $count++;
+                }
+                fclose($handle);
+
+                file_put_contents($json_file, json_encode($data, JSON_UNESCAPED_UNICODE));
+                $mensaje = '<div class="notice notice-success"><p><strong>¡Padrón actualizado con éxito!</strong> Se procesaron ' . number_format($count, 0, ',', '.') . ' infracciones (' . number_format(count($patentes_set), 0, ',', '.') . ' patentes únicas).</p></div>';
+            }
+        }
+    }
+
+    $total_infracciones = 0;
+    $total_patentes = 0;
+    if (is_file($json_file)) {
+        $current_data = json_decode(file_get_contents($json_file), true);
+        if (is_array($current_data)) {
+            $total_patentes = count($current_data);
+            foreach ($current_data as $list) {
+                $total_infracciones += count($list);
+            }
+        }
+    }
+    ?>
+    <div class="wrap">
+        <h1>Importar / Actualizar Padrón del Tribunal de Faltas</h1>
+        <?php echo $mensaje; ?>
+
+        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px">
+            <!-- Columna 1: Estado e Importación -->
+            <div class="card" style="flex:1;min-width:320px;max-width:550px;padding:20px;border-radius:12px;margin:0">
+                <h2 style="margin-top:0">Estado del Padrón Masivo</h2>
+                <p style="font-size:15px"><strong>Total de Infracciones:</strong> <span class="badge" style="background:#2563eb;color:#fff;padding:3px 10px;border-radius:12px;font-weight:bold"><?php echo number_format($total_infracciones, 0, ',', '.'); ?></span></p>
+                <p style="font-size:15px"><strong>Patentes Únicas Registradas:</strong> <strong><?php echo number_format($total_patentes, 0, ',', '.'); ?></strong></p>
+                <hr style="margin:20px 0;border-top:1px solid #e5e7eb">
+                <h3>Actualizar Padrón desde CSV (Excel / Access)</h3>
+                <p>Podés exportar el padrón desde Microsoft Access o Excel en formato <strong>.CSV</strong> y subirlo aquí para actualizar la consulta pública en la web de forma instantánea.</p>
+
+                <form method="post" enctype="multipart/form-data" style="margin-top:15px">
+                    <?php wp_nonce_field('tp_importar_padron_action', 'tp_importar_nonce'); ?>
+                    <p>
+                        <label><strong>Seleccionar archivo CSV (.csv):</strong></label><br>
+                        <input type="file" name="csv_padron" accept=".csv,.txt" required style="margin-top:8px">
+                    </p>
+                    <p>
+                        <button type="submit" class="button button-primary button-large">Reemplazar y Actualizar Padrón</button>
+                    </p>
+                </form>
+                <p class="description">El formato del CSV debe contener las columnas: <code>DOMINIO; CAUSA; ACTA; EMPADRONADO</code></p>
+            </div>
+
+            <!-- Columna 2: Buscador y Muestra de Patentes en el Admin -->
+            <div class="card" style="flex:1;min-width:320px;max-width:550px;padding:20px;border-radius:12px;margin:0">
+                <h2 style="margin-top:0">Buscador del Padrón (Admin)</h2>
+                <p>Ingresá una patente para verificar qué causas/actas figuran en el padrón masivo:</p>
+                
+                <div style="display:flex;gap:8px;margin-bottom:20px">
+                    <input type="text" id="admin-search-patente" placeholder="Ej: JQD569 o ABC123" class="regular-text" style="text-transform:uppercase;font-family:monospace;font-size:16px">
+                    <button type="button" id="admin-btn-buscar" class="button button-secondary">Buscar Patente</button>
+                </div>
+
+                <div id="admin-search-result" style="display:none;margin-bottom:20px;padding:12px;border-radius:8px"></div>
+
+                <h3>Muestra de Patentes Registradas</h3>
+                <table class="wp-list-table widefat fixed striped" style="margin-top:10px">
+                    <thead>
+                        <tr>
+                            <th>Patente / Dominio</th>
+                            <th>N° Causa</th>
+                            <th>N° Acta</th>
+                            <th>Empadronado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sample_count = 0;
+                        if (is_array($current_data)) {
+                            foreach ($current_data as $pat => $items) {
+                                foreach ($items as $item) {
+                                    echo '<tr>';
+                                    echo '<td><strong style="font-family:monospace">' . esc_html($pat) . '</strong></td>';
+                                    echo '<td>' . esc_html($item['causa'] ?: 'S/N') . '</td>';
+                                    echo '<td>' . esc_html($item['acta'] ?: 'S/N') . '</td>';
+                                    echo '<td>' . esc_html($item['empadronado'] ?: 'NO') . '</td>';
+                                    echo '</tr>';
+                                    $sample_count++;
+                                    if ($sample_count >= 10) break 2;
+                                }
+                            }
+                        }
+                        if ($sample_count === 0) {
+                            echo '<tr><td colspan="4">No hay patentes cargadas en el padrón.</td></tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('admin-btn-buscar').addEventListener('click', function() {
+        var patente = document.getElementById('admin-search-patente').value.trim().toUpperCase();
+        var resDiv = document.getElementById('admin-search-result');
+        if (!patente) return;
+        
+        resDiv.style.display = 'block';
+        resDiv.style.background = '#f0f4f8';
+        resDiv.style.border = '1px solid #cbd5e1';
+        resDiv.innerHTML = 'Consultando...';
+
+        var body = new URLSearchParams({ action: 'tp_consultar_patente_tribunal', patente: patente });
+        fetch(ajaxurl, { method: 'POST', body: body })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (res.success && res.data.tiene_infraccion) {
+                    resDiv.style.background = '#fef2f2';
+                    resDiv.style.border = '1px solid #fca5a5';
+                    var html = '<strong style="color:#b91c1c">INFRACCIÓN REGISTRADA para ' + patente + ' (' + res.data.total + ' registro/s):</strong><ul style="margin:8px 0 0 16px">';
+                    res.data.registros.forEach(function(item) {
+                        html += '<li>Causa N° ' + (item.causa || 'S/N') + ' | Acta N° ' + (item.acta || 'S/N') + '</li>';
+                    });
+                    html += '</ul>';
+                    resDiv.innerHTML = html;
+                } else {
+                    resDiv.style.background = '#f0fdf4';
+                    resDiv.style.border = '1px solid #86efac';
+                    resDiv.innerHTML = '<strong style="color:#15803d">LIBRE DEUDA:</strong> La patente ' + patente + ' no registra infracciones en el padrón.';
+                }
+            })
+            .catch(function() {
+                resDiv.innerHTML = 'Error al consultar.';
+            });
+    });
+    </script>
+    <?php
+}
+
+// Banner informativo en edit.php?post_type=tp_multa
+add_action('admin_notices', function () {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if ($screen && $screen->id === 'edit-tp_multa') {
+        $import_url = admin_url('edit.php?post_type=tp_multa&page=tp_importar_padron_tribunal');
+        echo '<div class="notice notice-info"><p><strong>Tribunal de Faltas — Padrón Masivo Activo:</strong> La consulta de la web responde automáticamente a <strong>54.131 infracciones</strong> importadas. Desde este menú podés cargar multas manuales individuales adicionales o ir a <a href="' . esc_url($import_url) . '"><strong>Importar Padrón CSV</strong></a> para subir un nuevo archivo masivo.</p></div>';
+    }
+});
+

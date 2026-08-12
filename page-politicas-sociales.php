@@ -11,7 +11,7 @@ $area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-pink-500';
 
 $gallery_dir = get_template_directory() . '/resources/images/fotos-areas/POLITICAS-SOCIALES';
-$gallery_images = [];
+$gallery_fallback = [];
 
 if ( is_dir( $gallery_dir ) ) {
     $gallery_files = glob( $gallery_dir . '/*.{jpg,jpeg,JPG,JPEG,png,PNG,webp,WEBP}', GLOB_BRACE );
@@ -20,10 +20,12 @@ if ( is_dir( $gallery_dir ) ) {
         natsort( $gallery_files );
 
         foreach ( $gallery_files as $file ) {
-            $gallery_images[] = get_template_directory_uri() . '/resources/images/fotos-areas/POLITICAS-SOCIALES/' . basename( $file );
+            $gallery_fallback[] = get_template_directory_uri() . '/resources/images/fotos-areas/POLITICAS-SOCIALES/' . basename( $file );
         }
     }
 }
+$gallery_custom = function_exists('tp_content_gallery_urls') ? tp_content_gallery_urls('gallery') : [];
+$gallery_images = !empty($gallery_custom) ? $gallery_custom : $gallery_fallback;
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [
@@ -36,26 +38,29 @@ get_template_part( 'template-parts/area-hero', null, [
 
 <!-- Descripción principal -->
 <section class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-5 gap-12 items-start">
 
-        <div class="mb-10 max-w-3xl">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-pink-500 pl-4">
-                <?php echo esc_html( tp_content( 'intro_heading' ) ); ?>
-            </h2>
-            <p class="text-lg text-gray-700 leading-relaxed mb-5">
-                <?php echo esc_html( tp_content( 'intro_1' ) ); ?>
-            </p>
-            <p class="text-gray-600 leading-relaxed mb-5">
-                <?php echo esc_html( tp_content( 'intro_2' ) ); ?>
-            </p>
-            <p class="text-gray-600 leading-relaxed">
-                <?php echo esc_html( tp_content( 'intro_3' ) ); ?>
-            </p>
-        </div>
+            <!-- Texto + ejes (izquierda, 2 cols) -->
+            <div class="md:col-span-3">
+                <div class="mb-10">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-pink-500 pl-4">
+                        <?php echo esc_html( tp_content( 'intro_heading' ) ); ?>
+                    </h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-5">
+                        <?php echo esc_html( tp_content( 'intro_1' ) ); ?>
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mb-5">
+                        <?php echo esc_html( tp_content( 'intro_2' ) ); ?>
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        <?php echo esc_html( tp_content( 'intro_3' ) ); ?>
+                    </p>
+                </div>
 
-        <!-- Ejes de acción -->
-        <?php
-        $axis_rows = tp_content_rows( 'axes' );
+                <!-- Ejes de acción -->
+                <?php
+                $axis_rows = tp_content_rows( 'axes' );
         $ejes = [
             [
                 'titulo' => $axis_rows[0][0] ?? '',
@@ -102,8 +107,42 @@ get_template_part( 'template-parts/area-hero', null, [
                     <p class="text-sm text-gray-600 leading-relaxed"><?php echo esc_html( $eje['desc'] ); ?></p>
                 </div>
             <?php endforeach; ?>
-        </div>
+                </div>
+            </div>
 
+            <!-- Lateral: Dirección / Horario / Mapa (derecha, debajo del hero) -->
+            <div class="bg-pink-50 rounded-2xl p-6 border border-pink-100 h-fit md:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-pink-500 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-gray-900">Contacto</h3>
+                </div>
+                <?php $addr = tp_content('address'); $addr_label = tp_content('address_label'); $hrs = tp_content('hours'); $hrs_label = tp_content('hours_label'); $map_url = tp_content('map_url'); $map_embed = tp_content('map_embed'); ?>
+                <?php if ($addr): ?>
+                <div class="pb-4">
+                    <p class="text-xs font-bold text-pink-600 uppercase tracking-wide mb-1"><?php echo esc_html($addr_label ?: 'Dirección'); ?></p>
+                    <p class="text-sm text-gray-700 whitespace-pre-line"><?php echo esc_html($addr); ?></p>
+                </div>
+                <?php endif; ?>
+                <?php if ($hrs): ?>
+                <div class="pt-4 border-t border-pink-100">
+                    <p class="text-xs font-bold text-pink-600 uppercase tracking-wide mb-1"><?php echo esc_html($hrs_label ?: 'Horario'); ?></p>
+                    <p class="text-sm text-gray-700"><?php echo esc_html($hrs); ?></p>
+                </div>
+                <?php endif; ?>
+                <?php if ($map_embed): ?>
+                <div class="mt-4 pt-4 border-t border-pink-100"><div class="rounded-xl overflow-hidden border border-pink-100 aspect-video bg-white relative [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0"><?php echo wp_kses($map_embed, ['iframe'=>['src'=>[],'width'=>[],'height'=>[],'style'=>[],'allowfullscreen'=>[],'loading'=>[],'referrerpolicy'=>[],'frameborder'=>[],'class'=>[]]]); ?></div></div>
+                <?php endif; ?>
+                <?php if ($map_url): ?>
+                <a href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-pink-600 hover:text-pink-700 underline underline-offset-4">Ver en Google Maps →</a>
+                <?php endif; ?>
+                <?php if (!$addr && !$hrs && !$map_url && !$map_embed): ?>
+                <p class="text-sm text-gray-500 italic">Completá dirección y horario en <em>Páginas → Políticas Sociales</em>.</p>
+                <?php endif; ?>
+            </div>
+
+        </div>
     </div>
 </section>
 

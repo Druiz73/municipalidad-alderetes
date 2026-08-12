@@ -108,6 +108,13 @@ function tp_editable_content_schema(): array
                     'label'   => 'Texto del botón',
                     'default' => 'Contactar',
                 ],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'alumbrado' => [
@@ -169,6 +176,12 @@ function tp_editable_content_schema(): array
                     'label'   => 'Texto del botón',
                     'default' => 'Reportar falla',
                 ],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'cultura' => [
@@ -184,6 +197,13 @@ function tp_editable_content_schema(): array
                 'cta_title' => ['label' => 'Título del llamado a contacto', 'default' => '¿Querés participar o consultar?'],
                 'cta_text' => ['label' => 'Texto del llamado a contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para sumarte a los programas culturales.'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'deporte' => [
@@ -200,6 +220,13 @@ function tp_editable_content_schema(): array
                 'cta_title' => ['label' => 'Título del llamado a contacto', 'default' => '¿Querés sumarte al deporte municipal?'],
                 'cta_text' => ['label' => 'Texto del llamado a contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para conocer los espacios deportivos disponibles.'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'educacion' => [
@@ -213,6 +240,13 @@ function tp_editable_content_schema(): array
                 'cta_title' => ['label' => 'Título del llamado a contacto', 'default' => '¿Necesitás comunicarte con el área?'],
                 'cta_text' => ['label' => 'Texto del llamado a contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para consultas sobre programas educativos.'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'oficina-empleo' => [
@@ -229,11 +263,14 @@ function tp_editable_content_schema(): array
                 'sidebar_text' => ['label' => 'Texto de la tarjeta lateral', 'type' => 'textarea', 'default' => 'Acercate y conocé los programas y servicios disponibles para ayudarte a construir un mejor futuro laboral.'],
                 'hours_label' => ['label' => 'Etiqueta del horario', 'default' => 'Horario de atención'],
                 'hours' => ['label' => 'Horario', 'default' => 'Lunes a Viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
                 'place_label' => ['label' => 'Etiqueta del lugar', 'default' => 'Lugar'],
                 'place' => ['label' => 'Lugar', 'type' => 'textarea', 'default' => 'Benjamin Aráoz 100 entre Caseros y pasaje Junín'],
                 'cta_title' => ['label' => 'Título del llamado a contacto', 'default' => '¿Necesitás comunicarte con el área?'],
                 'cta_text' => ['label' => 'Texto del llamado a contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para consultas sobre la Oficina de Empleo.'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
             ],
         ],
         'catastro' => [
@@ -251,6 +288,8 @@ function tp_editable_content_schema(): array
                 'address' => ['label' => 'Dirección', 'default' => 'Edificio Municipal – Caseros y Urquiza'],
                 'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
                 'hours' => ['label' => 'Horario', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'contacto' => [
@@ -305,6 +344,7 @@ function tp_editable_content_schema(): array
                 'cta_text' => ['label' => 'Texto de contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para obtener más información sobre actividades y servicios del Punto Digital.'],
                 'cta_address' => ['label' => 'Dirección', 'default' => 'Llegarse por: 9 de Julio 200 - El Corte - Alderetes'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
             ],
         ],
         'rentas' => [
@@ -314,6 +354,8 @@ function tp_editable_content_schema(): array
                 'hero_tagline' => ['label' => 'Bajada de portada', 'default' => 'Gestión de tributos municipales, requisitos y beneficios.'],
                 'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horarios de Atención:'],
                 'hours' => ['label' => 'Horario', 'default' => 'Lunes a Viernes · 8:00 a 13:30 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
                 'notice_heading' => ['label' => 'Título del aviso', 'default' => 'Nota Importante'],
                 'notice_text' => ['label' => 'Texto del aviso', 'default' => '"LOS TRÁMITES SON PERSONALES SIN EXCEPCIÓN ALGUNA"'],
                 'tem_signup_heading' => ['label' => 'TEM — título de inscripción', 'default' => 'Requisitos para Inscripción T.E.M.'],
@@ -332,6 +374,32 @@ function tp_editable_content_schema(): array
                 'cemetery_exemption_items' => ['label' => 'Cementerio — requisitos de exención', 'type' => 'textarea', 'default' => "Nota dirigida a la Intendente de la Municipalidad de Alderetes Sra. Graciela Gutiérrez, indicando N.º de Padrón.\nFotocopia de DNI.\nOriginal y fotocopia de la Escritura.\nFotocopia última boleta de sueldo.\nArancel Administrativo.", 'instructions' => 'Un requisito por línea.'],
                 'cemetery_burial_heading' => ['label' => 'Cementerio — título de inhumación', 'default' => 'Inhumación C.I.S.C. (Cementerio)'],
                 'cemetery_burial_items' => ['label' => 'Cementerio — requisitos de inhumación', 'type' => 'textarea', 'default' => "Fotocopia de DNI de la persona que hace el trámite.\nEstar al día con el impuesto.\nLa persona que realice el trámite tiene que ser el titular.\nSi el titular falleció, debe hacer cambio de titularidad.\nCertificado de Defunción.", 'instructions' => 'Un requisito por línea.'],
+                'rentas_aviso1_titulo' => ['label' => 'Aviso 1: Título', 'default' => 'Nota Importante'],
+                'rentas_aviso1_subtitulo' => ['label' => 'Aviso 1: Subtítulo (Opcional)', 'default' => ''],
+                'rentas_aviso1_texto' => ['label' => 'Aviso 1: Texto/Párrafo', 'type' => 'textarea', 'default' => '"LOS TRÁMITES SON PERSONALES SIN EXCEPCIÓN ALGUNA"'],
+                'rentas_aviso1_imagen' => ['label' => 'Aviso 1: Imagen (Opcional)', 'type' => 'image', 'default' => ''],
+                
+                'rentas_aviso2_titulo' => ['label' => 'Aviso 2: Título', 'default' => ''],
+                'rentas_aviso2_subtitulo' => ['label' => 'Aviso 2: Subtítulo (Opcional)', 'default' => ''],
+                'rentas_aviso2_texto' => ['label' => 'Aviso 2: Texto/Párrafo', 'type' => 'textarea', 'default' => ''],
+                'rentas_aviso2_imagen' => ['label' => 'Aviso 2: Imagen (Opcional)', 'type' => 'image', 'default' => ''],
+                
+                'rentas_aviso3_titulo' => ['label' => 'Aviso 3: Título', 'default' => ''],
+                'rentas_aviso3_subtitulo' => ['label' => 'Aviso 3: Subtítulo (Opcional)', 'default' => ''],
+                'rentas_aviso3_texto' => ['label' => 'Aviso 3: Texto/Párrafo', 'type' => 'textarea', 'default' => ''],
+                'rentas_aviso3_imagen' => ['label' => 'Aviso 3: Imagen (Opcional)', 'type' => 'image', 'default' => ''],
+
+                'rentas_descarga1_nombre' => ['label' => 'TEM — Descarga 1: Nombre', 'default' => 'Formulario R708 - Inscripción'],
+                'rentas_descarga1_archivo' => ['label' => 'TEM — Descarga 1: Archivo PDF', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/FORM-INSCRIPCION-TEM.pdf'],
+                
+                'rentas_descarga2_nombre' => ['label' => 'TEM — Descarga 2: Nombre', 'default' => 'Declaración Jurada'],
+                'rentas_descarga2_archivo' => ['label' => 'TEM — Descarga 2: Archivo PDF', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/FORMULARIO-DDJJ-TEM.pdf'],
+                
+                'rentas_descarga3_nombre' => ['label' => 'TEM — Descarga 3: Nombre', 'default' => 'Calendario de Vencimientos'],
+                'rentas_descarga3_archivo' => ['label' => 'TEM — Descarga 3: Archivo PDF', 'type' => 'file', 'default' => '/wp-content/uploads/2026/05/calendario-vencimiento-2026.pdf'],
+                
+                'rentas_descarga4_nombre' => ['label' => 'TEM — Descarga 4: Nombre', 'default' => ''],
+                'rentas_descarga4_archivo' => ['label' => 'TEM — Descarga 4: Archivo PDF', 'type' => 'file', 'default' => ''],
             ],
         ],
         'transito' => [
@@ -368,6 +436,8 @@ function tp_editable_content_schema(): array
                 'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
                 'hours_heading' => ['label' => 'Título de horario', 'default' => 'Atención'],
                 'hours' => ['label' => 'Horario', 'default' => 'de 08:00 a 13:00 hs.'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
                 'map_button' => ['label' => 'Botón del mapa', 'default' => 'Ver en Google Maps'],
                 'pending_note' => ['label' => 'Aviso provisorio', 'type' => 'textarea', 'default' => 'Próximamente se habilitará información adicional sobre trámites online y consulta de deuda.'],
                 'cta_title' => ['label' => 'Título de contacto', 'default' => '¿Tenés alguna consulta?'],
@@ -390,6 +460,13 @@ function tp_editable_content_schema(): array
                 'cta_title' => ['label' => 'Título del llamado a contacto', 'default' => '¿Necesitás comunicarte con el área?'],
                 'cta_text' => ['label' => 'Texto del llamado a contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para consultas sobre seguridad ciudadana.'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'politicas-sociales' => [
@@ -406,6 +483,13 @@ function tp_editable_content_schema(): array
                 'cta_title' => ['label' => 'Título del llamado a contacto', 'default' => '¿Necesitás asistencia o información?'],
                 'cta_text' => ['label' => 'Texto del llamado a contacto', 'type' => 'textarea', 'default' => 'Contactá a la Secretaría de Políticas Sociales de la Municipalidad de Alderetes.'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
+                'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
+                'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
+                'hours' => ['label' => 'Horario del área', 'default' => 'Lunes a viernes de 08:00 a 13:00 hs'],
+                'map_url' => ['label' => 'Enlace a Google Maps (opcional)', 'default' => '', 'instructions' => 'Pegá el link de Google Maps. Si está cargado, se muestra botón Ver en mapa.'],
+                'map_embed' => ['label' => 'Mapa embebido (opcional, iframe)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Pegá el iframe de Google Maps <iframe>. Si está cargado, se muestra el mapa debajo de dirección/horario.'], 
             ],
         ],
         'institucional' => [
@@ -481,6 +565,86 @@ function tp_editable_theme_image_source(string $url): ?array
         'path'     => $source_path,
         'relative' => str_replace('\\', '/', $relative),
     ];
+}
+
+/**
+ * Mapa de galerías por área — rutas relativas dentro del tema.
+ * Se usa para precargar la galería en la mediateca la primera vez,
+ * de modo que el admin vea las fotos actuales y pueda editar/eliminar.
+ *
+ * @return array<string, string[]>
+ */
+function tp_gallery_fallback_map(): array {
+    return [
+        'obras-publicas'      => ['resources/images/fotos-areas/OBRAS-PUBLICAS/FOTO4.jpg','resources/images/fotos-areas/OBRAS-PUBLICAS/FOTO5.jpg','resources/images/fotos-areas/OBRAS-PUBLICAS/FOTO6.jpg','resources/images/fotos-areas/OBRAS-PUBLICAS/FOTO10.JPG'],
+        'alumbrado'           => ['resources/images/fotos-areas/ALUMBRADO-PUBLICO/FOTO2.jpg','resources/images/fotos-areas/ALUMBRADO-PUBLICO/FOTO3.jpg','resources/images/fotos-areas/ALUMBRADO-PUBLICO/FOTO4.jpg'],
+        'cultura'             => ['resources/images/fotos-areas/CULTURA/FOTO3.jpg'],
+        'deporte'             => ['resources/images/fotos-areas/DEPORTES/1.jpg','resources/images/fotos-areas/DEPORTES/2.jpg','resources/images/fotos-areas/DEPORTES/3.jpg','resources/images/fotos-areas/DEPORTES/5.jpg','resources/images/fotos-areas/DEPORTES/6.jpg','resources/images/fotos-areas/DEPORTES/7.jpg','resources/images/fotos-areas/DEPORTES/8.jpg','resources/images/fotos-areas/DEPORTES/9.jpg'],
+        'educacion'           => ['resources/images/fotos-areas/EDUCACION/FOTO5.jpg','resources/images/fotos-areas/EDUCACION/FOTO6.jpg'],
+        'oficina-empleo'      => ['resources/images/fotos-areas/OFICINA-EMPLEO/1.jpeg','resources/images/fotos-areas/OFICINA-EMPLEO/2.jpeg','resources/images/fotos-areas/OFICINA-EMPLEO/3.jpeg'],
+        'seguridad'           => ['resources/images/fotos-areas/SEGURIDAD/SEGURIDAD1.JPG','resources/images/fotos-areas/SEGURIDAD/SEGURIDAD3.JPG','resources/images/fotos-areas/SEGURIDAD/SEGURIDAD4.JPG','resources/images/fotos-areas/SEGURIDAD/SEGURIDAD5.jpg'],
+        'politicas-sociales'  => ['resources/images/fotos-areas/POLITICAS-SOCIALES/1.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/2.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/3.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/4.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/5.jpg'],
+        'punto-digital'       => [], // punto-digital usa carpetas dinámicas; no se precarga aquí
+    ];
+}
+
+/**
+ * Precarga las galerías de cada área si el campo está vacío.
+ * Importa cada foto del fallback a la mediateca y las asigna al campo gallery.
+ *
+ * @return array{imported:int, assigned:int, skipped:int, errors:string[]}
+ */
+function tp_editable_preload_galleries(bool $force = false): array {
+    $result = ['imported'=>0,'assigned'=>0,'skipped'=>0,'errors'=>[]];
+    $map = tp_gallery_fallback_map();
+    foreach ($map as $slug => $rel_paths) {
+        if (empty($rel_paths)) continue;
+        $page = get_page_by_path($slug, OBJECT, 'page');
+        if (!$page) { $result['errors'][] = $slug.': página no existe (creala en Páginas o revisa el slug)'; continue; }
+        
+        $assigned_count = 0;
+        $skipped_count = 0;
+        
+        foreach ($rel_paths as $index => $rel) {
+            $num = $index + 1;
+            $field_name = 'gallery_' . $num;
+            $field_key = 'field_tp_' . md5($slug . ':' . $field_name);
+            
+            // Si ya tiene algo cargado en este campo, no tocar (a menos que $force)
+            if (!$force && metadata_exists('post', $page->ID, '_' . $field_name)) {
+                $skipped_count++;
+                continue;
+            }
+            
+            $abs = trailingslashit(get_template_directory()) . $rel;
+            if (!is_file($abs)) { $result['errors'][] = $slug.': no existe '.$rel; continue; }
+            $source = ['path'=>$abs, 'relative'=>$rel];
+            $att_id = tp_editable_import_theme_image($source, 'Galería - '.$slug.' (Foto '.$num.')');
+            if (is_wp_error($att_id)) { $result['errors'][] = $slug.': '.$att_id->get_error_message(); continue; }
+            
+            update_post_meta($page->ID, $field_name, $att_id);
+            update_post_meta($page->ID, '_' . $field_name, $field_key);
+            if (function_exists('update_field')) {
+                update_field($field_key, $att_id, $page->ID);
+            }
+            
+            $saved = get_post_meta($page->ID, $field_name, true);
+            if (!empty($saved)) {
+                $assigned_count++;
+                $result['imported']++;
+            } else {
+                $result['errors'][] = $slug.': no se pudo asignar ' . $field_name;
+            }
+        }
+        
+        if ($assigned_count > 0) {
+            $result['assigned']++;
+        }
+        if ($skipped_count === count($rel_paths)) {
+            $result['skipped']++;
+        }
+    }
+    return $result;
 }
 
 /**
@@ -579,7 +743,49 @@ function tp_editable_preload_images(): array
     foreach (tp_editable_content_schema() as $slug => $page_schema) {
         $page = get_page_by_path($slug, OBJECT, 'page');
         if (!$page) {
-            continue;
+            // Si la página aún no existe (instalaciones previas), la creamos al vuelo para que la sección Galería aparezca sin esperar al siguiente init
+            $titles = [
+                'obras-publicas' => 'Obras Públicas',
+                'oficina-empleo' => 'Oficina de Empleo',
+                'cultura' => 'Cultura',
+                'deporte' => 'Deporte',
+                'educacion' => 'Educación',
+                'seguridad' => 'Seguridad',
+                'alumbrado' => 'Alumbrado Público',
+                'politicas-sociales' => 'Políticas Sociales',
+                'punto-digital' => 'Punto Digital',
+                'tribunal-de-faltas' => 'Tribunal de Faltas',
+                'catastro' => 'Catastro',
+                'transito' => 'Tránsito',
+                'rentas' => 'Rentas',
+            ];
+            $title = $titles[$slug] ?? ucwords(str_replace('-', ' ', $slug));
+            $new_id = wp_insert_post([
+                'post_title'   => $title,
+                'post_name'    => $slug,
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_content' => '',
+            ], true);
+            if (is_wp_error($new_id) || !$new_id) {
+                continue;
+            }
+            // Asignar plantilla si existe en el mapa de áreas
+            $tmpl_map = [
+                'obras-publicas' => 'page-obras-publicas.php',
+                'cultura' => 'page-cultura.php',
+                'deporte' => 'page-deporte.php',
+                'educacion' => 'page-educacion.php',
+                'seguridad' => 'page-seguridad.php',
+                'alumbrado' => 'page-alumbrado.php',
+                'politicas-sociales' => 'page-politicas-sociales.php',
+                'oficina-empleo' => 'page-oficina-empleo.php',
+            ];
+            if (isset($tmpl_map[$slug])) {
+                update_post_meta($new_id, '_wp_page_template', $tmpl_map[$slug]);
+            }
+            $page = get_post($new_id);
+            if (!$page) continue;
         }
 
         foreach ($page_schema['fields'] as $name => $settings) {
@@ -666,10 +872,47 @@ function tp_content(string $field_name, ?string $slug = null, ?int $post_id = nu
         if ($value !== null && $value !== false && $value !== '') {
             return $value;
         }
+
+        if ($slug === 'rentas') {
+            $aliases = ['tem', 'cisi', 'cementerio'];
+            foreach ($aliases as $alias) {
+                $alias_page = get_page_by_path($alias, OBJECT, 'page');
+                if ($alias_page && $alias_page->ID !== $post_id) {
+                    $alias_val = get_field($field_name, $alias_page->ID);
+                    if ($alias_val !== null && $alias_val !== false && $alias_val !== '') {
+                        return $alias_val;
+                    }
+                }
+            }
+        }
     }
 
     return $default;
 }
+
+add_action('save_post_page', static function ($post_id): void {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    $slug = get_post_field('post_name', $post_id);
+    $template = get_page_template_slug($post_id);
+    if (in_array($slug, ['rentas', 'tem', 'cisi', 'cementerio'], true) || $template === 'page-tramites-rentas.php') {
+        $targets = ['rentas', 'tem', 'cisi', 'cementerio'];
+        $schema = tp_editable_content_schema()['rentas']['fields'] ?? [];
+        foreach ($targets as $target_slug) {
+            $target_page = get_page_by_path($target_slug, OBJECT, 'page');
+            if (!$target_page || (int)$target_page->ID === (int)$post_id) continue;
+            foreach (array_keys($schema) as $field_name) {
+                $val = get_post_meta($post_id, $field_name, true);
+                $key = get_post_meta($post_id, '_' . $field_name, true);
+                if ($val !== '') {
+                    update_post_meta($target_page->ID, $field_name, $val);
+                }
+                if ($key !== '') {
+                    update_post_meta($target_page->ID, '_' . $field_name, $key);
+                }
+            }
+        }
+    }
+}, 20);
 
 /**
  * Devuelve una lista editable, con un elemento por línea.
@@ -714,12 +957,93 @@ function tp_content_image_url(string $field_name, ?string $slug = null, ?int $po
 }
 
 /**
+ * Devuelve las URLs de una galería editable (ACF gallery).
+ * Si el campo está vacío, devuelve [] para que el template use el fallback del tema.
+ *
+ * @return string[]
+ */
+// Si el campo gallery está vacío en admin, mostrar el fallback como valor por defecto para que se vean las fotos actuales para editar
+add_filter('acf/load_value', function($value, $post_id, $field) {
+    $field_name = $field['name'] ?? '';
+    if (preg_match('/^gallery_([1-8])$/', $field_name, $matches) !== 1) {
+        return $value;
+    }
+    if (get_post_type($post_id) !== 'page') return $value;
+    
+    // Si ya existe la relación de campo ACF en postmeta, significa que ya fue inicializado/guardado
+    if (metadata_exists('post', $post_id, '_' . $field_name)) {
+        return $value;
+    }
+    
+    $slug = get_post_field('post_name', $post_id);
+    if ($slug === 'punto-digital') return $value;
+    
+    $index = (int)$matches[1] - 1;
+    $map = tp_gallery_fallback_map();
+    if (empty($map[$slug]) || !isset($map[$slug][$index])) return $value;
+    
+    $rel = $map[$slug][$index];
+    $abs = trailingslashit(get_template_directory()) . $rel;
+    if (!is_file($abs)) return $value;
+    
+    $source = ['path'=>$abs, 'relative'=>$rel];
+    $att_id = tp_editable_import_theme_image($source, 'Galería - '.$slug.' (Foto '.($index+1).')');
+    if (!is_wp_error($att_id)) {
+        update_post_meta($post_id, $field_name, $att_id);
+        update_post_meta($post_id, '_' . $field_name, $field['key'] ?? 'field_tp_'.md5($slug.':'.$field_name));
+        return $att_id;
+    }
+    return $value;
+}, 10, 3);
+
+function tp_content_gallery_urls(string $field_name = 'gallery', ?string $slug = null, ?int $post_id = null): array
+{
+    $slug = $slug ?: tp_editable_page_slug($post_id);
+    if (!$post_id && $slug) {
+        $page = get_page_by_path($slug, OBJECT, 'page');
+        $post_id = $page ? (int) $page->ID : null;
+    }
+
+    $urls = [];
+    $has_any_saved = false;
+    
+    for ($i = 1; $i <= 8; $i++) {
+        $key = 'gallery_' . $i;
+        if ($post_id && metadata_exists('post', $post_id, '_' . $key)) {
+            $has_any_saved = true;
+        }
+        
+        $value = tp_content($key, $slug, $post_id);
+        if ($value) {
+            if (is_numeric($value)) {
+                $url = wp_get_attachment_image_url((int) $value, 'large');
+                if ($url) {
+                    $urls[] = $url;
+                }
+            } elseif (is_string($value) && $value !== '') {
+                $urls[] = $value;
+            }
+        }
+    }
+
+    if ($has_any_saved) {
+        return array_values(array_filter($urls));
+    }
+
+    return [];
+}
+
+/**
  * Usa la pantalla clásica en las páginas administradas con estos campos.
  * Evita mostrar un editor de bloques vacío que podría confundir al personal.
  */
 add_filter('use_block_editor_for_post', static function (bool $use_block_editor, $post): bool {
     if (!$post instanceof WP_Post || $post->post_type !== 'page') {
         return $use_block_editor;
+    }
+
+    if (in_array($post->post_name, ['rentas', 'tem', 'cisi', 'cementerio'], true) || get_page_template_slug($post->ID) === 'page-tramites-rentas.php') {
+        return false;
     }
 
     return array_key_exists($post->post_name, tp_editable_content_schema()) ? false : $use_block_editor;
@@ -736,7 +1060,49 @@ add_action('acf/init', static function (): void {
     foreach (tp_editable_content_schema() as $slug => $page_schema) {
         $page = get_page_by_path($slug, OBJECT, 'page');
         if (!$page) {
-            continue;
+            // Si la página aún no existe (instalaciones previas), la creamos al vuelo para que la sección Galería aparezca sin esperar al siguiente init
+            $titles = [
+                'obras-publicas' => 'Obras Públicas',
+                'oficina-empleo' => 'Oficina de Empleo',
+                'cultura' => 'Cultura',
+                'deporte' => 'Deporte',
+                'educacion' => 'Educación',
+                'seguridad' => 'Seguridad',
+                'alumbrado' => 'Alumbrado Público',
+                'politicas-sociales' => 'Políticas Sociales',
+                'punto-digital' => 'Punto Digital',
+                'tribunal-de-faltas' => 'Tribunal de Faltas',
+                'catastro' => 'Catastro',
+                'transito' => 'Tránsito',
+                'rentas' => 'Rentas',
+            ];
+            $title = $titles[$slug] ?? ucwords(str_replace('-', ' ', $slug));
+            $new_id = wp_insert_post([
+                'post_title'   => $title,
+                'post_name'    => $slug,
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_content' => '',
+            ], true);
+            if (is_wp_error($new_id) || !$new_id) {
+                continue;
+            }
+            // Asignar plantilla si existe en el mapa de áreas
+            $tmpl_map = [
+                'obras-publicas' => 'page-obras-publicas.php',
+                'cultura' => 'page-cultura.php',
+                'deporte' => 'page-deporte.php',
+                'educacion' => 'page-educacion.php',
+                'seguridad' => 'page-seguridad.php',
+                'alumbrado' => 'page-alumbrado.php',
+                'politicas-sociales' => 'page-politicas-sociales.php',
+                'oficina-empleo' => 'page-oficina-empleo.php',
+            ];
+            if (isset($tmpl_map[$slug])) {
+                update_post_meta($new_id, '_wp_page_template', $tmpl_map[$slug]);
+            }
+            $page = get_post($new_id);
+            if (!$page) continue;
         }
 
         $fields = [[
@@ -749,6 +1115,25 @@ add_action('acf/init', static function (): void {
 
         foreach ($page_schema['fields'] as $name => $settings) {
             $type = $settings['type'] ?? 'text';
+
+            if ($type === 'gallery') {
+                for ($i = 1; $i <= 8; $i++) {
+                    $fields[] = [
+                        'key'           => 'field_tp_' . md5($slug . ':gallery_' . $i),
+                        'label'         => 'Foto de galería ' . $i,
+                        'name'          => 'gallery_' . $i,
+                        'type'          => 'image',
+                        'instructions'  => $i === 1 ? 'Podés cargar hasta 8 fotos individuales para la galería. Si las dejas vacías, se usarán las del tema.' : '',
+                        'required'      => 0,
+                        'default_value' => '',
+                        'return_format' => 'id',
+                        'preview_size'  => 'medium',
+                        'library'       => 'all',
+                    ];
+                }
+                continue;
+            }
+
             $field = [
                 'key'           => 'field_tp_' . md5($slug . ':' . $name),
                 'label'         => $settings['label'],
@@ -768,19 +1153,45 @@ add_action('acf/init', static function (): void {
                 $field['preview_size'] = 'medium';
                 $field['library'] = 'all';
             }
+            if ($type === 'file') {
+                $field['return_format'] = 'url';
+            }
 
             $fields[] = $field;
+        }
+
+        $location_groups = [[
+            [
+                'param'    => 'page',
+                'operator' => '==',
+                'value'    => (string) $page->ID,
+            ]
+        ]];
+
+        if ($slug === 'rentas') {
+            $alias_slugs = ['tem', 'cisi', 'cementerio'];
+            foreach ($alias_slugs as $alias_slug) {
+                $alias_page = get_page_by_path($alias_slug, OBJECT, 'page');
+                if ($alias_page) {
+                    $location_groups[] = [[
+                        'param'    => 'page',
+                        'operator' => '==',
+                        'value'    => (string) $alias_page->ID,
+                    ]];
+                }
+            }
+            $location_groups[] = [[
+                'param'    => 'page_template',
+                'operator' => '==',
+                'value'    => 'page-tramites-rentas.php',
+            ]];
         }
 
         acf_add_local_field_group([
             'key'                   => 'group_tp_' . md5($slug),
             'title'                 => 'Contenido de ' . $page_schema['label'],
             'fields'                => $fields,
-            'location'              => [[[
-                'param'    => 'page',
-                'operator' => '==',
-                'value'    => (string) $page->ID,
-            ]]],
+            'location'              => $location_groups,
             'position'              => 'acf_after_title',
             'style'                 => 'default',
             'label_placement'       => 'top',
@@ -796,7 +1207,20 @@ add_action('acf/init', static function (): void {
  * la versión guardada en la base de datos no existe y la migración se repite.
  */
 add_action('admin_init', static function (): void {
-    $migration_version = '2026-07-16-1';
+    // Handler para forzar precarga manual: siempre disponible via ?tp_fix_galleries=1 aunque migración ya esté hecha
+    if (isset($_GET['tp_fix_galleries']) && current_user_can('edit_pages') && current_user_can('upload_files')) {
+        $forced = tp_editable_preload_galleries(true);
+        update_option('tp_editable_image_migration_report', ['galleries_forced' => $forced], false);
+        add_action('admin_notices', function() use ($forced) {
+            $msg = 'Galerías precargadas: ' . (int)$forced['assigned'] . ' páginas asignadas, ' . count($forced['errors']) . ' errores.';
+            if (!empty($forced['errors'])) $msg .= ' Detalle: ' . esc_html(implode(' | ', array_slice($forced['errors'],0,3)));
+            else $msg .= ' Revisá Páginas > [Área] > Galería de imágenes.';
+            echo '<div class="notice notice-success is-dismissible"><p><strong>Galerías:</strong> '.esc_html($msg).' — son 8 páginas (no 8 fotos), cada una con 1 a 8 fotos (total ~30). Recargá <em>Páginas &gt; [Área] &gt; Galería de imágenes</em> para verlas.</p></div>';
+        });
+        // No retornar, seguir con migración normal si hace falta
+    }
+
+    $migration_version = '2026-08-09-1';
 
     if (
         get_option('tp_editable_image_migration') === $migration_version
@@ -808,9 +1232,12 @@ add_action('admin_init', static function (): void {
     }
 
     $result = tp_editable_preload_images();
+    $gallery_result = tp_editable_preload_galleries();
+    // Combinar reportes para diagnóstico
+    $result['galleries'] = $gallery_result;
     update_option('tp_editable_image_migration_report', $result, false);
 
-    if (empty($result['errors'])) {
+    if (empty($result['errors']) && empty($gallery_result['errors'])) {
         update_option('tp_editable_image_migration', $migration_version, false);
     }
 }, 20);

@@ -1,0 +1,39 @@
+Guía del Operador de Tránsito – Sistema de Turnos Online
+Municipalidad de Alderetes
+
+¿En qué consiste el Rol de Tránsito?
+El usuario con el rol de "Tránsito" tiene una cuenta simplificada en el panel de administración de WordPress. Su acceso está restringido exclusivamente a las tareas de su área: gestionar los turnos solicitados por los ciudadanos para la licencia de conducir y bloquear fechas por feriados o asuetos locales. No tiene acceso a cambiar los textos del sitio web, ni las noticias, ni las secciones de otras oficinas.
+
+Acceso al Panel
+1. Ingresá a la dirección web del panel (/wp-admin) utilizando tu usuario y contraseña con el rol de Tránsito.
+2. En tu menú izquierdo verás únicamente dos accesos:
+   - 📁 Medios: para subir o ver imágenes.
+   - 📅 Turnos de Tránsito: el sistema principal de gestión de turnos.
+
+Gestión de Turnos Diarios
+Al hacer clic en 📅 Turnos de Tránsito, verás la lista de todas las reservas de los ciudadanos.
+- Filtrar por fecha: En la parte superior de la tabla disponés de dos filtros: "Desde" y "Hasta". Ingresá la fecha (o el rango de fechas) y hacé clic en el botón "Filtrar" para ver los turnos correspondientes.
+- Exportar listado: Si necesitás la lista del día impresa o para planillas de firmas, aplicá el filtro de fecha y hacé clic en "Exportar CSV". Se descargará un archivo que podés abrir directamente en Microsoft Excel.
+
+Detalle y Estados del Turno
+Hacé clic en el título de cualquier turno (que lleva el nombre del trámite y el número de reserva) para abrir su editor. En la caja "Datos del Turno" verás la información de contacto y el estado:
+- Estado:
+  - Pendiente (Amarillo): El turno está reservado pero aún no se atendió.
+  - Atendido (Verde): El ciudadano asistió a su turno y fue atendido.
+  - Ausente (Rojo): Pasó el horario y el ciudadano no se presentó.
+  - Cancelado (Gris): El turno fue anulado.
+Una vez que selecciones el nuevo estado, hacé clic en el botón azul "Actualizar" a la derecha.
+
+Importante sobre Cancelaciones:
+Si cambias el estado de un turno a "Cancelado" desde la administración, el sistema enviará automáticamente un correo electrónico al ciudadano notificándole la cancelación de su turno.
+
+Bloquear Fechas (Feriados / Asuetos municipales)
+Si la oficina de Tránsito permanecerá cerrada un día hábil (lunes a viernes) debido a un asueto, desinfección o feriado provincial:
+1. En el menú izquierdo, hacé clic en 📅 Turnos de Tránsito -> Bloquear Fechas.
+2. Buscá la casilla de fecha en blanco al final de la lista.
+3. Elegí el día que deseas bloquear del calendario.
+4. Hacé clic en "Bloquear esta fecha".
+A partir de ese momento, los ciudadanos no podrán reservar turnos para ese día en el calendario de la web pública.
+- Desbloquear un día: Si necesitás volver a habilitar una fecha previamente bloqueada, marcá la casilla "Eliminar" al lado del día correspondiente y hacé clic en el botón de guardar.
+
+*Nota:* Los fines de semana y los feriados nacionales oficiales de Argentina ya se encuentran bloqueados de forma automática en el sistema; no es necesario que los cargues manualmente.

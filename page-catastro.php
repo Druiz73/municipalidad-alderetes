@@ -24,7 +24,7 @@ get_template_part( 'template-parts/area-hero', null, [
 
 <!-- Descripción principal -->
 <section class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
         <div class="grid md:grid-cols-3 gap-12 items-start">
 
             <!-- Texto -->

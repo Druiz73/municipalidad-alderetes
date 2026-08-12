@@ -139,6 +139,61 @@ $estructura = [
     ],
 ];
 
+// --- Estructura dinámica desde CPT tp_cargo (admin: Organigrama) ---
+// Si el admin cargó cargos, reemplaza el array hardcodeado por el contenido del CPT.
+if (function_exists('tp_get_organigrama_estructura')) {
+    $dinamica = tp_get_organigrama_estructura();
+    if (!empty($dinamica)) {
+        $estructura_dinamica = [];
+        foreach ($dinamica as $sec) {
+            $sec_foto = $sec['foto_id'] ? wp_get_attachment_image_url($sec['foto_id'], 'medium') : '';
+            $subsecretarias = [];
+            $direcciones_directas = [];
+            foreach (($sec['children'] ?? []) as $child) {
+                $child_foto = $child['foto_id'] ? wp_get_attachment_image_url($child['foto_id'], 'medium') : '';
+                if (!empty($child['children'])) {
+                    // Es subsecretaría con direcciones hijas
+                    $dirs = [];
+                    foreach ($child['children'] as $dir) {
+                        $dir_foto = $dir['foto_id'] ? wp_get_attachment_image_url($dir['foto_id'], 'medium') : '';
+                        $dirs[] = ['cargo' => $dir['cargo'], 'titular' => $dir['titular'], 'imagen' => $dir_foto ? str_replace(get_template_directory_uri().'/', '', $dir_foto) : $dir_foto];
+                        // guardar URL absoluta si existe, si no intentar mantener relativa (el template usa alderetes_funcionario_image_url que espera path relativo)
+                        if ($dir_foto) {
+                            $dirs[count($dirs)-1]['imagen'] = 'dynamic:'.$dir_foto; // marcador para render dinámico
+                        }
+                    }
+                    $entry = ['cargo' => $child['cargo'], 'titular' => $child['titular'], 'imagen' => $child_foto ? 'dynamic:'.$child_foto : '', 'direcciones' => $dirs];
+                    $subsecretarias[] = $entry;
+                } else {
+                    // Dirección directa bajo secretaría
+                    $direcciones_directas[] = ['cargo' => $child['cargo'], 'titular' => $child['titular'], 'imagen' => $child_foto ? 'dynamic:'.$child_foto : ''];
+                }
+            }
+            $estructura_dinamica[] = [
+                'secretaria' => $sec['cargo'],
+                'titular'    => $sec['titular'],
+                'imagen'     => $sec_foto ? 'dynamic:'.$sec_foto : '',
+                'color'      => $sec['color'],
+                'subsecretarias' => $subsecretarias,
+                'direcciones_directas' => $direcciones_directas,
+            ];
+        }
+        if (!empty($estructura_dinamica)) {
+            $estructura = $estructura_dinamica;
+            // helper para resolver imagen dinámica vs archivo del tema
+            if (!function_exists('alderetes_resolver_imagen')) {
+                function alderetes_resolver_imagen($path) {
+                    if (strpos($path, 'dynamic:') === 0) {
+                        return substr($path, 8);
+                    }
+                    if ($path === '') return '';
+                    return alderetes_funcionario_image_url($path);
+                }
+            }
+        }
+    }
+}
+
 $color_map = [
     'blue'   => ['hex' => '#60a5fa'],
     'purple' => ['hex' => '#c084fc'],
@@ -208,7 +263,7 @@ $mayor_photo_url = tp_content_image_url( 'mayor_photo' );
                         class="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-gray-50 transition-colors">
                     <div class="flex items-center gap-4">
                         <?php if (!empty($sec['imagen'])): ?>
-                            <img src="<?php echo esc_url(alderetes_funcionario_image_url($sec['imagen'])); ?>"
+                            <img src="<?php echo esc_url((function_exists('alderetes_resolver_imagen') ? alderetes_resolver_imagen($sec['imagen']) : alderetes_funcionario_image_url($sec['imagen']))); ?>"
                                  alt="<?php echo esc_attr($sec['titular']); ?>"
                                  class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
                         <?php else: ?>
@@ -237,7 +292,7 @@ $mayor_photo_url = tp_content_image_url( 'mayor_photo' );
                     <div class="rounded-xl border border-gray-100 bg-white p-4 shadow-sm" style="border-left:4px solid <?php echo esc_attr($c['hex']); ?>;">
                         <div class="flex items-center gap-4">
                             <?php if (!empty($sub['imagen'])): ?>
-                                <img src="<?php echo esc_url(alderetes_funcionario_image_url($sub['imagen'])); ?>"
+                                <img src="<?php echo esc_url((function_exists('alderetes_resolver_imagen') ? alderetes_resolver_imagen($sub['imagen']) : alderetes_funcionario_image_url($sub['imagen']))); ?>"
                                      alt="<?php echo esc_attr($sub['titular']); ?>"
                                      class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
                             <?php endif; ?>
@@ -255,7 +310,7 @@ $mayor_photo_url = tp_content_image_url( 'mayor_photo' );
                             <?php foreach ($sub['direcciones'] as $dir): ?>
                             <div class="flex items-center gap-4 rounded-lg bg-gray-50/80 p-3">
                                 <?php if (!empty($dir['imagen'])): ?>
-                                    <img src="<?php echo esc_url(alderetes_funcionario_image_url($dir['imagen'])); ?>"
+                                    <img src="<?php echo esc_url((function_exists('alderetes_resolver_imagen') ? alderetes_resolver_imagen($dir['imagen']) : alderetes_funcionario_image_url($dir['imagen']))); ?>"
                                          alt="<?php echo esc_attr($dir['titular']); ?>"
                                          class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
                                 <?php else: ?>
@@ -282,7 +337,7 @@ $mayor_photo_url = tp_content_image_url( 'mayor_photo' );
                         <?php foreach ($sec['direcciones_directas'] as $dir): ?>
                         <div class="flex items-center gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-sm" style="border-left:4px solid <?php echo esc_attr($c['hex']); ?>;">
                             <?php if (!empty($dir['imagen'])): ?>
-                                <img src="<?php echo esc_url(alderetes_funcionario_image_url($dir['imagen'])); ?>"
+                                <img src="<?php echo esc_url((function_exists('alderetes_resolver_imagen') ? alderetes_resolver_imagen($dir['imagen']) : alderetes_funcionario_image_url($dir['imagen']))); ?>"
                                      alt="<?php echo esc_attr($dir['titular']); ?>"
                                      class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md shrink-0">
                             <?php else: ?>

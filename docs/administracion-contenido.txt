@@ -1,55 +1,137 @@
-Administración de textos – Municipalidad de Alderetes
-Guía breve para el personal municipal
+# Manual de Administración de Contenidos
+## Municipalidad de Alderetes — Guía rápida para la actualización del sitio web
 
-¿Qué se puede editar?
-El panel permite actualizar los textos institucionales de Inicio, Institucional, Organigrama, Contacto, las principales áreas, Punto Digital, Rentas, Tránsito, Catastro y la portada del sistema de turnos.
+Este manual describe el funcionamiento y los pasos necesarios para actualizar la información y las imágenes del sitio web institucional.
 
-También se pueden reemplazar las cinco fotos del carrusel, las imágenes de portada de las páginas diseñadas, el logo de Punto Digital y la foto de la intendenta.
+---
 
-El diseño, los colores, los enlaces, los íconos, las galerías automáticas y el funcionamiento de los turnos están protegidos. No hace falta usar Elementor ni editar código.
+## 📋 ¿Qué se puede editar?
 
-Cómo cambiar un texto
-1. Entrá al dominio oficial del sitio y agregá /wp-admin.
-2. En el menú izquierdo elegí Páginas.
-3. Abrí la página que querés modificar.
-4. Buscá la caja titulada "Contenido de...".
-5. Cambiá únicamente el campo necesario.
-6. Hacé clic en Actualizar.
-7. Abrí la página pública y comprobá el resultado.
+Desde el panel de administración es posible actualizar el contenido de las siguientes secciones:
+* **Inicio** (textos generales, carrusel y sección de trámites)
+* **Institucional** (autoridades, misión y visión)
+* **Organigrama** (datos de la Intendenta y del Concejo Deliberante)
+* **Contacto** (datos de contacto generales de la municipalidad)
+* **Principales Áreas** (Obras Públicas, Deportes, Educación, Cultura, etc.)
+* **Punto Digital** (descripción, servicios y enlaces de interés)
+* **Rentas** (requisitos e información tributaria)
+* **Tránsito** (información general y de contacto)
+* **Catastro** (descripción y descargas de planos o PDFs)
+* **Portada del sistema de Turnos** (títulos, bajadas y etiquetas visibles)
 
-Importante
-- Si un campo se deja vacío, el sitio conserva el texto original aprobado.
-- Si no se selecciona una imagen nueva, el sitio conserva automáticamente la imagen actual.
-- En los campos con varias líneas, respetá el formato indicado debajo del nombre del campo.
-- En las tarjetas, no borres el carácter | que separa el título de la descripción.
-- Para evitar errores, no cambies la plantilla, la página superior, el enlace permanente ni el título de WordPress.
+También pueden modificarse los siguientes recursos multimedia:
+* Las **5 imágenes del carrusel principal** de la Home
+* Las **imágenes de portada** (banners principales) de cada página
+* El **logo** oficial de Punto Digital
+* La **fotografía** oficial de la Intendenta
+* Las **galerías de imágenes** de cada una de las áreas municipales (hasta 8 fotos por área)
 
-Cómo cambiar una imagen
-1. Abrí la página correspondiente desde Páginas.
-2. En el campo "Imagen de portada" o "Carrusel — imagen", hacé clic sobre la miniatura actual.
-3. Elegí una foto existente de la Biblioteca de medios o subí una nueva.
-4. Usá preferentemente una imagen horizontal de al menos 1600 × 900 píxeles.
-5. Hacé clic en Actualizar y revisá la página pública.
+---
 
-Para volver a la imagen original, eliminá la selección del campo y actualizá la página. El sitio recuperará automáticamente la foto incluida en el diseño aprobado.
+## 🔒 Contenido protegido
 
-Foto de la intendenta
-1. Abrí Páginas > Organigrama.
-2. En "Foto de la intendenta", elegí la imagen desde la biblioteca o subí la fotografía oficial.
-3. Usá preferentemente una imagen vertical o cuadrada, nítida y con el rostro centrado.
-4. Hacé clic en Actualizar.
+Los siguientes elementos **no deben modificarse** para evitar romper la estructura técnica del sitio:
+* El **diseño visual** y maquetación del sitio.
+* Los **colores corporativos** y tipografías.
+* Los **enlaces internos** y de redes sociales (salvo los configurables en contacto).
+* Los **iconos** ilustrativos.
+* El **funcionamiento interno** del sistema de turnos de tránsito.
 
-Noticias
-Las noticias, mientras esa sección esté activa, se administran desde el menú Noticias y no desde Páginas.
+> [!IMPORTANT]
+> **No es necesario utilizar editores visuales como Elementor ni editar líneas de código.** Todo se actualiza completando formularios simples en el panel administrativo.
 
-Turnos
-Los turnos se gestionan desde Turnos de Tránsito. La edición de textos de la página de turnos no modifica los horarios ni las reservas.
+---
 
-Rentas, TEM, CISI y Cementerio
-Estas cuatro direcciones usan una plantilla compartida. Los textos, requisitos y la imagen principal se administran desde Páginas > Rentas. Los cambios correspondientes aparecen automáticamente en TEM, CISI o Cementerio.
+## ✏️ Cómo modificar un texto
 
-Acción Social y Salud
-Estas páginas todavía no tienen contenido ni diseño institucional aprobado dentro del tema. No se incorporaron textos inventados. Cuando el municipio entregue el contenido, se pueden sumar al mismo sistema editable.
+* **Paso 1:** Ingresá al panel de administración del municipio:
+  `https://tudominio.gov.ar/wp-admin`
+* **Paso 2:** En el menú lateral izquierdo, seleccioná la sección **Páginas**.
+* **Paso 3:** Hacé clic sobre la página que deseás editar (ej. *Inicio* u *Obras Públicas*).
+* **Paso 4:** Buscá la caja principal titulada **"Contenido de [Nombre de la página]"**.
+* **Paso 5:** Modificá únicamente el campo de texto que consideres necesario.
+* **Paso 6:** Presioná el botón azul **Actualizar** en el lateral derecho de la pantalla.
+* **Paso 7:** Abrí la página pública correspondiente y verificá que los cambios se hayan aplicado correctamente.
 
-Módulo de infracciones
-La consulta real de infracciones queda pendiente hasta que el municipio entregue una fuente de datos válida, como un archivo actualizado o una API. No debe presentarse como una consulta conectada a datos reales hasta completar esa integración.
+---
+
+## 🖼️ Cómo cambiar una imagen o banner de portada
+
+* **Paso 1:** Ingresá a la página correspondiente desde el menú **Páginas**.
+* **Paso 2:** Ubicá el campo de imagen que quieras cambiar (ej: *Imagen de portada*, *Carrusel — imagen 1*, etc.) y hacé clic sobre la miniatura actual.
+* **Paso 3:** Elegí una imagen existente en la *Biblioteca de Medios* o cargá una nueva desde tu computadora en la solapa *Subir archivos*.
+* **Paso 4:** Se recomienda utilizar imágenes con las siguientes características:
+  * Formato **horizontal** (paisaje).
+  * Resolución mínima recomendada: **1600 × 900 px**.
+  * Buena calidad de iluminación y encuadre.
+* **Paso 5:** Presioná **Actualizar** en el lateral derecho y revisá el resultado en el sitio público.
+
+### Restaurar la imagen original
+Si deseás volver a la foto por defecto provista por el diseñador: hacé clic en la cruz (Quitar) para vaciar el campo de la imagen y presioná **Actualizar**. El sistema recuperará automáticamente la imagen original del diseño.
+
+---
+
+## 📸 Cómo gestionar la Galería de Imágenes de un Área
+Cada área del municipio cuenta con una grilla de fotos. Ahora podés administrarla de forma directa:
+1. Abrí la página del Área en **Páginas** (ej: *Obras Públicas* o *Deportes*).
+2. Buscá los campos llamados **Foto de galería 1** hasta **Foto de galería 8**.
+3. Seleccioná o subí la imagen que desees mostrar en cada posición.
+4. Si quieres eliminar una foto, presiona la cruz para vaciar el campo.
+5. Presioná **Actualizar**.
+*Nota: Si dejas todas las fotos de la galería vacías, la página mostrará automáticamente las imágenes de respaldo (fallback) del tema original.*
+
+---
+
+## 👤 Cambiar la foto de la Intendenta
+1. Ingresá a **Páginas > Organigrama**.
+2. Buscá el campo **Foto de la Intendenta**.
+3. Seleccioná una imagen existente o cargá la fotografía oficial. Se recomienda una imagen:
+   * Formato **vertical o cuadrada**.
+   * Rostro nítido y centrado.
+4. Presioná **Actualizar**.
+
+*Nota: Para gestionar la jerarquía completa del Organigrama (Secretarías, Subsecretarías, Direcciones y sus respectivos nombres y fotos), debés ingresar al menú específico 🕸️ Organigrama de la barra lateral izquierda (consultar el manual detallado administracion-organigrama.txt).*
+
+---
+
+## ⚠️ Recomendaciones importantes de edición
+
+* **✔ Textos vacíos:** Si vaciás por completo un campo de texto y actualizás la página, el sitio no se romperá; mostrará automáticamente el texto predeterminado aprobado originalmente.
+* **✔ Fotos vacías:** Si no se selecciona una imagen nueva, continuará mostrándose la imagen actual sin cambios.
+* **✔ Respetar saltos de línea:** En los campos que indiquen "Una línea por renglón", recordá presionar Enter después de cada dato para mantener el formato en la interfaz pública.
+* **✔ Tarjetas con separadores:** En campos de formato estructurado (ej. *Tarjetas de trámites* o *Servicios*), **no elimines ni modifiques el carácter "|" (barra vertical)**, ya que se utiliza para separar el título del texto descriptivo.
+* **❌ NO Modifiques:**
+  * La **Plantilla** de la página (caja de la derecha *Atributos de página*).
+  * La **Página superior**.
+  * El **Enlace permanente** (slug de la URL).
+  * El **Título** de WordPress de la página.
+
+---
+
+## 📰 Noticias
+
+Mientras esta sección permanezca habilitada en el menú municipal, las novedades deben administrarse exclusivamente desde el menú de la izquierda:
+* **Noticias** (CPT nativo para agregar, editar o enviar a papelera artículos de actualidad).
+* Las noticias **no deben editarse ni buscarse desde la sección Páginas**.
+
+---
+
+## 🚗 Sistema de Turnos de Tránsito
+
+Los turnos reservados por los ciudadanos se administran exclusivamente desde el menú izquierdo:
+* **Turnos de Tránsito** (donde el operador puede ver citas, registrar ausencias/atenciones, exportar a Excel y bloquear fechas por asueto).
+* **Importante:** Modificar los textos de la página de turnos desde el panel "Páginas" únicamente cambia el diseño/letreros visibles en la portada web, **no altera los horarios, la disponibilidad ni el funcionamiento del sistema interno**.
+
+---
+
+## 💰 Rentas, TEM, CISI y Cementerio
+
+Estas cuatro dependencias comparten una misma plantilla de visualización para mantener la coherencia estética del área de Hacienda.
+* Toda la información (textos explicativos, requisitos de inscripción/exención y la imagen principal de portada) se administra desde un solo lugar:
+  **Páginas → Rentas**
+* Los cambios realizados en *Rentas* se reflejarán de manera automática en las subpáginas asociadas de **TEM**, **CISI** y **Cementerio**.
+
+### Nuevas Características Editables:
+* **Avisos del Área (ex "Nota Importante"):** En el formulario de edición podés configurar hasta 3 avisos. Cada aviso acepta un **Título, Subtítulo, Párrafo e Imagen opcional a la izquierda**.
+  * Si solo usás el Aviso 1 (por defecto), este aparecerá en su formato original de tarjeta verde flotante en la cabecera. Si sumás más avisos, se mostrarán como tarjetas a ancho completo.
+* **Descargas de Archivos TEM:** Se habilitaron 4 ranuras (**Descarga 1** a **Descarga 4**) donde podés escribir el nombre del formulario o archivo y subir un PDF directamente desde tu computadora. Los enlaces en la sección de descargas del sitio se actualizarán automáticamente.

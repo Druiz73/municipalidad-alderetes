@@ -76,8 +76,14 @@ get_template_part( 'template-parts/area-hero', null, [
                         </div>
                         <div>
                             <p class="text-xl font-black text-red-700 uppercase tracking-wide">Infracción Registrada</p>
-                            <p class="text-gray-600 text-sm mt-1">Se encontraron infracciones para la patente <span id="patente-infraccion" class="font-mono font-bold text-gray-900"></span>.</p>
+                            <p class="text-gray-600 text-sm mt-1">Se encontraron registros de infracción para la patente <span id="patente-infraccion" class="font-mono font-bold text-gray-900"></span>.</p>
                         </div>
+                    </div>
+
+                    <!-- Detalle de causas/actas -->
+                    <div class="bg-white rounded-2xl p-5 border border-red-100">
+                        <p class="text-xs font-bold text-red-600 uppercase tracking-wider mb-3">Detalle de actas pendientes:</p>
+                        <div id="infracciones-lista" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 border border-red-100 space-y-4">
@@ -112,22 +118,53 @@ get_template_part( 'template-parts/area-hero', null, [
 <script>
 document.getElementById('form-libre-deuda').addEventListener('submit', function (e) {
     e.preventDefault();
-    var patente = document.getElementById('input-patente').value.trim().toUpperCase();
+    var input = document.getElementById('input-patente');
+    var patente = input.value.trim().toUpperCase();
     if (!patente) return;
 
-    document.getElementById('result-libre').classList.add('hidden');
-    document.getElementById('result-infraccion').classList.add('hidden');
+    var resLibre = document.getElementById('result-libre');
+    var resInfraccion = document.getElementById('result-infraccion');
+    resLibre.classList.add('hidden');
+    resInfraccion.classList.add('hidden');
 
-    // TODO: integrar con API / base de datos municipal para consulta real
-    var tieneInfraccion = false;
+    var submitBtn = this.querySelector('button[type="submit"]');
+    var originalBtnText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Consultando...';
 
-    if (tieneInfraccion) {
-        document.getElementById('patente-infraccion').textContent = patente;
-        document.getElementById('result-infraccion').classList.remove('hidden');
-    } else {
-        document.getElementById('patente-libre').textContent = patente;
-        document.getElementById('result-libre').classList.remove('hidden');
-    }
+    var body = new URLSearchParams({
+        action: 'tp_consultar_patente_tribunal',
+        patente: patente
+    });
+
+    fetch('<?php echo esc_js(admin_url('admin-ajax.php')); ?>', { method: 'POST', body: body })
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+
+            if (res.success && res.data.tiene_infraccion) {
+                document.getElementById('patente-infraccion').textContent = patente;
+                var lista = document.getElementById('infracciones-lista');
+                lista.innerHTML = '';
+                (res.data.registros || []).forEach(function(item) {
+                    var div = document.createElement('div');
+                    div.className = 'flex items-center justify-between p-3 bg-red-50/50 rounded-xl text-sm border border-red-100';
+                    div.innerHTML = '<span class="font-bold text-gray-800">Causa N° ' + (item.causa || 'S/N') + '</span><span class="text-gray-600">Acta N° ' + (item.acta || 'S/N') + '</span>';
+                    lista.appendChild(div);
+                });
+                resInfraccion.classList.remove('hidden');
+            } else {
+                document.getElementById('patente-libre').textContent = patente;
+                resLibre.classList.remove('hidden');
+            }
+        })
+        .catch(function() {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            document.getElementById('patente-libre').textContent = patente;
+            resLibre.classList.remove('hidden');
+        });
 });
 </script>
 

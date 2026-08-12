@@ -11,11 +11,13 @@ $area_title      = get_the_title();
 $area_tagline    = tp_content( 'hero_tagline' );
 $area_color      = 'bg-yellow-500';
 
-$gallery_images = [
+$gallery_fallback = [
     $base . 'FOTO2.jpg',
     $base . 'FOTO3.jpg',
     $base . 'FOTO4.jpg',
 ];
+$gallery_custom = function_exists('tp_content_gallery_urls') ? tp_content_gallery_urls('gallery') : [];
+$gallery_images = !empty($gallery_custom) ? $gallery_custom : $gallery_fallback;
 
 get_header();
 get_template_part( 'template-parts/area-hero', null, [
@@ -28,11 +30,11 @@ get_template_part( 'template-parts/area-hero', null, [
 
 <!-- Descripción principal -->
 <section class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-12 items-start">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-5 gap-12 items-start">
 
             <!-- Texto -->
-            <div class="md:col-span-2">
+            <div class="md:col-span-3">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-yellow-500 pl-4">
                     <?php echo esc_html( tp_content( 'intro_heading' ) ); ?>
                 </h2>
@@ -54,7 +56,7 @@ get_template_part( 'template-parts/area-hero', null, [
             </div>
 
             <!-- Card lateral -->
-            <div class="bg-yellow-50 rounded-2xl p-6 border border-yellow-100">
+            <div class="bg-yellow-50 rounded-2xl p-6 border border-yellow-100 md:col-span-2 h-fit">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-xl bg-yellow-500 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,6 +72,22 @@ get_template_part( 'template-parts/area-hero', null, [
                     <p class="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1"><?php echo esc_html( tp_content( 'claim_heading' ) ); ?></p>
                     <p class="text-sm text-gray-600"><?php echo esc_html( tp_content( 'claim_text' ) ); ?></p>
                 </div>
+                <?php $addr = tp_content('address'); $addr_label = tp_content('address_label'); $hrs = tp_content('hours'); $hrs_label = tp_content('hours_label'); if ($addr || $hrs): ?>
+                <div class="mt-4 pt-4 border-t border-yellow-100 space-y-3">
+                    <?php if ($addr): ?><div><p class="text-xs font-semibold text-yellow-700 uppercase tracking-wide"><?php echo esc_html($addr_label); ?></p><p class="text-sm text-gray-700 whitespace-pre-line"><?php echo esc_html($addr); ?></p></div><?php endif; ?>
+                    <?php if ($hrs): ?><div><p class="text-xs font-semibold text-yellow-700 uppercase tracking-wide"><?php echo esc_html($hrs_label); ?></p><p class="text-sm text-gray-700"><?php echo esc_html($hrs); ?></p></div><?php endif; ?>
+                <?php $map_url = tp_content('map_url'); $map_embed = tp_content('map_embed'); if ($map_url || $map_embed): ?>
+                <div class="mt-4 pt-4 border-t border-current/10">
+                    <?php if ($map_embed): ?>
+                    <div class="rounded-xl overflow-hidden border border-current/10 aspect-video bg-white relative [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0"><?php echo wp_kses($map_embed, ['iframe'=>['src'=>[],'width'=>[],'height'=>[],'style'=>[],'allowfullscreen'=>[],'loading'=>[],'referrerpolicy'=>[],'frameborder'=>[],'class'=>[]]]); ?></div>
+                    <?php endif; ?>
+                    <?php if ($map_url): ?>
+                    <a href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4">Ver en Google Maps →</a>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </div>
 
         </div>

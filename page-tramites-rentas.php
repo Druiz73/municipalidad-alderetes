@@ -41,21 +41,68 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
     </div>
 </div>
 
+<!-- Avisos de Rentas (Nota Importante, novedades) -->
 <div class="bg-gray-50 pb-8">
     <div class="max-w-7xl mx-auto px-4 -mt-2">
-        <div class="bg-alderetes-green text-white rounded-3xl shadow-xl border border-white/10 p-6 md:p-8 max-w-2xl ml-auto">
-            <div class="flex items-center gap-4 mb-3">
-                <div class="p-3 bg-alderetes-orange rounded-xl">
-                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <?php
+        $rentas_avisos = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $tt = tp_content('rentas_aviso' . $i . '_titulo', 'rentas');
+            if (!$tt) continue;
+            $rentas_avisos[] = [
+                'titulo'    => $tt,
+                'subtitulo' => tp_content('rentas_aviso' . $i . '_subtitulo', 'rentas'),
+                'texto'     => tp_content('rentas_aviso' . $i . '_texto', 'rentas'),
+                'imagen'    => tp_content_image_url('rentas_aviso' . $i . '_imagen', 'rentas'),
+            ];
+        }
+
+        if (!empty($rentas_avisos)):
+            // Si el único aviso es el de por defecto (sin imagen, sin subtítulo y titulado "Nota Importante")
+            // lo mostramos flotando en el formato original.
+            $is_only_default = count($rentas_avisos) === 1 && empty($rentas_avisos[0]['imagen']) && empty($rentas_avisos[0]['subtitulo']) && ($rentas_avisos[0]['titulo'] === 'Nota Importante');
+            
+            if ($is_only_default):
+        ?>
+                <div class="bg-alderetes-green text-white rounded-3xl shadow-xl border border-white/10 p-6 md:p-8 max-w-2xl ml-auto">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="p-3 bg-alderetes-orange rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <span class="font-bold text-xl"><?php echo esc_html($rentas_avisos[0]['titulo']); ?></span>
+                    </div>
+                    <p class="text-sm md:text-base text-white/90 uppercase font-bold tracking-wider leading-relaxed">
+                        <?php echo esc_html($rentas_avisos[0]['texto']); ?>
+                    </p>
                 </div>
-                <span class="font-bold text-xl"><?php echo esc_html( tp_content( 'notice_heading', 'rentas' ) ); ?></span>
-            </div>
-            <p class="text-sm md:text-base text-white/90 uppercase font-bold tracking-wider leading-relaxed">
-                <?php echo esc_html( tp_content( 'notice_text', 'rentas' ) ); ?>
-            </p>
-        </div>
-    </div>
-</div>
+            <?php else: ?>
+                <!-- Si hay múltiples avisos o avisos con imágenes, usamos un grid elegante de ancho completo -->
+                <div class="grid gap-6">
+                    <?php foreach ($rentas_avisos as $aviso): ?>
+                        <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-lg flex flex-col md:flex-row gap-6 items-start text-left">
+                            <?php if (!empty($aviso['imagen'])): ?>
+                                <img src="<?php echo esc_url($aviso['imagen']); ?>" alt="<?php echo esc_attr($aviso['titulo']); ?>" class="w-full md:w-48 h-32 object-cover rounded-2xl flex-shrink-0 border border-gray-100 shadow-sm">
+                            <?php endif; ?>
+                            <div class="flex-1 min-w-0">
+                                <?php if (!empty($aviso['subtitulo'])): ?>
+                                    <span class="text-xs font-bold text-alderetes-green uppercase tracking-wider block mb-1">
+                                        <?php echo esc_html($aviso['subtitulo']); ?>
+                                    </span>
+                                <?php endif; ?>
+                                <h3 class="text-xl font-bold text-gray-900 leading-snug">
+                                    <?php echo esc_html($aviso['titulo']); ?>
+                                </h3>
+                                <?php if (!empty($aviso['texto'])): ?>
+                                    <p class="text-sm text-gray-600 mt-2 leading-relaxed whitespace-pre-line">
+                                        <?php echo esc_html($aviso['texto']); ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
 
 <!-- Tributos Tabs -->
 <main class="py-12 bg-gray-50">
@@ -136,11 +183,16 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                 </h3>
                                 <div class="space-y-2">
                                     <?php
-                                    $descargas = [
-                                        ["nombre" => "Formulario R708 - Inscripción", "url" => $uploads_base_url . "/2026/03/FORM-INSCRIPCION-TEM.pdf"],
-                                        ["nombre" => "Declaración Jurada",            "url" => $uploads_base_url . "/2026/03/FORMULARIO-DDJJ-TEM.pdf"],
-                                        ["nombre" => "Calendario de Vencimientos",    "url" => $uploads_base_url . "/2026/05/calendario-vencimiento-2026.pdf"],
-                                    ];
+                                    $descargas = [];
+                                    for ($i = 1; $i <= 4; $i++) {
+                                        $nombre = tp_content('rentas_descarga' . $i . '_nombre', 'rentas');
+                                        $url = tp_content('rentas_descarga' . $i . '_archivo', 'rentas');
+                                        if (!$nombre) continue;
+                                        $descargas[] = [
+                                            'nombre' => $nombre,
+                                            'url'    => $url ?: '#'
+                                        ];
+                                    }
                                     foreach ($descargas as $doc): ?>
                                     <a href="<?php echo esc_url( $doc['url'] ); ?>" <?php if ( $doc['url'] !== '#' ) echo 'target="_blank" rel="noopener noreferrer"'; ?> class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/25 rounded-xl text-sm transition-all border border-white/10 group">
                                         <svg class="w-4 h-4 text-alderetes-orange shrink-0 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -159,12 +211,12 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
                         <!-- Cambio de Titularidad -->
-                        <div>
+                        <div class="flex flex-col h-full">
                             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                                 <span class="w-10 h-10 bg-orange-100 text-alderetes-orange rounded-xl flex items-center justify-center font-black">1</span>
                                 <?php echo esc_html( tp_content( 'cisi_transfer_heading', 'rentas' ) ); ?>
                             </h2>
-                            <ul class="space-y-3">
+                            <ul class="space-y-3 flex-1">
                                 <?php
                                 $cisi_titularidad = tp_content_lines( 'cisi_transfer_items', 'rentas' );
                                 foreach ($cisi_titularidad as $req): ?>
@@ -174,18 +226,18 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                 </li>
                                 <?php endforeach; ?>
                             </ul>
-                            <p class="mt-5 text-center text-sm font-bold text-alderetes-orange uppercase tracking-wider bg-orange-50 border border-orange-100 rounded-xl py-3 px-4">
+                            <p class="mt-5 text-center text-sm font-bold text-alderetes-orange uppercase tracking-wider bg-orange-50 border border-orange-100 rounded-xl py-3 px-4 mt-auto">
                                 <?php echo esc_html( tp_content( 'notice_text', 'rentas' ) ); ?>
                             </p>
                         </div>
 
                         <!-- Exención CISI -->
-                        <div>
+                        <div class="flex flex-col h-full">
                             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                                 <span class="w-10 h-10 bg-orange-100 text-alderetes-orange rounded-xl flex items-center justify-center font-black">2</span>
                                 <?php echo esc_html( tp_content( 'cisi_exemption_heading', 'rentas' ) ); ?>
                             </h2>
-                            <ul class="space-y-3">
+                            <ul class="space-y-3 flex-1">
                                 <?php
                                 $cisi_exencion = tp_content_lines( 'cisi_exemption_items', 'rentas' );
                                 foreach ($cisi_exencion as $req): ?>
@@ -200,7 +252,7 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                     <span class="font-bold text-alderetes-orange"><?php echo esc_html( tp_content( 'cisi_fee', 'rentas' ) ); ?></span>
                                 </li>
                             </ul>
-                            <p class="mt-5 text-center text-sm font-bold text-alderetes-orange uppercase tracking-wider bg-orange-50 border border-orange-100 rounded-xl py-3 px-4">
+                            <p class="mt-5 text-center text-sm font-bold text-alderetes-orange uppercase tracking-wider bg-orange-50 border border-orange-100 rounded-xl py-3 px-4 mt-auto">
                                 <?php echo esc_html( tp_content( 'notice_text', 'rentas' ) ); ?>
                             </p>
                         </div>
@@ -213,14 +265,14 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
                         <!-- Cambio de Titularidad CISC -->
-                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6">
+                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6 flex flex-col h-full">
                             <div class="flex items-center gap-3 mb-5">
                                 <div class="w-10 h-10 bg-blue-100 text-alderetes-blue rounded-xl flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-900 leading-tight"><?php echo esc_html( tp_content( 'cemetery_transfer_heading', 'rentas' ) ); ?></h3>
                             </div>
-                            <ul class="space-y-3 mb-5">
+                            <ul class="space-y-3 mb-5 flex-1">
                                 <?php
                                 $cisc_titularidad = tp_content_lines( 'cemetery_transfer_items', 'rentas' );
                                 foreach ($cisc_titularidad as $item): ?>
@@ -230,20 +282,20 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                 </li>
                                 <?php endforeach; ?>
                             </ul>
-                            <p class="text-xs font-bold text-alderetes-blue uppercase tracking-wide bg-blue-50 border border-blue-100 rounded-lg py-2 px-3 text-center">
+                            <p class="text-xs font-bold text-alderetes-blue uppercase tracking-wide bg-blue-50 border border-blue-100 rounded-lg py-2 px-3 text-center mt-auto">
                                 <?php echo esc_html( tp_content( 'notice_text', 'rentas' ) ); ?>
                             </p>
                         </div>
 
                         <!-- Exención CISC -->
-                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6">
+                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6 flex flex-col h-full">
                             <div class="flex items-center gap-3 mb-5">
                                 <div class="w-10 h-10 bg-orange-100 text-alderetes-orange rounded-xl flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-900 leading-tight"><?php echo esc_html( tp_content( 'cemetery_exemption_heading', 'rentas' ) ); ?></h3>
                             </div>
-                            <ul class="space-y-3 mb-5">
+                            <ul class="space-y-3 mb-5 flex-1">
                                 <?php
                                 $cisc_exencion = tp_content_lines( 'cemetery_exemption_items', 'rentas' );
                                 foreach ($cisc_exencion as $item): ?>
@@ -253,20 +305,20 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                 </li>
                                 <?php endforeach; ?>
                             </ul>
-                            <p class="text-xs font-bold text-alderetes-orange uppercase tracking-wide bg-orange-50 border border-orange-100 rounded-lg py-2 px-3 text-center">
+                            <p class="text-xs font-bold text-alderetes-orange uppercase tracking-wide bg-orange-50 border border-orange-100 rounded-lg py-2 px-3 text-center mt-auto">
                                 <?php echo esc_html( tp_content( 'notice_text', 'rentas' ) ); ?>
                             </p>
                         </div>
 
                         <!-- Inhumación CISC -->
-                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6">
+                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6 flex flex-col h-full">
                             <div class="flex items-center gap-3 mb-5">
                                 <div class="w-10 h-10 bg-gray-200 text-gray-600 rounded-xl flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-900 leading-tight"><?php echo esc_html( tp_content( 'cemetery_burial_heading', 'rentas' ) ); ?></h3>
                             </div>
-                            <ul class="space-y-3">
+                            <ul class="space-y-3 mb-5 flex-1">
                                 <?php
                                 $cisc_inhumacion = tp_content_lines( 'cemetery_burial_items', 'rentas' );
                                 foreach ($cisc_inhumacion as $item): ?>
@@ -276,6 +328,9 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                 </li>
                                 <?php endforeach; ?>
                             </ul>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wide bg-gray-100 border border-gray-200 rounded-lg py-2 px-3 text-center mt-auto">
+                                <?php echo esc_html( tp_content( 'notice_text', 'rentas' ) ); ?>
+                            </p>
                         </div>
 
                     </div>

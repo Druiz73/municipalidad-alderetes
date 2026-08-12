@@ -28,6 +28,7 @@ if ( empty( $gallery_images ) ) {
             </h2>
         </div>
 
+        <?php // La galería soporta crecimiento ilimitado: grid fluido que pagina visualmente sin romperse ?>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             <?php foreach ( $gallery_images as $index => $img_url ) : ?>
                 <a href="<?php echo esc_url( $img_url ); ?>"
