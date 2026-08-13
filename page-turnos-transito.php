@@ -268,12 +268,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_turno'], $_P
                     <select id="input-categoria" required
                             class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alderetes-blue focus:ring-2 focus:ring-blue-100 transition-all bg-white">
                         <option value="">Seleccioná una opción...</option>
-                        <option value="Renovación A+B1 (Hasta 70 días desde vto.)">Renovación A+B1 (Hasta 70 días desde vto.)</option>
-                        <option value="Renovación C1-C2 (Hasta 70 días desde vto.)">Renovación C1-C2 (Hasta 70 días desde vto.)</option>
-                        <option value="Renovación D1-D2-D3 (Hasta 70 días desde vto.)">Renovación D1-D2-D3 (Hasta 70 días desde vto.)</option>
-                        <option value="Renovación E2 (Hasta 70 días desde vto.)">Renovación E2 (Hasta 70 días desde vto.)</option>
-                        <option value="Renovación Mayores de 65 años (Hasta 70 días desde vto.)">Renovación Mayores de 65 años (Hasta 70 días desde vto.)</option>
-                        <option value="Duplicado de Licencia">Duplicado de Licencia</option>
+                        <?php
+                        // Opciones generadas desde la fuente única tp_turnos_categorias_validas().
+                        // Mostramos solo las 6 opciones vigentes para el vecino.
+                        $cats_vigentes = array_slice(tp_turnos_categorias_validas(), 0, 6);
+                        foreach ($cats_vigentes as $cat) : ?>
+                            <option value="<?php echo esc_attr($cat); ?>"><?php echo esc_html($cat); ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div id="form-error" class="hidden bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700"></div>

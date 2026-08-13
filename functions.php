@@ -1024,6 +1024,33 @@ function tp_ajax_get_slots() {
     wp_send_json_success(['slots' => $todos, 'ocupados' => $ocupados]);
 }
 
+/**
+ * Categorías de licencia válidas para el formulario de turnos.
+ * Fuente única de verdad: usada por la validación AJAX y por el <select> del template.
+ */
+function tp_turnos_categorias_validas(): array {
+    return [
+        'Renovación A+B1 (Hasta 70 días desde vto.)',
+        'Renovación C1-C2 (Hasta 70 días desde vto.)',
+        'Renovación D1-D2-D3 (Hasta 70 días desde vto.)',
+        'Renovación E2 (Hasta 70 días desde vto.)',
+        'Renovación Mayores de 65 años (Hasta 70 días desde vto.)',
+        'Duplicado de Licencia',
+        // Compatibilidad: valores legacy que aún pueden llegar desde caché/CDN
+        'Renovación A+B (Particular)',
+        'Renovación C1-C2 (Profesional)',
+        'Renovación D1-D2-D3 (Profesional)',
+        'Renovación E2 (Profesional)',
+        'Ampliación C',
+        'Ampliación D',
+        'Ampliación E',
+        'Principiante Mayor de Edad',
+        'Principiante Menor de Edad',
+        'Mayores de 65 Años',
+        'Duplicado',
+    ];
+}
+
 // --- AJAX: Reservar turno ---
 add_action('wp_ajax_tp_reservar',        'tp_ajax_reservar');
 add_action('wp_ajax_nopriv_tp_reservar', 'tp_ajax_reservar');
@@ -1056,19 +1083,7 @@ function tp_ajax_reservar() {
         wp_send_json_error(['mensaje' => 'Ingresá una dirección de email válida.']);
     }
 
-    $categorias_validas = [
-        'Renovación A+B (Particular)',
-        'Renovación C1-C2 (Profesional)',
-        'Renovación D1-D2-D3 (Profesional)',
-        'Renovación E2 (Profesional)',
-        'Ampliación C',
-        'Ampliación D',
-        'Ampliación E',
-        'Principiante Mayor de Edad',
-        'Principiante Menor de Edad',
-        'Mayores de 65 Años',
-        'Duplicado',
-    ];
+    $categorias_validas = tp_turnos_categorias_validas();
     if (!in_array($categoria, $categorias_validas, true)) {
         wp_send_json_error(['mensaje' => 'Seleccioná una categoría de licencia válida.']);
     }
