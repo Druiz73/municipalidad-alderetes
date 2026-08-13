@@ -12,6 +12,9 @@
 .DS_Store
 *.DS_Store
 
+# Generated images (plugins de optimización)
+*.webp
+
 # Environment
 .env
 .env.*
