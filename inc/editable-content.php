@@ -344,7 +344,11 @@ function tp_editable_content_schema(): array
                 'cta_text' => ['label' => 'Texto de contacto', 'type' => 'textarea', 'default' => 'Contactá a la Municipalidad de Alderetes para obtener más información sobre actividades y servicios del Punto Digital.'],
                 'cta_address' => ['label' => 'Dirección', 'default' => 'Llegarse por: 9 de Julio 200 - El Corte - Alderetes'],
                 'cta_button' => ['label' => 'Texto del botón', 'default' => 'Contactar'],
-                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
+                'gallery' => ['label' => 'Galería – Imágenes generales', 'type' => 'gallery', 'instructions' => 'Fotos destacadas sueltas del Punto Digital. Podés eliminar, reordenar o agregar nuevas. Si la dejás vacía, se usan 3 fotos del tema.'],
+                'gallery_aprendizaje' => ['label' => 'Galería – Sala de Aprendizaje', 'type' => 'gallery', 'instructions' => 'Fotos de la Sala de Aprendizaje (8). Si la dejás vacía, se muestran las del tema.'],
+                'gallery_cine' => ['label' => 'Galería – Sala de Cine', 'type' => 'gallery', 'instructions' => 'Fotos de la Sala de Cine (4). Si la dejás vacía, se muestran las del tema.'],
+                'gallery_entretenimiento' => ['label' => 'Galería – Sala de Entretenimiento', 'type' => 'gallery', 'instructions' => 'Fotos de la Sala de Entretenimiento (4). Si la dejás vacía, se muestran las del tema.'],
+                'gallery_tramites' => ['label' => 'Galería – Trámites', 'type' => 'gallery', 'instructions' => 'Fotos de Trámites (5). Si la dejás vacía, se muestran las del tema.'],
             ],
         ],
         'rentas' => [
@@ -584,7 +588,7 @@ function tp_gallery_fallback_map(): array {
         'oficina-empleo'      => ['resources/images/fotos-areas/OFICINA-EMPLEO/1.jpeg','resources/images/fotos-areas/OFICINA-EMPLEO/2.jpeg','resources/images/fotos-areas/OFICINA-EMPLEO/3.jpeg'],
         'seguridad'           => ['resources/images/fotos-areas/SEGURIDAD/SEGURIDAD1.JPG','resources/images/fotos-areas/SEGURIDAD/SEGURIDAD3.JPG','resources/images/fotos-areas/SEGURIDAD/SEGURIDAD4.JPG','resources/images/fotos-areas/SEGURIDAD/SEGURIDAD5.jpg'],
         'politicas-sociales'  => ['resources/images/fotos-areas/POLITICAS-SOCIALES/1.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/2.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/3.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/4.jpg','resources/images/fotos-areas/POLITICAS-SOCIALES/5.jpg'],
-        'punto-digital'       => [], // punto-digital usa carpetas dinámicas; no se precarga aquí
+        'punto-digital'       => ['resources/images/punto-digital/ACTIVIDADES EN COORDINACION CON LAS ESCUELAS1.jpg','resources/images/punto-digital/CERTIFICACION1.jpg','resources/images/punto-digital/TORNEOS.jpg'],
     ];
 }
 
@@ -965,7 +969,7 @@ function tp_content_image_url(string $field_name, ?string $slug = null, ?int $po
 // Si el campo gallery está vacío en admin, mostrar el fallback como valor por defecto para que se vean las fotos actuales para editar
 add_filter('acf/load_value', function($value, $post_id, $field) {
     $field_name = $field['name'] ?? '';
-    if (preg_match('/^gallery_([1-8])$/', $field_name, $matches) !== 1) {
+    if (preg_match('/^gallery(?:_[a-z0-9_]+)?_([1-8])$/', $field_name, $matches) !== 1) {
         return $value;
     }
     if (get_post_type($post_id) !== 'page') return $value;
@@ -976,7 +980,8 @@ add_filter('acf/load_value', function($value, $post_id, $field) {
     }
     
     $slug = get_post_field('post_name', $post_id);
-    if ($slug === 'punto-digital') return $value;
+    // Punto Digital ahora tiene galerías editables por sala; no saltar
+    // if ($slug === 'punto-digital') return $value; // removido
     
     $index = (int)$matches[1] - 1;
     $map = tp_gallery_fallback_map();
@@ -1006,9 +1011,10 @@ function tp_content_gallery_urls(string $field_name = 'gallery', ?string $slug =
 
     $urls = [];
     $has_any_saved = false;
+    $prefix = $field_name;
     
     for ($i = 1; $i <= 8; $i++) {
-        $key = 'gallery_' . $i;
+        $key = $prefix . '_' . $i;
         if ($post_id && metadata_exists('post', $post_id, '_' . $key)) {
             $has_any_saved = true;
         }
@@ -1117,13 +1123,17 @@ add_action('acf/init', static function (): void {
             $type = $settings['type'] ?? 'text';
 
             if ($type === 'gallery') {
+                $prefix = $name;
+                $base_label = $settings['label'] ?? 'Foto de galería';
+                // Si el label ya contiene "Galería –", usamos un sufijo corto para cada foto
+                $is_grouped = strpos($prefix, 'gallery_') === 0 || $prefix === 'gallery';
                 for ($i = 1; $i <= 8; $i++) {
                     $fields[] = [
-                        'key'           => 'field_tp_' . md5($slug . ':gallery_' . $i),
-                        'label'         => 'Foto de galería ' . $i,
-                        'name'          => 'gallery_' . $i,
+                        'key'           => 'field_tp_' . md5($slug . ':' . $prefix . '_' . $i),
+                        'label'         => $base_label . ' — foto ' . $i,
+                        'name'          => $prefix . '_' . $i,
                         'type'          => 'image',
-                        'instructions'  => $i === 1 ? 'Podés cargar hasta 8 fotos individuales para la galería. Si las dejas vacías, se usarán las del tema.' : '',
+                        'instructions'  => $i === 1 ? ($settings['instructions'] ?? 'Podés cargar hasta 8 fotos. Si las dejás vacías, se usarán las del tema.') : '',
                         'required'      => 0,
                         'default_value' => '',
                         'return_format' => 'id',

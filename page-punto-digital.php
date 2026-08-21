@@ -67,6 +67,26 @@ if ( is_dir( $gallery_dir ) ) {
         }
     }
 }
+// Override de galerías por sala con contenido editable (si el admin cargó fotos, pisan el filesystem)
+$group_prefix_map = [
+    'sala-de-aprendizaje'   => 'gallery_aprendizaje',
+    'sala-de-cine'          => 'gallery_cine',
+    'sala-de-entretenimiento' => 'gallery_entretenimiento',
+    'tramites'              => 'gallery_tramites',
+];
+if (function_exists('tp_content_gallery_urls')) {
+    foreach ($gallery_groups as &$g) {
+        $prefix = $group_prefix_map[$g['slug']] ?? null;
+        if (!$prefix) continue;
+        $custom = tp_content_gallery_urls($prefix);
+        if (!empty($custom)) {
+            $g['images'] = $custom;
+            $g['cover']  = $custom[0];
+            $g['count']  = count($custom);
+        }
+    }
+    unset($g);
+}
 $gallery_custom = function_exists('tp_content_gallery_urls') ? tp_content_gallery_urls('gallery') : [];
 $gallery_images = !empty($gallery_custom) ? $gallery_custom : $gallery_fallback;
 
