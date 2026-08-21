@@ -873,6 +873,10 @@ function tp_content(string $field_name, ?string $slug = null, ?int $post_id = nu
 
     if (function_exists('get_field')) {
         $value = get_field($field_name, $post_id ?: false);
+        // Fix legado: esa frase interna de dev no debe mostrarse nunca, aunque haya quedado guardada en la DB
+        if ($slug === 'punto-digital' && $field_name === 'galleries_text' && is_string($value) && trim($value) === 'Cada carpeta ahora se muestra como una sección propia para ordenar mejor las fotos y el contenido de cada espacio.') {
+            return $default;
+        }
         if ($value !== null && $value !== false && $value !== '') {
             return $value;
         }
