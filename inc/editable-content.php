@@ -336,7 +336,7 @@ function tp_editable_content_schema(): array
                 'services' => ['label' => 'Tarjetas de servicios', 'type' => 'textarea', 'default' => "Cursos y capacitaciones|Formación en informática y otras materias para ampliar conocimientos y habilidades.\nAsistencia en trámites|Acompañamiento para Mi Argentina, ANSES, PROGRESAR, subsidios de servicios públicos y otras gestiones.\nTalleres educativos|Espacios educativos y de formación laboral pensados para distintas edades y necesidades.\nSala de entretenimiento|Uso de consolas de videojuegos y propuestas recreativas para niños y jóvenes.", 'instructions' => 'Conservá las cuatro líneas y el formato: Título | Descripción.'],
                 'galleries_badge' => ['label' => 'Etiqueta de galerías', 'default' => 'Galerías'],
                 'galleries_heading' => ['label' => 'Título de galerías', 'default' => 'Espacios y actividades del Punto Digital'],
-                'galleries_text' => ['label' => 'Texto de galerías', 'type' => 'textarea', 'default' => 'Cada carpeta ahora se muestra como una sección propia para ordenar mejor las fotos y el contenido de cada espacio.'],
+                'galleries_text' => ['label' => 'Texto de galerías (opcional)', 'type' => 'textarea', 'default' => '', 'instructions' => 'Opcional. Si queda vacío no se muestra nada bajo el título.'],
                 'gallery_link' => ['label' => 'Texto para abrir una galería', 'default' => 'Ver fotos de esta sección'],
                 'featured_badge' => ['label' => 'Etiqueta de imágenes generales', 'default' => 'Destacadas'],
                 'featured_heading' => ['label' => 'Título de imágenes generales', 'default' => 'Imágenes generales'],

@@ -653,6 +653,7 @@ add_action('init', function () {
         'menu_position' => 25,
         'menu_icon'     => 'dashicons-calendar-alt',
         'supports'      => ['title'],
+        'capability_type' => ['tp_turno','tp_turnos'],
         'capabilities'  => ['create_posts' => 'do_not_allow'],
         'map_meta_cap'  => true,
     ]);

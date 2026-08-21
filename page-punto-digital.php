@@ -197,7 +197,9 @@ get_template_part( 'template-parts/area-hero', null, [
                     <?php echo esc_html( tp_content( 'galleries_badge' ) ); ?>
                 </span>
                 <h2 class="text-3xl font-bold text-gray-900"><?php echo esc_html( tp_content( 'galleries_heading' ) ); ?></h2>
-                <p class="text-gray-600 mt-3 max-w-3xl"><?php echo esc_html( tp_content( 'galleries_text' ) ); ?></p>
+                <?php $galleries_text = tp_content( 'galleries_text' ); if ($galleries_text !== '') : ?>
+                <p class="text-gray-600 mt-3 max-w-3xl"><?php echo esc_html( $galleries_text ); ?></p>
+                <?php endif; ?>
             </div>
         </div>
 
