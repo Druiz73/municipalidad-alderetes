@@ -797,7 +797,7 @@ add_action('restrict_manage_posts', function ($post_type) {
 });
 
 add_action('admin_post_tp_exportar_turnos_csv', function () {
-    if (!current_user_can('edit_posts')) wp_die('No tenés permisos para exportar turnos.');
+    if (!current_user_can('edit_tp_turnos') && !current_user_can('edit_posts')) wp_die('No tenés permisos para exportar turnos.');
     check_admin_referer('tp_exportar_turnos_csv');
 
     $desde = isset($_GET['turno_fecha_desde']) ? sanitize_text_field($_GET['turno_fecha_desde']) : '';

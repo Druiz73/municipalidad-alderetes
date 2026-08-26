@@ -184,9 +184,9 @@ $uploads_base_url = isset( $uploads['baseurl'] ) ? untrailingslashit( $uploads['
                                 <div class="space-y-2">
                                     <?php
                                     $descargas = [];
-                                    for ($i = 1; $i <= 4; $i++) {
+                                    for ($i = 1; $i <= 8; $i++) {
                                         $nombre = tp_content('rentas_descarga' . $i . '_nombre', 'rentas');
-                                        $url = tp_content('rentas_descarga' . $i . '_archivo', 'rentas');
+                                        $url = tp_content_file_url('rentas_descarga' . $i . '_archivo', 'rentas');
                                         if (!$nombre) continue;
                                         $descargas[] = [
                                             'nombre' => $nombre,

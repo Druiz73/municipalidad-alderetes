@@ -283,6 +283,22 @@ function tp_editable_content_schema(): array
                 'intro_2' => ['label' => 'Segundo párrafo', 'type' => 'textarea', 'default' => 'Brindamos servicios de <strong class="text-gray-800">consulta catastral, emisión de certificados, aprobación de planos de mensura y subdivisión</strong>, y asesoramiento técnico para trámites relacionados con la propiedad inmueble.', 'instructions' => 'El texto entre etiquetas <strong> conserva la negrita.'],
                 'downloads_heading' => ['label' => 'Título de descargas', 'default' => 'Descargas'],
                 'download_button' => ['label' => 'Texto de descarga', 'default' => 'Descargar PDF'],
+                'catastro_descarga1_nombre' => ['label' => 'Descarga 1: Nombre', 'default' => 'Solicitud de Inicio de Permiso de Obra'],
+                'catastro_descarga1_archivo' => ['label' => 'Descarga 1: Archivo PDF', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/Solicitud-de-Inicio-Permiso-de-Obra.pdf'],
+                'catastro_descarga2_nombre' => ['label' => 'Descarga 2: Nombre', 'default' => 'Solicitud de Línea Municipal'],
+                'catastro_descarga2_archivo' => ['label' => 'Descarga 2: Archivo PDF', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/Solicitud-de-Linea-Municipal.pdf'],
+                'catastro_descarga3_nombre' => ['label' => 'Descarga 3: Nombre', 'default' => 'Solicitud de Visado de Documentación'],
+                'catastro_descarga3_archivo' => ['label' => 'Descarga 3: Archivo PDF', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/Solicitud-de-Visado-de-Documentacion-Tecnica.pdf'],
+                'catastro_descarga4_nombre' => ['label' => 'Descarga 4: Nombre', 'default' => 'Conforme a Obra (Requisitos)'],
+                'catastro_descarga4_archivo' => ['label' => 'Descarga 4: Archivo', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/CONFORME-A-OBRA-REQUISITOS-scaled.jpg'],
+                'catastro_descarga5_nombre' => ['label' => 'Descarga 5: Nombre', 'default' => 'Anteproyecto – Lista de Requisitos'],
+                'catastro_descarga5_archivo' => ['label' => 'Descarga 5: Archivo', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/ANTEPROYECTO-REQUISITOS-scaled.jpg'],
+                'catastro_descarga6_nombre' => ['label' => 'Descarga 6: Nombre', 'default' => 'Higiene y Seguridad (Requisitos)'],
+                'catastro_descarga6_archivo' => ['label' => 'Descarga 6: Archivo', 'type' => 'file', 'default' => '/wp-content/uploads/2026/03/HIGIENE-Y-SEGURIDAD-REQUISITOS-scaled.jpg'],
+                'catastro_descarga7_nombre' => ['label' => 'Descarga 7: Nombre', 'default' => ''],
+                'catastro_descarga7_archivo' => ['label' => 'Descarga 7: Archivo', 'type' => 'file', 'default' => ''],
+                'catastro_descarga8_nombre' => ['label' => 'Descarga 8: Nombre', 'default' => ''],
+                'catastro_descarga8_archivo' => ['label' => 'Descarga 8: Archivo', 'type' => 'file', 'default' => ''],
                 'attention_heading' => ['label' => 'Título de atención', 'default' => 'Atención'],
                 'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
                 'address' => ['label' => 'Dirección', 'default' => 'Edificio Municipal – Caseros y Urquiza'],
@@ -404,6 +420,14 @@ function tp_editable_content_schema(): array
                 
                 'rentas_descarga4_nombre' => ['label' => 'TEM — Descarga 4: Nombre', 'default' => ''],
                 'rentas_descarga4_archivo' => ['label' => 'TEM — Descarga 4: Archivo PDF', 'type' => 'file', 'default' => ''],
+                'rentas_descarga5_nombre' => ['label' => 'TEM — Descarga 5: Nombre', 'default' => ''],
+                'rentas_descarga5_archivo' => ['label' => 'TEM — Descarga 5: Archivo PDF', 'type' => 'file', 'default' => ''],
+                'rentas_descarga6_nombre' => ['label' => 'TEM — Descarga 6: Nombre', 'default' => ''],
+                'rentas_descarga6_archivo' => ['label' => 'TEM — Descarga 6: Archivo PDF', 'type' => 'file', 'default' => ''],
+                'rentas_descarga7_nombre' => ['label' => 'TEM — Descarga 7: Nombre', 'default' => ''],
+                'rentas_descarga7_archivo' => ['label' => 'TEM — Descarga 7: Archivo PDF', 'type' => 'file', 'default' => ''],
+                'rentas_descarga8_nombre' => ['label' => 'TEM — Descarga 8: Nombre', 'default' => ''],
+                'rentas_descarga8_archivo' => ['label' => 'TEM — Descarga 8: Archivo PDF', 'type' => 'file', 'default' => ''],
             ],
         ],
         'transito' => [
@@ -965,6 +989,31 @@ function tp_content_image_url(string $field_name, ?string $slug = null, ?int $po
 }
 
 /**
+ * Devuelve la URL de un archivo seleccionado en la biblioteca de medios.
+ * Maneja todos los formatos de retorno de ACF (id, array, url) y strings
+ * directos para que las descargas de Rentas/TEM no fallen con ERROR.
+ */
+function tp_content_file_url(string $field_name, ?string $slug = null, ?int $post_id = null): string
+{
+    $value = tp_content($field_name, $slug, $post_id);
+    if (is_array($value) && !empty($value['url'])) {
+        return (string) $value['url'];
+    }
+    if (is_numeric($value)) {
+        return (string) (wp_get_attachment_url((int) $value) ?: '');
+    }
+    if (is_string($value) && $value !== '') {
+        // Si es un ID numérico en string (ej. "123") también resolverlo
+        if (ctype_digit($value)) {
+            $url = wp_get_attachment_url((int) $value);
+            if ($url) return (string) $url;
+        }
+        return $value;
+    }
+    return '';
+}
+
+/**
  * Devuelve las URLs de una galería editable (ACF gallery).
  * Si el campo está vacío, devuelve [] para que el template use el fallback del tema.
  *
@@ -1155,7 +1204,7 @@ add_action('acf/init', static function (): void {
                 'type'          => $type,
                 'instructions'  => $settings['instructions'] ?? '',
                 'required'      => 0,
-                'default_value' => $type === 'image' ? '' : ($settings['default'] ?? ''),
+                'default_value' => ($type === 'image' || $type === 'file') ? '' : ($settings['default'] ?? ''),
             ];
 
             if ($type === 'textarea') {
@@ -1169,6 +1218,9 @@ add_action('acf/init', static function (): void {
             }
             if ($type === 'file') {
                 $field['return_format'] = 'url';
+                $field['library'] = 'all';
+                // Evita subir .zip/.exe por error (lo que disparó el warning con colapinto.zip)
+                $field['mime_types'] = 'pdf, jpg, jpeg, png';
             }
 
             $fields[] = $field;
