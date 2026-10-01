@@ -11,152 +11,36 @@ $hero_image_url = tp_content_image_url( 'hero_image' );
 $area_title     = 'Tránsito';
 $area_tagline   = tp_content( 'hero_tagline' );
 
+$req_card = static function (int $n): array {
+    return [
+        'titulo' => (string) tp_content('req' . $n . '_title'),
+        'reqs'   => tp_content_lines('req' . $n . '_items'),
+    ];
+};
+
 $categorias = [
     [
-        "grupo"  => "Renovaciones Profesionales",
+        "grupo"  => (string) tp_content('group1_heading'),
         "color"  => "orange",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>',
-        "items"  => [
-            [
-                "titulo" => "Renovación Categoría \"C1-C2\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico clase \"C\".",
-                    "* Casilla de correo obligatoria.",
-                ],
-            ],
-            [
-                "titulo" => "Renovación Categoría \"D1-D2-D3\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico clase \"D\".",
-                    "Certificado Nacional de Antecedentes Penales clase \"D\".",
-                    "* Casilla de correo obligatoria.",
-                ],
-            ],
-            [
-                "titulo" => "Renovación Categoría \"E2\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico clase \"E\".",
-                    "* Casilla de correo obligatoria.",
-                ],
-            ],
-            [
-                "titulo" => "Renovaciones Profesionales – Interjurisdiccional (Nacional)",
-                "reqs"   => [
-                    "Sólo impresión: E1 - D2 - D3 - C3.",
-                    "Fotocopia de DNI.",
-                    "Libre deuda.",
-                    "Certificado cargas generales o cargas peligrosas.",
-                    "Psicofísico impreso.",
-                ],
-            ],
-        ],
+        "items"  => [$req_card(1), $req_card(2), $req_card(3), $req_card(4)],
     ],
     [
-        "grupo"  => "Ampliaciones",
+        "grupo"  => (string) tp_content('group2_heading'),
         "color"  => "blue",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>',
-        "items"  => [
-            [
-                "titulo" => "Ampliación Categoría \"C\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico (principiantes, originales a partir de los 3 meses de su vencimiento y clases \"C\").",
-                    "* Mayor de 21 años.",
-                    "CURSOS: curso.seguridadvial.gob.ar (Auto, género y estrella amarilla).",
-                    "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
-                ],
-            ],
-            [
-                "titulo" => "Ampliación Categoría \"D\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico (principiantes, originales a partir de los 3 meses de su vencimiento y clases \"D\").",
-                    "Certificado de Antecedentes Penales Nacional (clase \"D\").",
-                    "* Mayor de 21 años.",
-                    "CURSOS: curso.seguridadvial.gob.ar (Auto, género y estrella amarilla).",
-                    "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
-                ],
-            ],
-            [
-                "titulo" => "Ampliación Categoría \"E\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico.",
-                    "* Mayor de 21 años.",
-                    "CURSOS: curso.seguridadvial.gob.ar (Auto, género y estrella amarilla).",
-                    "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
-                ],
-            ],
-        ],
+        "items"  => [$req_card(5), $req_card(6), $req_card(7)],
     ],
     [
-        "grupo"  => "Particulares y Principiantes",
+        "grupo"  => (string) tp_content('group3_heading'),
         "color"  => "green",
         "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>',
-        "items"  => [
-            [
-                "titulo" => "Renovación Categoría Particular \"A+B\"",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "* Correo electrónico.",
-                ],
-            ],
-            [
-                "titulo" => "Renovación Mayores de 65 Años – Particular",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Mayores de 65 años: electrocardiograma más informe.",
-                    "* Correo electrónico.",
-                ],
-            ],
-            [
-                "titulo" => "Principiantes Mayores de Edad",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "CUIL.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Grupo sanguíneo, Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico (principiantes).",
-                    "* Saber leer y escribir.",
-                    "CURSOS: curso.seguridadvial.gob.ar (Auto, moto, género y estrella amarilla).",
-                    "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
-                ],
-            ],
-            [
-                "titulo" => "Principiantes Menores de Edad",
-                "reqs"   => [
-                    "Fotocopia de DNI y original a la vista.",
-                    "Libre deuda Municipal (llevar cédula de identificación).",
-                    "Análisis: Glucemia, Colesterol y Triglicéridos.",
-                    "Informe psicológico (principiantes).",
-                    "Menores de 18: autorización de padre, madre o tutor en entidad policial, más copia de DNI.",
-                    "* Saber leer y escribir.",
-                    "CURSOS: curso.seguridadvial.gob.ar (Auto, moto, género y estrella amarilla).",
-                    "Examen teórico y práctico presenciales (con el vehículo correspondiente a la categoría).",
-                ],
-            ],
-        ],
+        "items"  => [$req_card(8), $req_card(9), $req_card(10), $req_card(11)],
     ],
 ];
+
+$duplicado_label = (string) tp_content('duplicado_label');
+$duplicado_items = tp_content_lines('duplicado_items');
 
 $color_map = [
     "orange" => [
@@ -205,11 +89,12 @@ $color_map = [
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                     </svg>
                 </div>
-                <span class="text-white font-bold uppercase tracking-wide text-sm">Duplicado de Licencia</span>
+                <span class="text-white font-bold uppercase tracking-wide text-sm"><?php echo esc_html($duplicado_label); ?></span>
             </div>
             <div class="flex flex-wrap gap-2 sm:ml-4">
-                <span class="bg-white/10 text-white/80 text-xs px-3 py-1.5 rounded-lg border border-white/10">✓ Fotocopia de DNI y original a la vista</span>
-                <span class="bg-white/10 text-white/80 text-xs px-3 py-1.5 rounded-lg border border-white/10">✓ Denuncia de extravío</span>
+                <?php foreach ($duplicado_items as $item): ?>
+                <span class="bg-white/10 text-white/80 text-xs px-3 py-1.5 rounded-lg border border-white/10">✓ <?php echo esc_html($item); ?></span>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -305,6 +190,17 @@ $color_map = [
                 </a>
             </div>
         </div>
+
+        <!-- Boleta de pago -->
+        <?php if (tp_content('boleta_url') && tp_content('boleta_button')) : ?>
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 text-center">
+            <a href="<?php echo esc_url(tp_content('boleta_url')); ?>" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 bg-alderetes-blue text-white font-bold px-8 py-3.5 rounded-xl hover:brightness-110 transition-colors shadow">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <?php echo esc_html(tp_content('boleta_button')); ?>
+            </a>
+        </div>
+        <?php endif; ?>
 
     </div>
 </main>
