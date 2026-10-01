@@ -176,6 +176,7 @@ function tp_editable_content_schema(): array
                     'label'   => 'Texto del botón',
                     'default' => 'Reportar falla',
                 ],
+                'gallery' => ['label' => 'Galería de imágenes', 'type' => 'gallery', 'instructions' => 'Las fotos actuales ya están precargadas aquí. Podés eliminar, reordenar arrastrando o agregar nuevas. Si dejás la galería vacía, el front mostrará el fallback del tema.'],
                 'address_label' => ['label' => 'Etiqueta de dirección', 'default' => 'Dirección'],
                 'address' => ['label' => 'Dirección del área', 'type' => 'textarea', 'default' => 'Caseros y Urquiza - Alderetes, Tucumán', 'instructions' => 'Una línea por renglón. Se muestra en la tarjeta lateral del área.'],
                 'hours_label' => ['label' => 'Etiqueta de horario', 'default' => 'Horario'],
@@ -1286,7 +1287,7 @@ add_action('admin_init', static function (): void {
         // No retornar, seguir con migración normal si hace falta
     }
 
-    $migration_version = '2026-08-09-1';
+    $migration_version = '2026-10-01-1';
 
     if (
         get_option('tp_editable_image_migration') === $migration_version
