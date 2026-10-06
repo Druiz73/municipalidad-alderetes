@@ -78,7 +78,7 @@
                         <div class="border-t border-gray-100 my-2"></div>
                         <span class="block px-4 pt-2 pb-1 text-xs font-bold text-gray-400 uppercase tracking-widest">Tránsito</span>
                         <a href="<?php echo esc_url(home_url('/transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Requisitos</a>
-                        <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Solicitar Turno</a>
+                        <!-- TEMP turnos oculto: <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm">Solicitar Turno</a> -->
                         <div class="border-t border-gray-100 my-2"></div>
                         <a href="<?php echo esc_url(home_url('/tribunal-de-faltas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Tribunal de Faltas</a>
                         <a href="<?php echo esc_url(home_url('/catastro')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">Catastro</a>
@@ -169,7 +169,7 @@
                     <div class="border-t border-gray-100 my-1"></div>
                     <span class="block px-4 pt-2 pb-1 text-xs font-bold text-gray-400 uppercase tracking-widest">Tránsito</span>
                     <a href="<?php echo esc_url(home_url('/transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Requisitos</a>
-                    <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Solicitar Turno</a>
+                    <!-- TEMP turnos oculto: <a href="<?php echo esc_url(home_url('/turnos-de-transito')); ?>" class="block pl-7 pr-4 py-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 text-sm">Solicitar Turno</a> -->
                     <div class="border-t border-gray-100 my-1"></div>
                     <a href="<?php echo esc_url(home_url('/tribunal-de-faltas')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Tribunal de Faltas</a>
                     <a href="<?php echo esc_url(home_url('/catastro')); ?>" class="block px-4 py-2.5 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50">Catastro</a>

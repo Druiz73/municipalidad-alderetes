@@ -37,7 +37,7 @@ function tp_editable_content_schema(): array
                 'tramites_badge' => ['label' => 'Etiqueta de trámites', 'default' => 'Servicios Online'],
                 'tramites_title' => ['label' => 'Título de trámites', 'default' => 'Trámites Municipales'],
                 'tramites_text' => ['label' => 'Introducción de trámites', 'type' => 'textarea', 'default' => 'Realizá tus gestiones de forma rápida y sencilla desde cualquier lugar'],
-                'tramites_cards' => ['label' => 'Tarjetas de trámites', 'type' => 'textarea', 'default' => "Rentas|Tasas, impuestos y certificaciones\nTránsito|Licencias, renovaciones y turnos\nTribunal de Faltas|Consulta de infracciones y libre deuda\nCatastro|Información catastral y planos", 'instructions' => 'Conservá las cuatro líneas y el formato: Título | Descripción. Los enlaces e íconos están protegidos.'],
+                'tramites_cards' => ['label' => 'Tarjetas de trámites', 'type' => 'textarea', 'default' => "Rentas|Tasas, impuestos y certificaciones\nTránsito|Licencias y renovaciones\nTribunal de Faltas|Consulta de infracciones y libre deuda\nCatastro|Información catastral y planos", 'instructions' => 'Conservá las cuatro líneas y el formato: Título | Descripción. Los enlaces e íconos están protegidos.'], // TEMP turnos oculto (orig: 'Licencias, renovaciones y turnos'),
                 'tramites_card_button' => ['label' => 'Texto de las tarjetas de trámites', 'default' => 'TRÁMITES'],
                 'areas_badge' => ['label' => 'Etiqueta de áreas', 'default' => 'Gestión Municipal'],
                 'areas_title' => ['label' => 'Título de áreas', 'default' => 'Áreas del Municipio'],
