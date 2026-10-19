@@ -11,33 +11,26 @@ $hero_image_url = tp_content_image_url( 'hero_image' );
 $area_title     = 'Tránsito';
 $area_tagline   = tp_content( 'hero_tagline' );
 
-$req_card = static function (int $n): array {
-    return [
-        'titulo' => (string) tp_content('req' . $n . '_title'),
-        'reqs'   => tp_content_lines('req' . $n . '_items'),
-    ];
-};
+// Grupos dinámicos: se editan en la caja "Grupos de Tránsito" del editor
+// (agregar / eliminar / reordenar). Si nunca se guardaron, usa el contenido histórico.
+$grupos = function_exists('tp_transito_groups') ? tp_transito_groups() : [];
 
-$categorias = [
-    [
-        "grupo"  => (string) tp_content('group1_heading'),
-        "color"  => "orange",
-        "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>',
-        "items"  => [$req_card(1), $req_card(2), $req_card(3), $req_card(4)],
-    ],
-    [
-        "grupo"  => (string) tp_content('group2_heading'),
-        "color"  => "blue",
-        "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>',
-        "items"  => [$req_card(5), $req_card(6), $req_card(7)],
-    ],
-    [
-        "grupo"  => (string) tp_content('group3_heading'),
-        "color"  => "green",
-        "icono"  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>',
-        "items"  => [$req_card(8), $req_card(9), $req_card(10), $req_card(11)],
-    ],
+$palette = ["orange", "blue", "green"];
+$iconos = [
+    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>',
+    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>',
+    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>',
 ];
+
+$categorias = [];
+foreach ($grupos as $i => $grupo_data) {
+    $categorias[] = [
+        "grupo" => $grupo_data['grupo'],
+        "color" => $palette[$i % count($palette)],
+        "icono" => $iconos[$i % count($iconos)],
+        "items" => $grupo_data['items'],
+    ];
+}
 
 $duplicado_label = (string) tp_content('duplicado_label');
 $duplicado_items = tp_content_lines('duplicado_items');

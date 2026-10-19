@@ -4,6 +4,10 @@ All notable changes to TailPress will be documented in this file.
 
 ## Unreleased
 
+- Tránsito: grupos y tarjetas dinámicos. Nueva caja "Grupos de Tránsito" en el editor
+  de la página con botones para agregar, eliminar y reordenar (sin límite fijo).
+  Si nunca se guardó, se usa el contenido histórico como respaldo.
+
 ## 5.0.0
 
 - Major update to default styling and template files

@@ -116,6 +116,29 @@ Mientras esta sección permanezca habilitada en el menú municipal, las novedade
 
 ---
 
+## 🚗 Grupos de Tránsito (agregar, eliminar y ordenar)
+
+La página Tránsito muestra sus requisitos en grupos (ej. Renovaciones, Ampliaciones).
+Para administrarlos:
+
+1. Ingresá a **Páginas > Tránsito**.
+2. Bajá hasta la caja **Grupos de Tránsito** (debajo de los campos de texto).
+3. Ahí podés:
+   * **Agregar un grupo** con el botón azul "＋ Agregar grupo" (aparece al final).
+   * **Moverlo** con las flechas ↑ ↓ hasta la posición que quieras
+     (ej. para ponerlo antes del grupo 2, subilo hasta que diga "Grupo 2").
+   * **Eliminarlo** con "Eliminar grupo" (pide confirmación).
+   * Dentro de cada grupo, **agregar, eliminar y ordenar tarjetas** con sus propios botones.
+4. En *Requisitos* escribí uno por línea. Las líneas que mencionen CURSOS o Examen
+   se destacan en azul en la página.
+5. Presioná **Actualizar** y revisá la página pública.
+
+*Nota: los campos viejos "Grupo 1/2/3 — título (respaldo)" y "Renovación... (respaldo)"
+son el contenido original de respaldo y ya no hace falta tocarlos. Nada se guarda
+hasta presionar Actualizar: si eliminás algo por error, salí sin guardar.*
+
+---
+
 ## 🚗 Sistema de Turnos de Tránsito
 
 Los turnos reservados por los ciudadanos se administran exclusivamente desde el menú izquierdo:
