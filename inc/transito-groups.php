@@ -149,42 +149,15 @@ function tp_transito_groups(?int $post_id = null): array
 }
 
 /**
- * Grupos en forma editable (requisitos como texto con saltos de línea).
- * Si nunca se guardó nada dinámico, precarga desde el contenido histórico.
+ * Convierte grupos normalizados (grupo/items/reqs) a la forma del formulario.
  *
+ * @param array<int, array{grupo:string, items:array<int, array{titulo:string, reqs:string[]}>}> $groups
  * @return array<int, array{titulo:string, tarjetas:array<int, array{titulo:string, requisitos:string}>}>
  */
-function tp_transito_editable_groups(int $post_id): array
+function tp_transito_groups_to_editable(array $groups): array
 {
-    if (metadata_exists('post', $post_id, TP_TRANSITO_GROUPS_META)) {
-        $saved = get_post_meta($post_id, TP_TRANSITO_GROUPS_META, true);
-        $editable = [];
-        foreach ((array) $saved as $group) {
-            if (!is_array($group)) {
-                continue;
-            }
-            $tarjetas = [];
-            foreach ((array) ($group['tarjetas'] ?? []) as $card) {
-                if (!is_array($card)) {
-                    continue;
-                }
-                $req = $card['requisitos'] ?? '';
-                $tarjetas[] = [
-                    'titulo'     => (string) ($card['titulo'] ?? ''),
-                    'requisitos' => is_array($req) ? implode("\n", $req) : (string) $req,
-                ];
-            }
-            $editable[] = [
-                'titulo'   => (string) ($group['titulo'] ?? $group['grupo'] ?? ''),
-                'tarjetas' => $tarjetas,
-            ];
-        }
-
-        return $editable;
-    }
-
     $editable = [];
-    foreach (tp_transito_legacy_groups($post_id) as $group) {
+    foreach ($groups as $group) {
         $tarjetas = [];
         foreach ($group['items'] as $card) {
             $tarjetas[] = [
@@ -196,6 +169,24 @@ function tp_transito_editable_groups(int $post_id): array
     }
 
     return $editable;
+}
+
+/**
+ * Grupos en forma editable (requisitos como texto con saltos de línea).
+ * Si nunca se guardó nada dinámico, precarga desde el contenido histórico.
+ * Acepta meta guardado con claves tarjetas/items y requisitos/reqs.
+ *
+ * @return array<int, array{titulo:string, tarjetas:array<int, array{titulo:string, requisitos:string}>}>
+ */
+function tp_transito_editable_groups(int $post_id): array
+{
+    if (metadata_exists('post', $post_id, TP_TRANSITO_GROUPS_META)) {
+        return tp_transito_groups_to_editable(
+            tp_transito_normalize_groups(get_post_meta($post_id, TP_TRANSITO_GROUPS_META, true))
+        );
+    }
+
+    return tp_transito_groups_to_editable(tp_transito_normalize_groups(tp_transito_legacy_groups($post_id)));
 }
 
 /**
@@ -248,7 +239,7 @@ function tp_transito_sanitize_groups($raw): array
 }
 
 /**
- * Registra la caja solo en el editor de la página de Tránsito.
+ * Registra la caja solo en el editor de la página de Tránsito (prioridad alta).
  */
 add_action('add_meta_boxes_page', static function ($post): void {
     if (!$post instanceof WP_Post || !tp_transito_is_groups_page((int) $post->ID)) {
@@ -256,12 +247,30 @@ add_action('add_meta_boxes_page', static function ($post): void {
     }
     add_meta_box(
         'tp_transito_groups',
-        'Grupos de Tránsito',
+        'Grupos de Tránsito — agregar, eliminar y ordenar',
         'tp_transito_groups_meta_box',
         'page',
         'normal',
         'high'
     );
+}, 5);
+
+/**
+ * Aviso arriba del editor: editar grupos solo en la caja dinámica.
+ */
+add_action('edit_form_after_title', static function ($post): void {
+    if (!$post instanceof WP_Post || $post->post_type !== 'page') {
+        return;
+    }
+    if (!tp_transito_is_groups_page((int) $post->ID)) {
+        return;
+    }
+    echo '<div class="notice notice-info inline" style="margin:12px 0;padding:12px 16px;border-left-width:4px;">';
+    echo '<p style="margin:0;font-size:14px;line-height:1.5"><strong>Tránsito — requisitos:</strong> ';
+    echo 'Para <strong>agregar, eliminar o reordenar</strong> grupos y tarjetas usá únicamente la caja ';
+    echo '<strong>«Grupos de Tránsito»</strong> (más abajo en esta página). ';
+    echo 'Los campos viejos de grupos/requisitos están ocultos a propósito: vaciarlos no elimina tarjetas.';
+    echo '</p></div>';
 });
 
 /**
@@ -332,13 +341,16 @@ function tp_transito_groups_meta_box($post): void
     wp_nonce_field('tp_transito_groups_save', 'tp_transito_groups_nonce');
     ?>
     <input type="hidden" name="tp_transito_groups_present" value="1">
-    <p>Estos son los grupos que ve el vecino en la página de Tránsito, en orden.
+    <p><strong>Esta es la única caja para editar grupos y tarjetas de requisitos.</strong>
+    Estos son los que ve el vecino en la página de Tránsito, en orden.
     Podés <strong>agregar</strong> grupos nuevos, <strong>eliminarlos</strong> y
     <strong>subirlos/bajarlos</strong> para ordenarlos (por ejemplo, para poner uno nuevo antes del grupo 2).
     Lo mismo vale para las tarjetas dentro de cada grupo.</p>
     <p>En <em>Requisitos</em> escribí uno por línea. Las líneas que mencionen
     <strong>CURSOS</strong> o <strong>Examen</strong> se destacan en azul en la página.
-    Nada se guarda hasta que presiones <strong>Actualizar</strong>.</p>
+    Nada se guarda hasta que presiones <strong>Actualizar</strong>.
+    Si es la primera vez, al actualizar se guarda lo que ves aquí (precargado desde el contenido histórico)
+    y a partir de entonces las eliminaciones quedan persistidas.</p>
 
     <div id="tp-tg-list">
         <?php foreach ($groups as $gi => $group) :
@@ -455,7 +467,13 @@ function tp_transito_groups_meta_box($post): void
                 return;
             }
             if (btn.hasAttribute('data-del-card') && card) {
-                card.remove(); reindex(); return;
+                var titleEl = card.querySelector('[data-c-titulo]');
+                var title = titleEl && titleEl.value ? titleEl.value.trim() : '';
+                var msg = title
+                    ? '¿Eliminar la tarjeta «' + title + '»? (Se aplica al presionar Actualizar)'
+                    : '¿Eliminar esta tarjeta? (Se aplica al presionar Actualizar)';
+                if (window.confirm(msg)) { card.remove(); reindex(); }
+                return;
             }
             if (btn.hasAttribute('data-move-up-group') && group) { move(group, -1); return; }
             if (btn.hasAttribute('data-move-down-group') && group) { move(group, 1); return; }
@@ -499,7 +517,9 @@ add_action('save_post_page', static function ($post_id): void {
 }, 20);
 
 /**
- * Marca los campos fijos históricos como respaldo para no confundir.
+ * Oculta los campos ACF fijos de grupos/requisitos en Tránsito.
+ * Vaciarlos no elimina tarjetas (tp_content vuelve al default); la edición
+ * diaria es solo en "Grupos de Tránsito".
  */
 add_filter('acf/prepare_field', static function ($field) {
     if (!is_array($field) || !is_admin()) {
@@ -510,7 +530,7 @@ add_filter('acf/prepare_field', static function ($field) {
     if (!$post_id && isset($_POST['post_ID'])) {
         $post_id = absint($_POST['post_ID']);
     }
-    if (!$post_id || get_post_field('post_name', $post_id) !== TP_TRANSITO_SLUG) {
+    if (!$post_id || !tp_transito_is_groups_page($post_id)) {
         return $field;
     }
 
@@ -524,9 +544,7 @@ add_filter('acf/prepare_field', static function ($field) {
     }
 
     if (in_array($field['name'] ?? '', $legacy, true)) {
-        $field['label'] .= ' (respaldo)';
-        $field['instructions'] = 'Contenido original de respaldo. Para agregar, eliminar o reordenar grupos usá la caja “Grupos de Tránsito” de más abajo. '
-            . ($field['instructions'] ?? '');
+        return false;
     }
 
     return $field;
