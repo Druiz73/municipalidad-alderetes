@@ -4,11 +4,10 @@ All notable changes to TailPress will be documented in this file.
 
 ## Unreleased
 
-- Tránsito: se ocultan los campos ACF legacy de grupos/requisitos (group1..3,
-  req1..11) en el editor para que no se editen por error. Solo la caja
-  "Grupos de Tránsito" agrega, elimina y reordena; aviso arriba del editor,
-  confirmación al eliminar una tarjeta, y lectura del meta compatible con
-  claves `tarjetas`/`items`.
+- Tránsito: campos legacy de grupos/requisitos (`group1..3`, `req1..11`) con
+  `admin_hide` — ya no se registran en el editor. Arriba quedan solo portada,
+  duplicado, cursos y boleta; el ABM es la caja "Grupos de Tránsito" (aviso,
+  confirm al borrar tarjeta, meta `tarjetas`/`items`).
 - Tránsito: grupos y tarjetas dinámicos. Nueva caja "Grupos de Tránsito" en el editor
   de la página con botones para agregar, eliminar y reordenar (sin límite fijo).
   Si nunca se guardó, se usa el contenido histórico como respaldo.
